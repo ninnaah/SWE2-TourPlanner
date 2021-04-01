@@ -5,53 +5,151 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TourPlanner"
         mc:Ignorable="d"
-        Title="TourPlanner" Height="450" Width="800">
+        Title="TourPlanner" Height="450" Width="800" MinWidth="100">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
-    <Grid ShowGridLines ="true" Margin="10">
+    <Grid>
+        <StackPanel Orientation="Vertical">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <Grid ShowGridLines ="true" Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
+                <Button Name="file" Margin="5" Grid.Column="0" MinWidth="50">File</Button>
+                <Button Name="edit" Margin="5" Grid.Column="1" MinWidth="50">Edit</Button>
+                <Button Name="options" Margin="5" Grid.Column="2" MinWidth="60">Options</Button>
+                <Button Name="help" Margin="5" Grid.Column="3" MinWidth="50">Help</Button>
+            </Grid>
 
-        <Grid ShowGridLines ="true" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="1" Command="{Binding SendCommand}" Name="button" HorizontalAlignment="right">Send</Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Tour:" VerticalAlignment="Center" Margin="5,0,5,0"></TextBlock>
+                <TextBox Grid.Column="1" Name="tourSearch" VerticalAlignment="Center" Margin="5,0,5,0" Text="{Binding SearchTour}"></TextBox>
+                <Button Name="search" Margin="5" Grid.Column="2" MinWidth="50">Search</Button>
+            </Grid>
+
+            <Grid Height="370"> <!-- TO DO: No fixed heighth -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" Text="Tours" VerticalAlignment="Center" Margin="5"></TextBlock>
+                            <Button Name="addTour" Margin="5" Grid.Column="1" MinWidth="15">+</Button>
+                            <Button Name="deleteTour" Margin="5" Grid.Column="2" MinWidth="15">-</Button>
+                            <Button Name="addMultipleTours" Margin="5" Grid.Column="3" MinWidth="15">[ ]</Button>
+                        </Grid>
+
+
+                        <TextBlock Grid.Row="1" Text="-Tour1" Margin="5"></TextBlock>
+
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <TextBlock Grid.Row="0" Text="Title:" VerticalAlignment="Center" Margin="5"></TextBlock>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="route" Grid.Column="0" Margin="5">Route</Button>
+                        <Button Name="description" Grid.Column="1" Margin="5">Description</Button>
+                    </Grid>
+
+                    <TextBlock Grid.Row="2"/>
+
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="Logs:" VerticalAlignment="Center" Margin="5"></TextBlock>
+                        <Button Name="addLog" Margin="5" Grid.Column="1" MinWidth="15">+</Button>
+                        <Button Name="deleteLog" Margin="5" Grid.Column="2" MinWidth="15">-</Button>
+                        <Button Name="addMultipleLogs" Margin="5" Grid.Column="3" MinWidth="15">[ ]</Button>
+                    </Grid>
+
+                    <Grid Grid.Row="4" ShowGridLines="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Date" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Grid.Column="1" Text="Duration" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Grid.Column="2" Text="Distance" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Grid.Column="3" Text="Rating" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Grid.Column="4" Text="..." VerticalAlignment="Center" Margin="5"/>
+                    </Grid>
+                    
+                </Grid>
+
+
+            </Grid>
+
+
+
+        </StackPanel>
+        
+        
+        
+        
+        
+            <!-- <Button Grid.Row="0" Grid.Column="1" Command="{Binding SendCommand}" Name="button" HorizontalAlignment="right">Send</Button>
             <TextBox Grid.Row="0" Grid.Column ="0" HorizontalAlignment="Left" Text="{Binding Input, UpdateSourceTrigger =PropertyChanged}"></TextBox>
-
-        </Grid>
-
-        <Grid ShowGridLines ="true" Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-
-        <Grid ShowGridLines ="true" Grid.Row="2" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-        </Grid>
-
+            -->
        
-        <Label Grid.Row="3" Content="{Binding Output}" FontSize="30"></Label>
 
+        
+        
     </Grid>
 </Window>
