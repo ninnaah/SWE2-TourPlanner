@@ -28,9 +28,12 @@
 
         <Grid ShowGridLines ="true" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" Grid.Column="1" Command="{Binding SendCommand}" Name="button" HorizontalAlignment="right">Send</Button>
+            <TextBox Grid.Row="0" Grid.Column ="0" HorizontalAlignment="Left" Text="{Binding Input, UpdateSourceTrigger =PropertyChanged}"></TextBox>
+
         </Grid>
 
         <Grid ShowGridLines ="true" Grid.Row="2">
@@ -47,9 +50,8 @@
             </Grid.RowDefinitions>
         </Grid>
 
-        <TextBox Grid.Row="1" Height="auto" Width="600" HorizontalAlignment="left" Text="{Binding Input, UpdateSourceTrigger = PropertyChanged}"></TextBox>
-        <Button Grid.Row="1" Grid.Column="1" Command="{Binding SendCommand}" Width="100" Name="button" HorizontalAlignment="right">Send</Button>
+       
         <Label Grid.Row="3" Content="{Binding Output}" FontSize="30"></Label>
-        
+
     </Grid>
 </Window>

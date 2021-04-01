@@ -10,8 +10,11 @@ namespace TourPlanner
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private string _output = "Hallo du!";
+        private string _output = "Hallo!";
         private string _input;
+        public ICommand SendCommand { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
 
         public string Input
         {
@@ -47,18 +50,14 @@ namespace TourPlanner
             }
         }
 
-        public ICommand SendCommand { get; }
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ViewModel()
         {
             this.SendCommand = new SendCommand(this);
         }
 
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
-            //PropertyChangedEventHandler handler = this.PropertyChanged;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
