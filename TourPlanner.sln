@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlanner", "TourPlanner\TourPlanner.csproj", "{9E68157E-C6C7-452C-A520-BDC111EB348C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner", "TourPlanner\TourPlanner.csproj", "{9E68157E-C6C7-452C-A520-BDC111EB348C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlanner.Models", "Models\TourPlanner.Models.csproj", "{ED687663-2F6F-4398-BBB5-45CF20F0E0E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlanner.BusinessLayer", "TourPlanner.BusinessLayer\TourPlanner.BusinessLayer.csproj", "{17F398DF-2359-4619-AC0D-D3158273086D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlanner.DataAccessLayer", "TourPlanner.DataAccessLayer\TourPlanner.DataAccessLayer.csproj", "{1E5A687E-EE3F-4847-AA34-F1B93E44CB32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{9E68157E-C6C7-452C-A520-BDC111EB348C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E68157E-C6C7-452C-A520-BDC111EB348C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E68157E-C6C7-452C-A520-BDC111EB348C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED687663-2F6F-4398-BBB5-45CF20F0E0E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED687663-2F6F-4398-BBB5-45CF20F0E0E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED687663-2F6F-4398-BBB5-45CF20F0E0E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED687663-2F6F-4398-BBB5-45CF20F0E0E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17F398DF-2359-4619-AC0D-D3158273086D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17F398DF-2359-4619-AC0D-D3158273086D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17F398DF-2359-4619-AC0D-D3158273086D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17F398DF-2359-4619-AC0D-D3158273086D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E5A687E-EE3F-4847-AA34-F1B93E44CB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E5A687E-EE3F-4847-AA34-F1B93E44CB32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E5A687E-EE3F-4847-AA34-F1B93E44CB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E5A687E-EE3F-4847-AA34-F1B93E44CB32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
