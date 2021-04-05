@@ -67,7 +67,14 @@
                                 <Button Name="addMultipleTours" Margin="5" Grid.Column="3" MinWidth="15">[ ]</Button>
                             </Grid>
 
-                            <TextBlock Grid.Row="1" Text="-Tour1" Margin="5"></TextBlock>
+                            <!--<TextBlock Grid.Row="1" Text="-Tour1" Margin="5"></TextBlock>-->
+                            <ListView Grid.Row="1" ItemsSource="{Binding Tours}" Name="listTours">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
                         </Grid>
                     </Grid>
@@ -103,7 +110,8 @@
                                     </TabItem>
                                     <TabItem Header="Description">
                                         <!--Bind TextBlock.Text to the TextBox on the first TabItem.-->
-                                        <TextBlock Height="100" Text="{Binding ElementName=textBox1, Path=Text}"/>
+                                        <!--<TextBlock Height="100" Text="{Binding ElementName=textBox1, Path=Text}"/>-->
+                                        <TextBlock Height="100"/>
                                         <!-- TO DO: No fixed heighth -->
                                     </TabItem>
                                 </TabControl>
