@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace TourPlanner.DataAccessLayer
 {
-    public class DBConnObject
+    public class Config
     {
         public string server;
         public int port;
         public string user;
         public string password;
         public string database;
+        public string filePath;
     }
+
 }

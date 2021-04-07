@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using TourPlanner.Models;
 
 namespace TourPlanner.DataAccessLayer
@@ -7,21 +11,37 @@ namespace TourPlanner.DataAccessLayer
     {
         private string _filePath;
 
-        public FileSystem()
+        public FileSystem(Config config)
         {
-            //from config file!
-            _filePath = "...";
+            _filePath = $"../../../../{config.filePath}/import";
+            Debug.WriteLine(_filePath);
         }
+
+        //??? what for
         public List<TourItem> GetTours()
         {
-            //get items from fileSystem (import/export)
-            return new List<TourItem>()
-            {
-                new Models.TourItem() { Name = "Kahlenberg", Description = "Wien Nussdorf - Kahlenberg", Distance = 10},
-                new Models.TourItem() { Name = "Cobenzl", Description = "Wien Nussdorf - Cobenzl", Distance = 7},
-                new Models.TourItem() { Name = "Wienerwald", Description = "Wien Neuwaldegg - Rundweg", Distance = 5},
-                new Models.TourItem() { Name = "Prater", Description = "Wien Prater - Rundweg", Distance = 5}
-            };
+            return null;
         }
+
+        public bool ImportTour(ref TourItem tour)
+        {
+            try{
+                string jsonString = File.ReadAllText($"{_filePath}/fahrradtourWien.json");
+
+                Debug.WriteLine(jsonString);
+
+                tour = JsonConvert.DeserializeObject<TourItem>(jsonString);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+            
+        }
+
+
+
     }
 }
