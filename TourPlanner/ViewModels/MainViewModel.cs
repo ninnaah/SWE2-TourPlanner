@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
+using TourPlanner.Views;
 
 namespace TourPlanner.ViewModels
 {
@@ -12,8 +13,10 @@ namespace TourPlanner.ViewModels
         private ICommand _searchCommand;
         private TourItem _currentTour;
         private string _searchTour;
+        private ICommand _openAddTourWinCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
+        public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(OpenAddTourWin);
         public ObservableCollection<TourItem> Tours { get; set; }
         public TourItem CurrentTour 
         {
@@ -56,7 +59,7 @@ namespace TourPlanner.ViewModels
             CreateList();
         }
 
-        private void CreateList()
+        protected void CreateList()
         {
             Tours = new ObservableCollection<TourItem>();
 
@@ -74,6 +77,13 @@ namespace TourPlanner.ViewModels
             {
                 Tours.Add(item);
             }
+        }
+
+
+        private void OpenAddTourWin(object commandParameter)
+        {
+            AddTourWindow addTourWindow = new AddTourWindow();
+            addTourWindow.ShowDialog();
         }
 
     }

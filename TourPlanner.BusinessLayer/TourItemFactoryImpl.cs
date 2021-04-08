@@ -18,5 +18,10 @@ namespace TourPlanner.BusinessLayer
             IEnumerable<TourItem> tours = GetTours();
             return tours.Where(x => x.Name.Contains(tourName));
         }
+
+        public bool AddTour(TourItem tour)
+        {
+            return _tourItemDAO.AddTour(tour);
+        }
     }
 }

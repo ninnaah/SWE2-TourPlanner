@@ -7,5 +7,7 @@ namespace TourPlanner.BusinessLayer
     {
         IEnumerable<TourItem> GetTours();
         IEnumerable<TourItem> Search(string tourName);
+
+        bool AddTour(TourItem tour);
     }
 }

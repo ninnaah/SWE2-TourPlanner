@@ -46,7 +46,7 @@ namespace TourPlanner.DataAccessLayer
 
         }
 
-        public bool ImportTour(ref TourItem tour)
+        public bool ImportTour(ref TourItem tour, string fileName)
         {
             try
             {

@@ -6,6 +6,6 @@ namespace TourPlanner.DataAccessLayer
     interface IDataAccess
     {
         public List<TourItem> GetTours();
-        public bool ImportTour(ref TourItem tour);
+        public bool ImportTour(ref TourItem tour, string fileName);
     }
 }

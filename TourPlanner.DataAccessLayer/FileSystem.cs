@@ -23,11 +23,11 @@ namespace TourPlanner.DataAccessLayer
             return null;
         }
 
-        public bool ImportTour(ref TourItem tour)
+        public bool ImportTour(ref TourItem tour, string fileName)
         {
             try{
-                string jsonString = File.ReadAllText($"{_filePath}/fahrradtourWien.json");
-
+                //string jsonString = File.ReadAllText($"{_filePath}/fahrradtourWien.json");
+                string jsonString = File.ReadAllText($"{_filePath}/{fileName}");
                 Debug.WriteLine(jsonString);
 
                 tour = JsonConvert.DeserializeObject<TourItem>(jsonString);

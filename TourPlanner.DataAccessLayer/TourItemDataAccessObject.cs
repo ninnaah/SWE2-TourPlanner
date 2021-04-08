@@ -31,12 +31,18 @@ namespace TourPlanner.DataAccessLayer
             return _dataAccess.GetTours();
         }
 
-        public void ImportTour()
+        public void ImportTour(string fileName)
         {
             TourItem newTour = new TourItem();
-            _dataImport.ImportTour(ref newTour);
-            _dataAccess.ImportTour(ref newTour);
+            _dataImport.ImportTour(ref newTour, fileName);
+            _dataAccess.ImportTour(ref newTour, fileName);
 
         }
+
+        public bool AddTour(TourItem tour)
+        {
+            return _dataAccess.ImportTour(ref tour, null);
+        }
+
     }
 }
