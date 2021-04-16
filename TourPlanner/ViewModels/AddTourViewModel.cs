@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TourPlanner.Models;
 
@@ -10,17 +12,19 @@ namespace TourPlanner.ViewModels
 {
     public class AddTourViewModel : MainViewModel
     {
-        private ICommand _sendNewTourCommand;
+        private ICommand _sendAddTourCommand;
+        private ICommand _closeWinCommand;
         public Action CloseWin { get; set; }
         private string _tourName;
         private string _tourDescription;
         private string _tourFrom;
         private string _tourTo;
         private int _tourDistance;
+        public event EventHandler<TourItem> AddedTour;
 
-        public ICommand SendNewTourCommand => _sendNewTourCommand ??= new RelayCommand(AddTour);
-
-
+        public ICommand SendAddTourCommand => _sendAddTourCommand ??= new RelayCommand(AddTour);
+        public ICommand CloseWinCommand => _closeWinCommand ??= new RelayCommand(CloseWindow);
+        
         public string TourName
         {
             get
@@ -105,13 +109,16 @@ namespace TourPlanner.ViewModels
 
         private void AddTour(object commandParameter)
         {
-            TourItem item = new TourItem();
-            item.Name = _tourName;
-            item.Description = _tourDescription;
-            item.Distance = _tourDistance;
-            Tours.Add(item);
-            CreateList();
-            CloseWin();
+            AddedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourDistance));
+        }
+
+
+        private void CloseWindow (object commandParameter)
+        {
+            if(commandParameter != null)
+            {
+                (commandParameter as Window).Close();
+            }
         }
     }
 }

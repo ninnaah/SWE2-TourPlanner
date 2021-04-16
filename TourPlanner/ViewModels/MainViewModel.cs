@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
@@ -16,7 +17,7 @@ namespace TourPlanner.ViewModels
         private ICommand _openAddTourWinCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
-        public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(OpenAddTourWin);
+        public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
         public ObservableCollection<TourItem> Tours { get; set; }
         public TourItem CurrentTour 
         {
@@ -80,10 +81,23 @@ namespace TourPlanner.ViewModels
         }
 
 
-        private void OpenAddTourWin(object commandParameter)
+        private void Add(object commandParameter)
         {
             AddTourWindow addTourWindow = new AddTourWindow();
+            AddTourViewModel addTourVM = new AddTourViewModel();
+
+            addTourVM.AddedTour += (_, tour) => { AddTour(tour); };
+            addTourWindow.DataContext = addTourVM;
+
+
             addTourWindow.ShowDialog();
+        }
+
+        private void AddTour(TourItem tour)
+        {
+            _tourFactory.AddTour(tour);
+
+            Tours.Add(tour);
         }
 
     }

@@ -23,13 +23,6 @@ namespace TourPlanner.Views
         public AddTourWindow()
         {
             InitializeComponent();
-            AddTourViewModel ViewModel = new AddTourViewModel();
-            this.DataContext = ViewModel;
-
-            if (ViewModel.CloseWin == null)
-            {
-                ViewModel.CloseWin = new Action(this.Close);
-            }
         }
     }
 }

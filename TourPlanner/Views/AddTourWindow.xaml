@@ -1,4 +1,5 @@
 ﻿<Window x:Class="TourPlanner.Views.AddTourWindow"
+        x:Name ="AddTourWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,7 +27,8 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Add Tour" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
-
+        <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = AddTourWin}">Close</Button>
+        
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Tourname" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Name="tourName" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourName}"></TextBox>
 
@@ -42,6 +44,7 @@
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="5" Grid.Column="1" Name="tourDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourDistance}"></TextBox>
 
-        <Button Grid.Row="6" Grid.Column="1" Name="search" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendNewTourCommand}">Send</Button>
+        <Button Grid.Row="6" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourCommand}">Send</Button>
+        
     </Grid>
 </Window>
