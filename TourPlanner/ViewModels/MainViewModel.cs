@@ -17,10 +17,12 @@ namespace TourPlanner.ViewModels
         private TourItem _currentTour;
         private string _searchTour;
         private ICommand _openAddTourWinCommand;
+        private ICommand _openEditTourWinCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
         public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
+        public ICommand OpenEditTourWinCommand => _openEditTourWinCommand ??= new RelayCommand(Edit);
         public ObservableCollection<TourItem> Tours { get; set; }
         public TourItem CurrentTour 
         {
@@ -105,8 +107,31 @@ namespace TourPlanner.ViewModels
             addTourWindow.ShowDialog();
         }
 
+        private void Edit(object commandParameter)
+        {
+            if(CurrentTour != null) 
+            {
+                EditTourWindow editTourWindow = new EditTourWindow();
+                AddTourViewModel addTourVM = new AddTourViewModel();
+
+                addTourVM.AddedTour += (_, tour) => { EditTour(tour); };
+                editTourWindow.DataContext = addTourVM;
+
+
+                editTourWindow.ShowDialog();
+            }
+        }
+
         private void AddTour(TourItem tour)
         {
+            _tourFactory.AddTour(tour);
+
+            Tours.Add(tour);
+        }
+
+        private void EditTour(TourItem tour)
+        {
+            _tourFactory.DeleteTour(CurrentTour);
             _tourFactory.AddTour(tour);
 
             Tours.Add(tour);

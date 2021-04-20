@@ -62,7 +62,7 @@
                                 <TextBlock Grid.Column="0" Text="Tours" VerticalAlignment="Center" Margin="5"></TextBlock>
                                 <Button Name="addTour" Margin="5" Grid.Column="1" MinWidth="15" Command="{Binding OpenAddTourWinCommand}">+</Button>
                                 <Button Name="deleteTour" Margin="5" Grid.Column="2" MinWidth="15" Command="{Binding DeleteCommand}">-</Button>
-                                <Button Name="addMultipleTours" Margin="5" Grid.Column="3" MinWidth="15">[ ]</Button>
+                                <Button Name="editTour" Margin="5" Grid.Column="3" MinWidth="30" Command="{Binding OpenEditTourWinCommand}">edit</Button>
                             </Grid>
 
                             <ListBox Grid.Row="1" ItemsSource="{Binding Tours}" SelectionMode="Extended" SelectedItem="{Binding CurrentTour}" DisplayMemberPath="Name" Name="listTours"></ListBox>
@@ -130,7 +130,7 @@
                                     <TextBlock Grid.Column="0" Text="Logs:" VerticalAlignment="Center" Margin="5"></TextBlock>
                                     <Button Grid.Column="1" Name="addLog" Margin="5"  MinWidth="15">+</Button>
                                     <Button Grid.Column="2" Name="deleteLog" Margin="5" MinWidth="15">-</Button>
-                                    <Button Grid.Column="3" Name="addMultipleLogs" Margin="5" MinWidth="15">[ ]</Button>
+                                    <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30">edit</Button>
                                 </Grid>
 
                                 <DataGrid Height="160" Grid.Row="1" Margin="5">
