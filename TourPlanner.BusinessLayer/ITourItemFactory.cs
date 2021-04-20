@@ -9,5 +9,6 @@ namespace TourPlanner.BusinessLayer
         IEnumerable<TourItem> Search(string tourName);
 
         bool AddTour(TourItem tour);
+        bool DeleteTour(TourItem tour);
     }
 }

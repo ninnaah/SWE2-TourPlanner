@@ -7,5 +7,6 @@ namespace TourPlanner.DataAccessLayer
     {
         public List<TourItem> GetTours();
         public bool ImportTour(ref TourItem tour, string fileName);
+        public bool DeleteTour(TourItem tour);
     }
 }

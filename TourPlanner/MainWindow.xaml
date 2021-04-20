@@ -61,11 +61,11 @@
 
                                 <TextBlock Grid.Column="0" Text="Tours" VerticalAlignment="Center" Margin="5"></TextBlock>
                                 <Button Name="addTour" Margin="5" Grid.Column="1" MinWidth="15" Command="{Binding OpenAddTourWinCommand}">+</Button>
-                                <Button Name="deleteTour" Margin="5" Grid.Column="2" MinWidth="15">-</Button>
+                                <Button Name="deleteTour" Margin="5" Grid.Column="2" MinWidth="15" Command="{Binding DeleteCommand}">-</Button>
                                 <Button Name="addMultipleTours" Margin="5" Grid.Column="3" MinWidth="15">[ ]</Button>
                             </Grid>
 
-                            <ListBox Grid.Row="1" ItemsSource="{Binding Tours}" SelectedItem="{Binding CurrentTour}" DisplayMemberPath="Name" Name="listTours"></ListBox>
+                            <ListBox Grid.Row="1" ItemsSource="{Binding Tours}" SelectionMode="Extended" SelectedItem="{Binding CurrentTour}" DisplayMemberPath="Name" Name="listTours"></ListBox>
 
                         </Grid>
                     </Grid>

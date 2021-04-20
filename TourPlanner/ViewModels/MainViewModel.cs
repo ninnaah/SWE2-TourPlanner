@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -12,11 +13,13 @@ namespace TourPlanner.ViewModels
     {
         private ITourItemFactory _tourFactory;
         private ICommand _searchCommand;
+        private ICommand _deleteCommand;
         private TourItem _currentTour;
         private string _searchTour;
         private ICommand _openAddTourWinCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
+        public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
         public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
         public ObservableCollection<TourItem> Tours { get; set; }
         public TourItem CurrentTour 
@@ -79,7 +82,16 @@ namespace TourPlanner.ViewModels
                 Tours.Add(item);
             }
         }
+        private void Delete(object commandParameter)
+        {
+            if(CurrentTour!= null)
+            {
+                Tours.Remove(CurrentTour);
+                _tourFactory.DeleteTour(CurrentTour);
+            }
 
+
+        }
 
         private void Add(object commandParameter)
         {

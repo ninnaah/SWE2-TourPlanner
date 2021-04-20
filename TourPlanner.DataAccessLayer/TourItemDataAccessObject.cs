@@ -44,5 +44,10 @@ namespace TourPlanner.DataAccessLayer
             return _dataAccess.ImportTour(ref tour, null);
         }
 
+        public bool DeleteTour(TourItem tour)
+        {
+            return _dataAccess.DeleteTour(tour);
+        }
+
     }
 }

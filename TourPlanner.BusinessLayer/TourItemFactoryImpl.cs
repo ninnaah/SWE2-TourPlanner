@@ -23,5 +23,10 @@ namespace TourPlanner.BusinessLayer
         {
             return _tourItemDAO.AddTour(tour);
         }
+
+        public bool DeleteTour(TourItem tour)
+        {
+            return _tourItemDAO.DeleteTour(tour);
+        }
     }
 }

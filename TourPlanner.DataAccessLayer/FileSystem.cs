@@ -41,6 +41,11 @@ namespace TourPlanner.DataAccessLayer
             
         }
 
+        public bool DeleteTour(TourItem tour)
+        {
+            throw new NotImplementedException();
+        }
+
 
 
     }

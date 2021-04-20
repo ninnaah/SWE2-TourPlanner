@@ -71,6 +71,29 @@ namespace TourPlanner.DataAccessLayer
 
         }
 
+        public bool DeleteTour( TourItem tour)
+        {
+            try
+            {
+                _conn.Open();
+                _sql = "delete from tour where tourname=@name";
+                _cmd = new NpgsqlCommand(_sql, _conn);
+
+                _cmd.Parameters.AddWithValue("name", tour.Name);
+                _cmd.ExecuteNonQuery();
+
+                _conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _conn.Close();
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+
+        }
+
 
     }
 }
