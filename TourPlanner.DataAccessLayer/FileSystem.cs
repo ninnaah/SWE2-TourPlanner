@@ -48,5 +48,20 @@ namespace TourPlanner.DataAccessLayer
 
 
 
+
+
+        public List<TourLogItem> GetTourLogs()
+        {
+            throw new NotImplementedException();
+        }
+        public bool ImportTourLog(ref TourLogItem tourLog, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+        public bool DeleteTourLog(TourLogItem tourLog)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

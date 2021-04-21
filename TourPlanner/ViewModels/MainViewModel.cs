@@ -24,6 +24,7 @@ namespace TourPlanner.ViewModels
         public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
         public ICommand OpenEditTourWinCommand => _openEditTourWinCommand ??= new RelayCommand(Edit);
         public ObservableCollection<TourItem> Tours { get; set; }
+        public ObservableCollection<TourLogItem> TourLogs { get; set; }
         public TourItem CurrentTour 
         {
             get
@@ -36,6 +37,7 @@ namespace TourPlanner.ViewModels
                 if((_currentTour != value) && (value != null))
                 {
                     _currentTour = value;
+                    CreateList();
                     RaisePropertyChangedEvent(nameof(CurrentTour));
                 }
             }
@@ -73,6 +75,16 @@ namespace TourPlanner.ViewModels
             {
                 Tours.Add(item);
             }
+
+            if (CurrentTour != null)
+            {
+                TourLogs = new ObservableCollection<TourLogItem>();
+                foreach (TourLogItem item in this._tourFactory.GetTourLogsForTour(CurrentTour.Name))
+                {
+                    TourLogs.Add(item);
+                }
+                RaisePropertyChangedEvent(nameof(TourLogs));
+            }
         }
 
         private void Search(object commandParameter)
@@ -91,7 +103,6 @@ namespace TourPlanner.ViewModels
                 Tours.Remove(CurrentTour);
                 _tourFactory.DeleteTour(CurrentTour);
             }
-
 
         }
 

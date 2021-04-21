@@ -5,9 +5,11 @@ using TourPlanner.Models;
 
 namespace TourPlanner.BusinessLayer
 {
+    //concrete factory implementation
     internal class TourItemFactoryImpl : ITourItemFactory
     {
         private TourItemDataAccessObject _tourItemDAO = new TourItemDataAccessObject();
+        private TourLogItemDataAccessObject _tourLogItemDAO = new TourLogItemDataAccessObject();
         public IEnumerable<TourItem> GetTours()
         {
             return _tourItemDAO.GetTours();
@@ -27,6 +29,37 @@ namespace TourPlanner.BusinessLayer
         public bool DeleteTour(TourItem tour)
         {
             return _tourItemDAO.DeleteTour(tour);
+        }
+
+
+
+
+        public IEnumerable<TourLogItem> GetTourLogsForTour(string name)
+        {
+            List<TourLogItem> allLogs = new List<TourLogItem>();
+            List<TourLogItem> currentLogs = new List<TourLogItem>();
+
+            allLogs = _tourLogItemDAO.GetTourLogs();
+
+            foreach(TourLogItem item in allLogs)
+            {
+                if(item.Name == name)
+                {
+                    currentLogs.Add(item);
+                }
+            }
+
+            return currentLogs;
+        }
+
+        public bool AddTourLog(TourLogItem tourLog)
+        {
+            return _tourLogItemDAO.AddTourLog(tourLog);
+        }
+
+        public bool DeleteTourLog(TourLogItem tourLog)
+        {
+            return _tourLogItemDAO.DeleteTourLog(tourLog);
         }
     }
 }

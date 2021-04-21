@@ -73,8 +73,7 @@ namespace TourPlanner.DataAccessLayer
             }
 
         }
-
-        public bool DeleteTour( TourItem tour)
+        public bool DeleteTour(TourItem tour)
         {
             try
             {
@@ -96,6 +95,94 @@ namespace TourPlanner.DataAccessLayer
             }
 
         }
+
+
+
+
+
+        public List<TourLogItem> GetTourLogs()
+        {
+            List<TourLogItem> tourLogs = new List<TourLogItem>();
+            try
+            {
+                _conn.Open();
+                _sql = "select * from tourlog";
+                _cmd = new NpgsqlCommand(_sql, _conn);
+                var reader = _cmd.ExecuteReader();
+
+                while (reader.Read())
+                    tourLogs.Add(new Models.TourLogItem
+                    {
+                        Name = reader.GetString(0),
+                        Date = reader.GetDateTime(1),
+                        Duration = reader.GetFloat(2),
+                        Distance = reader.GetFloat(3),
+                        Report = reader.GetString(4),
+                        Rating = reader.GetInt32(5)
+                    });
+
+                _conn.Close();
+            }
+            catch (Exception ex)
+            {
+                _conn.Close();
+                Debug.WriteLine("Error: {0}", ex);
+            }
+
+            return tourLogs;
+
+        }
+        public bool ImportTourLog(ref TourLogItem tourLog, string fileName)
+        {
+            try
+            {
+                _conn.Open();
+                _sql = "insert into tourlog values (@tourname, @date, @duration, @distance, @report, @rating)";
+                _cmd = new NpgsqlCommand(_sql, _conn);
+
+                _cmd.Parameters.AddWithValue("tourname", tourLog.Name);
+                _cmd.Parameters.AddWithValue("date", tourLog.Date);
+                _cmd.Parameters.AddWithValue("duration", tourLog.Duration);
+                _cmd.Parameters.AddWithValue("distance", tourLog.Distance);
+                _cmd.Parameters.AddWithValue("report", tourLog.Report);
+                _cmd.Parameters.AddWithValue("rating", tourLog.Rating);
+                _cmd.ExecuteNonQuery();
+
+                _conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _conn.Close();
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+
+        }
+        public bool DeleteTourLog(TourLogItem tourLog)
+        {
+            try
+            {
+                _conn.Open();
+                _sql = "delete from tourLog where tourname=@name";
+                _cmd = new NpgsqlCommand(_sql, _conn);
+
+                _cmd.Parameters.AddWithValue("name", tourLog.Name);
+                _cmd.ExecuteNonQuery();
+
+                _conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _conn.Close();
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+
+        }
+
+
 
 
     }

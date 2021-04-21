@@ -133,13 +133,14 @@
                                     <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30">edit</Button>
                                 </Grid>
 
-                                <DataGrid Height="160" Grid.Row="1" Margin="5">
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" Height="160" Grid.Row="1" Margin="5">
                                     <!-- TO DO: No fixed heighth -->
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Date"/>
-                                        <DataGridTextColumn Header="Duration"/>
-                                        <DataGridTextColumn Header="Distance"/>
-                                        <DataGridTextColumn Header="Rating"/>
+                                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+                                        <DataGridTextColumn Header="Distance" Binding="{Binding Distance}"/>
+                                        <DataGridTextColumn Header="Report" Binding="{Binding Report}"/>
+                                        <DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 

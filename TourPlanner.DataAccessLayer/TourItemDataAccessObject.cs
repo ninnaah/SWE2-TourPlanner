@@ -11,43 +11,45 @@ namespace TourPlanner.DataAccessLayer
 {
     public class TourItemDataAccessObject
     {
-        private Config config;
-        private IDataAccess _dataAccess;
-        private IDataAccess _dataImport;
+        protected Config Config;
+        protected IDataAccess DataAccess;
+        protected IDataAccess DataImport;
         public TourItemDataAccessObject()
         {
             loadConfig();
-            _dataAccess = new DBConnection(config);
-            _dataImport = new FileSystem(config);
+            DataAccess = new DBConnection(Config);
+            DataImport = new FileSystem(Config);
         }
         public void loadConfig()
         {
             string jsonString = File.ReadAllText("../../../../config.json");
-            config = JsonConvert.DeserializeObject<Config>(jsonString);
+            Config = JsonConvert.DeserializeObject<Config>(jsonString);
         }
 
         public List<TourItem> GetTours()
         {
-            return _dataAccess.GetTours();
+            return DataAccess.GetTours();
         }
 
         public void ImportTour(string fileName)
         {
             TourItem newTour = new TourItem();
-            _dataImport.ImportTour(ref newTour, fileName);
-            _dataAccess.ImportTour(ref newTour, fileName);
+            DataImport.ImportTour(ref newTour, fileName);
+            DataAccess.ImportTour(ref newTour, fileName);
 
         }
 
         public bool AddTour(TourItem tour)
         {
-            return _dataAccess.ImportTour(ref tour, null);
+            return DataAccess.ImportTour(ref tour, null);
         }
 
         public bool DeleteTour(TourItem tour)
         {
-            return _dataAccess.DeleteTour(tour);
+            return DataAccess.DeleteTour(tour);
         }
+
+
 
     }
 }
