@@ -112,10 +112,10 @@ namespace TourPlanner.ViewModels
             if(CurrentTour != null) 
             {
                 EditTourWindow editTourWindow = new EditTourWindow();
-                AddTourViewModel addTourVM = new AddTourViewModel();
+                EditTourViewModel editTourVM = new EditTourViewModel(CurrentTour);
 
-                addTourVM.AddedTour += (_, tour) => { EditTour(tour); };
-                editTourWindow.DataContext = addTourVM;
+                editTourVM.EditedTour += (_, tour) => { EditTour(tour); };
+                editTourWindow.DataContext = editTourVM;
 
 
                 editTourWindow.ShowDialog();
@@ -135,6 +135,7 @@ namespace TourPlanner.ViewModels
             _tourFactory.AddTour(tour);
 
             Tours.Add(tour);
+            Tours.Remove(CurrentTour);
         }
 
     }

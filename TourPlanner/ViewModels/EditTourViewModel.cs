@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +9,10 @@ using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class AddTourViewModel : MainViewModel
+    class EditTourViewModel : MainViewModel
     {
-        private ICommand _sendAddTourCommand;
+
+        private ICommand _sendEditTourCommand;
         private ICommand _closeWinCommand;
         public Action CloseWin { get; set; }
         private string _tourName;
@@ -20,15 +20,22 @@ namespace TourPlanner.ViewModels
         private string _tourFrom;
         private string _tourTo;
         private int _tourDistance;
-        public event EventHandler<TourItem> AddedTour;
+        public event EventHandler<TourItem> EditedTour;
 
-        public ICommand SendAddTourCommand => _sendAddTourCommand ??= new RelayCommand(AddTour);
+        public ICommand SendEditTourCommand => _sendEditTourCommand ??= new RelayCommand(EditTour);
         public ICommand CloseWinCommand => _closeWinCommand ??= new RelayCommand(CloseWindow);
-        
+
+        public EditTourViewModel(TourItem currentTour)
+        {
+            CurrentTour = currentTour;
+        }
+
         public string TourName
         {
             get
             {
+                //_tourName = CurrentTour.Name;
+                //return CurrentTour.Name;
                 return _tourName;
             }
 
@@ -45,6 +52,8 @@ namespace TourPlanner.ViewModels
         {
             get
             {
+                //_tourDescription = CurrentTour.Description;
+                //return CurrentTour.Description;
                 return _tourDescription;
             }
 
@@ -62,6 +71,7 @@ namespace TourPlanner.ViewModels
             get
             {
                 return _tourFrom;
+                //return CurrentTour.From;
             }
 
             set
@@ -78,6 +88,7 @@ namespace TourPlanner.ViewModels
             get
             {
                 return _tourTo;
+                //return CurrentTour.To;
             }
 
             set
@@ -93,6 +104,8 @@ namespace TourPlanner.ViewModels
         {
             get
             {
+                //_tourDistance = CurrentTour.Distance;
+                //return CurrentTour.Distance;
                 return _tourDistance;
             }
 
@@ -105,17 +118,17 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
-       
 
-        private void AddTour(object commandParameter)
+
+        private void EditTour(object commandParameter)
         {
-            AddedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourDistance));
+            EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourDistance));
         }
 
 
-        private void CloseWindow (object commandParameter)
+        private void CloseWindow(object commandParameter)
         {
-            if(commandParameter != null)
+            if (commandParameter != null)
             {
                 (commandParameter as Window).Close();
             }
