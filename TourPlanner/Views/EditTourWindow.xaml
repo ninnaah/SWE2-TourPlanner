@@ -10,7 +10,7 @@
         Width="300"
         MinHeight="10"
         MinWidth="300"
-        Title="EditTourWindow">
+        Title="EditTour">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

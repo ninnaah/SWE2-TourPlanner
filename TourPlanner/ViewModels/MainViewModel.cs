@@ -19,12 +19,26 @@ namespace TourPlanner.ViewModels
         private ICommand _openAddTourWinCommand;
         private ICommand _openEditTourWinCommand;
 
+        private ICommand _openAddTourLogWinCommand;
+        private ICommand _openEditTourLogWinCommand;
+        private ICommand _deleteLogCommand;
+        private TourLogItem _currentTourLog;
+
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
         public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
         public ICommand OpenEditTourWinCommand => _openEditTourWinCommand ??= new RelayCommand(Edit);
+
+
+        public ICommand OpenAddTourLogWinCommand => _openAddTourLogWinCommand ??= new RelayCommand(AddLog);
+        public ICommand DeleteLogCommand => _deleteLogCommand ??= new RelayCommand(DeleteLog);
+        public ICommand OpenEditTourLogWinCommand => _openEditTourLogWinCommand ??= new RelayCommand(EditLog);
+
+
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
+
+
         public TourItem CurrentTour 
         {
             get
@@ -39,6 +53,23 @@ namespace TourPlanner.ViewModels
                     _currentTour = value;
                     CreateList();
                     RaisePropertyChangedEvent(nameof(CurrentTour));
+                }
+            }
+        }
+
+        public TourLogItem CurrentTourLog
+        {
+            get
+            {
+                return _currentTourLog;
+            }
+
+            set
+            {
+                if ((_currentTourLog != value) && (value != null))
+                {
+                    _currentTourLog = value;
+                    RaisePropertyChangedEvent(nameof(CurrentTourLog));
                 }
             }
         }
@@ -59,7 +90,6 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
-
 
         public MainViewModel()
         {
@@ -87,6 +117,7 @@ namespace TourPlanner.ViewModels
             }
         }
 
+        //TOURS
         private void Search(object commandParameter)
         {
             IEnumerable foundTours = this._tourFactory.Search(SearchTour);
@@ -105,7 +136,6 @@ namespace TourPlanner.ViewModels
             }
 
         }
-
         private void Add(object commandParameter)
         {
             AddTourWindow addTourWindow = new AddTourWindow();
@@ -116,6 +146,12 @@ namespace TourPlanner.ViewModels
 
 
             addTourWindow.ShowDialog();
+        }
+        private void AddTour(TourItem tour)
+        {
+            _tourFactory.AddTour(tour);
+
+            Tours.Add(tour);
         }
 
         private void Edit(object commandParameter)
@@ -133,13 +169,6 @@ namespace TourPlanner.ViewModels
             }
         }
 
-        private void AddTour(TourItem tour)
-        {
-            _tourFactory.AddTour(tour);
-
-            Tours.Add(tour);
-        }
-
         private void EditTour(TourItem tour)
         {
             _tourFactory.DeleteTour(CurrentTour);
@@ -147,6 +176,56 @@ namespace TourPlanner.ViewModels
 
             Tours.Add(tour);
             Tours.Remove(CurrentTour);
+        }
+
+        //LOGS
+        private void AddLog(object commandParameter)
+        {
+            AddTourLogWindow addTourLogWindow = new AddTourLogWindow();
+            AddTourLogViewModel addTourLogVM = new AddTourLogViewModel(CurrentTour.Name);
+
+            addTourLogVM.AddedTourLog += (_, tourLog) => { AddTourLog(tourLog); };
+            addTourLogWindow.DataContext = addTourLogVM;
+
+
+            addTourLogWindow.ShowDialog();
+        }
+        private void AddTourLog(TourLogItem tourLog)
+        {
+            _tourFactory.AddTourLog(tourLog);
+
+            TourLogs.Add(tourLog);
+        }
+        private void DeleteLog(object commandParameter)
+        {
+            if (CurrentTourLog != null)
+            {
+                TourLogs.Remove(CurrentTourLog);
+                _tourFactory.DeleteTourLog(CurrentTourLog);
+            }
+        }
+        private void EditLog(object commandParameter)
+        {
+            if (CurrentTourLog != null)
+            {
+                EditTourLogWindow editTourLogWindow = new EditTourLogWindow();
+                EditTourLogViewModel editTourLogVM = new EditTourLogViewModel(CurrentTour.Name, CurrentTourLog);
+
+                editTourLogVM.EditedTourLog += (_, tourLog) => { EditTourLog(tourLog); };
+                editTourLogWindow.DataContext = editTourLogVM;
+
+
+                editTourLogWindow.ShowDialog();
+            }
+        }
+
+        private void EditTourLog(TourLogItem tourLog)
+        {
+            _tourFactory.DeleteTourLog(CurrentTourLog);
+            _tourFactory.AddTourLog(tourLog);
+
+            TourLogs.Add(tourLog);
+            TourLogs.Remove(CurrentTourLog);
         }
 
     }

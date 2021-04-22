@@ -128,12 +128,12 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0" Text="Logs:" VerticalAlignment="Center" Margin="5"></TextBlock>
-                                    <Button Grid.Column="1" Name="addLog" Margin="5"  MinWidth="15">+</Button>
-                                    <Button Grid.Column="2" Name="deleteLog" Margin="5" MinWidth="15">-</Button>
-                                    <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30">edit</Button>
+                                    <Button Grid.Column="1" Name="addLog" Margin="5"  MinWidth="15" Command="{Binding OpenAddTourLogWinCommand}">+</Button>
+                                    <Button Grid.Column="2" Name="deleteLog" Margin="5" MinWidth="15" Command="{Binding DeleteLogCommand}">-</Button>
+                                    <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30" Command="{Binding OpenEditTourLogWinCommand}">edit</Button>
                                 </Grid>
 
-                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" Height="160" Grid.Row="1" Margin="5">
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" Height="160" Grid.Row="1" Margin="5">
                                     <!-- TO DO: No fixed heighth -->
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>

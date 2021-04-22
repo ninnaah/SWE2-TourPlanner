@@ -1,0 +1,45 @@
+﻿<Window x:Class="TourPlanner.Views.EditTourLogWindow"
+        x:Name="EditTourLogWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EditTourLogViewModel}"
+        mc:Ignorable="d"
+        Title="EditTourLog"
+        Height="240"
+        Width="300"
+        MinHeight="10"
+        MinWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Edit Tour Log" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
+        <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = EditTourLogWin}">Close</Button>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Duration" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="tourLogDuration" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDuration}"></TextBox>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDistance}"></TextBox>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogRating" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogRating}"></TextBox>
+
+        <Button Grid.Row="5" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourLogCommand}">Send</Button>
+    </Grid>
+</Window>

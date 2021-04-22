@@ -164,10 +164,11 @@ namespace TourPlanner.DataAccessLayer
             try
             {
                 _conn.Open();
-                _sql = "delete from tourLog where tourname=@name";
+                _sql = "delete from tourLog where tourname=@name and logdate=@date";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
                 _cmd.Parameters.AddWithValue("name", tourLog.Name);
+                _cmd.Parameters.AddWithValue("date", tourLog.Date);
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
