@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
@@ -131,10 +132,11 @@ namespace TourPlanner.ViewModels
         {
             if(CurrentTour!= null)
             {
-                Tours.Remove(CurrentTour);
                 _tourFactory.DeleteTour(CurrentTour);
+                Tours.Remove(CurrentTour);
             }
-
+            CreateList();
+            RaisePropertyChangedEvent(nameof(Tours));
         }
         private void Add(object commandParameter)
         {
@@ -150,7 +152,6 @@ namespace TourPlanner.ViewModels
         private void AddTour(TourItem tour)
         {
             _tourFactory.AddTour(tour);
-
             Tours.Add(tour);
         }
 

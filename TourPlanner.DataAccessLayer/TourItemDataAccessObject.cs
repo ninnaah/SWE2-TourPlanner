@@ -13,12 +13,14 @@ namespace TourPlanner.DataAccessLayer
     {
         protected Config Config;
         protected IDataAccess DataAccess;
-        protected IDataAccess DataImport;
+        protected MapQuest MapQuest;
+        //protected IDataAccess DataImport;
         public TourItemDataAccessObject()
         {
             loadConfig();
             DataAccess = new DBConnection(Config);
-            DataImport = new FileSystem(Config);
+            MapQuest = new MapQuest(Config.mapQuestKey);
+            //DataImport = new FileSystem(Config);
         }
         public void loadConfig()
         {
@@ -31,21 +33,28 @@ namespace TourPlanner.DataAccessLayer
             return DataAccess.GetTours();
         }
 
-        public void ImportTour(string fileName)
+        /*public void ImportTour(string fileName)
         {
             TourItem newTour = new TourItem();
             DataImport.ImportTour(ref newTour, fileName);
             DataAccess.ImportTour(ref newTour, fileName);
 
-        }
+        }*/
 
         public bool AddTour(TourItem tour)
         {
+            //call maqquest and save imagepath to tourItem
+
+            MapQuest.SendRequest(tour);
+            
+
+
             return DataAccess.ImportTour(ref tour, null);
         }
 
         public bool DeleteTour(TourItem tour)
         {
+            //call maqquest and delete image of tourItem
             return DataAccess.DeleteTour(tour);
         }
 

@@ -99,7 +99,7 @@ namespace TourPlanner.ViewModels
 
         private void EditTourLog(object commandParameter)
         {
-            EditedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDuration, _tourLogDistance, _tourLogReport, _tourLogRating));
+            EditedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDuration, _tourLogReport, _tourLogRating));
         }
 
 

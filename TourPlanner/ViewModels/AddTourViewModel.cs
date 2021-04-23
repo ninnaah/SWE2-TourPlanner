@@ -19,7 +19,6 @@ namespace TourPlanner.ViewModels
         private string _tourDescription;
         private string _tourFrom;
         private string _tourTo;
-        private int _tourDistance;
         public event EventHandler<TourItem> AddedTour;
 
         public ICommand SendAddTourCommand => _sendAddTourCommand ??= new RelayCommand(AddTour);
@@ -89,27 +88,11 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
-        public int TourDistance
-        {
-            get
-            {
-                return _tourDistance;
-            }
-
-            set
-            {
-                if (_tourDistance != value)
-                {
-                    _tourDistance = value;
-                    RaisePropertyChangedEvent(nameof(TourDistance));
-                }
-            }
-        }
        
 
         private void AddTour(object commandParameter)
         {
-            AddedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourDistance));
+            AddedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo));
         }
 
 

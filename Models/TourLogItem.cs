@@ -11,16 +11,14 @@ namespace TourPlanner.Models
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public float Duration { get; set; }
-        public float Distance { get; set; }
         public string Report { get; set; }
         public int Rating { get; set; }
 
-        public TourLogItem(string name, DateTime date, float duration, float distance, string report, int rating)
+        public TourLogItem(string name, DateTime date, float duration, string report, int rating)
         {
             Name = name;
             Date = date;
             Duration = duration;
-            Distance = distance;
             Report = report;
            
             if(rating <= 5 && rating >= 1)

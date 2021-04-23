@@ -14,6 +14,7 @@ namespace TourPlanner.DataAccessLayer
         public string password;
         public string database;
         public string filePath;
+        public string mapQuestKey;
     }
 
 }

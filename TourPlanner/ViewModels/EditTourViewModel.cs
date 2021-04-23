@@ -122,7 +122,7 @@ namespace TourPlanner.ViewModels
 
         private void EditTour(object commandParameter)
         {
-            EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourDistance));
+            EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo));
         }
 
 

@@ -15,13 +15,13 @@ namespace TourPlanner.DataAccessLayer
             return DataAccess.GetTourLogs();
         }
 
-        public void ImportTourLog(string fileName)
+        /*public void ImportTourLog(string fileName)
         {
             TourLogItem newTourLog = new TourLogItem();
             DataImport.ImportTourLog(ref newTourLog, fileName);
             DataAccess.ImportTourLog(ref newTourLog, fileName);
 
-        }
+        }*/
 
         public bool AddTourLog(TourLogItem tourLog)
         {

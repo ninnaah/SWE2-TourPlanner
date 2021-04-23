@@ -7,7 +7,7 @@ using TourPlanner.Models;
 
 namespace TourPlanner.DataAccessLayer
 {
-    class FileSystem : IDataAccess
+    /*public class FileSystem : IDataAccess
     {
         private string _filePath;
 
@@ -63,5 +63,5 @@ namespace TourPlanner.DataAccessLayer
             throw new NotImplementedException();
         }
 
-    }
+    }*/
 }

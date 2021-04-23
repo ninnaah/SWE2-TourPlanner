@@ -99,11 +99,29 @@
                                             <!-- TO DO: No fixed heighth -->
                                         </StackPanel>
                                     </TabItem>
-                                    <TabItem Header="Description">
-                                        <!--Bind TextBlock.Text to the TextBox on the first TabItem.-->
-                                        <!--<TextBlock Height="100" Text="{Binding ElementName=textBox1, Path=Text}"/>-->
-                                        <TextBlock Height="100"/>
-                                        <!-- TO DO: No fixed heighth -->
+                                    <TabItem Header="Description" >
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Text="Description:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="1" Grid.Column="0" Text="Start:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="2" Grid.Column="0" Text="End:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="3" Grid.Column="0" Text="Distance:"></TextBlock>
+
+                                            <TextBlock VerticalAlignment="Center" Margin="5,5,5,5" Grid.Row="0" Grid.Column="1" Text="{Binding CurrentTour.Description}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="1" Grid.Column="1" Text="{Binding CurrentTour.From}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="2" Grid.Column="1" Text="{Binding CurrentTour.To}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="3" Grid.Column="1" Text="{Binding CurrentTour.Distance}"></TextBlock>
+                                        </Grid>
                                     </TabItem>
                                 </TabControl>
                             </Grid>
@@ -138,7 +156,7 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                                         <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-                                        <DataGridTextColumn Header="Distance" Binding="{Binding Distance}"/>
+                                        <DataGridTextColumn Header="Distance" Binding="{Binding CurrentTour.Distance}"/>
                                         <DataGridTextColumn Header="Report" Binding="{Binding Report}"/>
                                         <DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
                                     </DataGrid.Columns>

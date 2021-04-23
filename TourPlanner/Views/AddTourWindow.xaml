@@ -6,14 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddTourViewModel}"
         mc:Ignorable="d"
-        Height="270"
+        Height="240"
         Width="300"
         MinHeight="10"
         MinWidth="300"
         Title="AddTour" >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -41,10 +40,7 @@
         <TextBlock Grid.Row="4" Grid.Column="0" Text="To" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="tourTo" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourTo}"></TextBox>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Name="tourDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourDistance}"></TextBox>
-
-        <Button Grid.Row="6" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourCommand}">Send</Button>
+        <Button Grid.Row="5" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourCommand}">Send</Button>
         
     </Grid>
 </Window>
