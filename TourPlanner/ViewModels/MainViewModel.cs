@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
@@ -38,7 +39,7 @@ namespace TourPlanner.ViewModels
 
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
-
+        
 
         public TourItem CurrentTour 
         {
@@ -72,6 +73,20 @@ namespace TourPlanner.ViewModels
                     _currentTourLog = value;
                     RaisePropertyChangedEvent(nameof(CurrentTourLog));
                 }
+            }
+        }
+
+        public string CurrentMap
+        {
+            get
+            {
+                if (CurrentTour != null)
+                {
+                    //return Path.GetFullPath($"../../../../tours/maps/{CurrentTour.Name}.png");
+                    return Path.GetFullPath($"../../../../tours/maps/{CurrentTour.Name}.png");
+                }
+                return null;
+                
             }
         }
 
@@ -115,6 +130,7 @@ namespace TourPlanner.ViewModels
                     TourLogs.Add(item);
                 }
                 RaisePropertyChangedEvent(nameof(TourLogs));
+                RaisePropertyChangedEvent(nameof(CurrentMap));
             }
         }
 
@@ -140,6 +156,7 @@ namespace TourPlanner.ViewModels
         }
         private void Add(object commandParameter)
         {
+            
             AddTourWindow addTourWindow = new AddTourWindow();
             AddTourViewModel addTourVM = new AddTourViewModel();
 
@@ -153,6 +170,9 @@ namespace TourPlanner.ViewModels
         {
             _tourFactory.AddTour(tour);
             Tours.Add(tour);
+            CreateList();
+            RaisePropertyChangedEvent(nameof(Tours));
+            RaisePropertyChangedEvent(nameof(CurrentMap));
         }
 
         private void Edit(object commandParameter)

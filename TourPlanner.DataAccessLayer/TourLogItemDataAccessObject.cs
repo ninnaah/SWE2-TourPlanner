@@ -25,12 +25,12 @@ namespace TourPlanner.DataAccessLayer
 
         public bool AddTourLog(TourLogItem tourLog)
         {
-            return DataAccess.ImportTourLog(ref tourLog, null);
+            return DataAccess.ImportTourLog(tourLog);
         }
 
         public bool DeleteTourLog(TourLogItem tourLog)
         {
-            return DataAccess.DeleteTourLog(tourLog);
+            return DataAccess.DeleteTourLogDate(tourLog);
         }
     }
 }

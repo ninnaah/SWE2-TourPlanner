@@ -32,8 +32,8 @@ namespace TourPlanner.DataAccessLayer
                 var reader = _cmd.ExecuteReader();
 
                 while (reader.Read())
-                    tours.Add(new Models.TourItem { Name = reader.GetString(0), Description = reader.GetString(1), Distance = reader.GetInt32(2),
-                                                    From = reader.GetString(4), To = reader.GetString(5)});
+                    tours.Add(new Models.TourItem { Name = reader.GetString(0), Description = reader.GetString(1), 
+                        From = reader.GetString(2), To = reader.GetString(3), Distance = reader.GetFloat(4) });
 
                 _conn.Close();
             }
@@ -47,19 +47,19 @@ namespace TourPlanner.DataAccessLayer
 
         }
 
-        public bool ImportTour(ref TourItem tour, string fileName)
+        public bool ImportTour(TourItem tour)
         {
             try
             {
                 _conn.Open();
-                _sql = "insert into tour values (@tourname, @description, @distance, 'image', @from, @to)";
+                _sql = "insert into tour values (@tourname, @description, @from, @to, @distance)";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
                 _cmd.Parameters.AddWithValue("tourname", tour.Name);
                 _cmd.Parameters.AddWithValue("description", tour.Description);
-                _cmd.Parameters.AddWithValue("distance", tour.Distance);
                 _cmd.Parameters.AddWithValue("from", tour.From);
                 _cmd.Parameters.AddWithValue("to", tour.To);
+                _cmd.Parameters.AddWithValue("distance", tour.Distance);
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
@@ -85,6 +85,9 @@ namespace TourPlanner.DataAccessLayer
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
+
+                DeleteTourLog(tour.Name);
+
                 return true;
             }
             catch (Exception ex)
@@ -95,7 +98,6 @@ namespace TourPlanner.DataAccessLayer
             }
 
         }
-
 
 
 
@@ -131,7 +133,7 @@ namespace TourPlanner.DataAccessLayer
             return tourLogs;
 
         }
-        public bool ImportTourLog(ref TourLogItem tourLog, string fileName)
+        public bool ImportTourLog(TourLogItem tourLog)
         {
             try
             {
@@ -157,7 +159,7 @@ namespace TourPlanner.DataAccessLayer
             }
 
         }
-        public bool DeleteTourLog(TourLogItem tourLog)
+        public bool DeleteTourLogDate(TourLogItem tourLog)
         {
             try
             {
@@ -167,6 +169,29 @@ namespace TourPlanner.DataAccessLayer
 
                 _cmd.Parameters.AddWithValue("name", tourLog.Name);
                 _cmd.Parameters.AddWithValue("date", tourLog.Date);
+                _cmd.ExecuteNonQuery();
+
+                _conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _conn.Close();
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+
+        }
+
+        public bool DeleteTourLog(string tourName)
+        {
+            try
+            {
+                _conn.Open();
+                _sql = "delete from tourLog where tourname=@name";
+                _cmd = new NpgsqlCommand(_sql, _conn);
+
+                _cmd.Parameters.AddWithValue("name", tourName);
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();

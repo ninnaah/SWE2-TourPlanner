@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,18 +14,16 @@ namespace TourPlanner.DataAccessLayer
     {
         protected Config Config;
         protected IDataAccess DataAccess;
-        protected MapQuest MapQuest;
         //protected IDataAccess DataImport;
         public TourItemDataAccessObject()
         {
             loadConfig();
             DataAccess = new DBConnection(Config);
-            MapQuest = new MapQuest(Config.mapQuestKey);
             //DataImport = new FileSystem(Config);
         }
         public void loadConfig()
         {
-            string jsonString = File.ReadAllText("../../../../config.json");
+            string jsonString = File.ReadAllText(@"../../../../config.json");
             Config = JsonConvert.DeserializeObject<Config>(jsonString);
         }
 
@@ -44,17 +43,16 @@ namespace TourPlanner.DataAccessLayer
         public bool AddTour(TourItem tour)
         {
             //call maqquest and save imagepath to tourItem
-
-            MapQuest.SendRequest(tour);
-            
-
-
-            return DataAccess.ImportTour(ref tour, null);
+            MapQuest mapQuest = new MapQuest(Config.mapQuestKey, Config.filePath);
+            mapQuest.GetMap(tour);
+            tour.Distance = MapQuest.Distance;
+            Debug.WriteLine("new Distance: " +tour.Distance);
+            return DataAccess.ImportTour(tour);
         }
 
         public bool DeleteTour(TourItem tour)
         {
-            //call maqquest and delete image of tourItem
+            //File.Delete(@$"{Config.filePath}/maps/{tour.Name}.png");
             return DataAccess.DeleteTour(tour);
         }
 

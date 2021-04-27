@@ -7,12 +7,13 @@ namespace TourPlanner.DataAccessLayer
     {
         //Tours
         public List<TourItem> GetTours();
-        public bool ImportTour(ref TourItem tour, string fileName);
+        public bool ImportTour(TourItem tour);
         public bool DeleteTour(TourItem tour);
 
         //Logs
         public List<TourLogItem> GetTourLogs();
-        public bool ImportTourLog(ref TourLogItem tourLog, string fileName);
-        public bool DeleteTourLog(TourLogItem tourLog);
+        public bool ImportTourLog(TourLogItem tourLog);
+        public bool DeleteTourLogDate(TourLogItem tourLog);
+        public bool DeleteTourLog(string tourName);
     }
 }

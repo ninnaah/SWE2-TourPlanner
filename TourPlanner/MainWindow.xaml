@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        MinHeight="470" MinWidth="700"
+        Height="470" Width="700">
     
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -36,8 +38,7 @@
                 <Button Name="search" Margin="5" Grid.Column="2" MinWidth="50" Command="{Binding SearchCommand}">Search</Button>
             </Grid>
 
-            <Grid Height="370">
-                <!-- TO DO: No fixed heighth -->
+            <Grid MinHeight="370">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -95,12 +96,11 @@
                                             </StackPanel>
                                         </TabItem.Header>
                                         <StackPanel>
-                                            <TextBlock Height="100"/>
-                                            <!-- TO DO: No fixed heighth -->
+                                            <Image Source="{Binding CurrentMap}" MinHeight="150" MaxHeight="280" />
                                         </StackPanel>
                                     </TabItem>
                                     <TabItem Header="Description" >
-                                        <Grid>
+                                        <Grid MinHeight="150">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
@@ -151,8 +151,7 @@
                                     <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30" Command="{Binding OpenEditTourLogWinCommand}">edit</Button>
                                 </Grid>
 
-                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" Height="160" Grid.Row="1" Margin="5">
-                                    <!-- TO DO: No fixed heighth -->
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="112" Grid.Row="1" Margin="5">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                                         <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>

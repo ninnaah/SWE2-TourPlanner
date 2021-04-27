@@ -18,6 +18,15 @@ namespace TourPlanner.Models
             To = to;
         }
 
+        public TourItem(string name, string description, string from, string to, float distance)
+        {
+            Name = name;
+            Description = description;
+            From = from;
+            To = to;
+            Distance = distance;
+        }
+
         public TourItem()
         {
 
