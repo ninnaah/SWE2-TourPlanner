@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TourPlanner.Models;
 
@@ -40,13 +41,39 @@ namespace TourPlanner.DataAccessLayer
 
         }*/
 
-        public bool AddTour(TourItem tour)
+        /*public async void GetTourMap(TourItem tour)
         {
             //call maqquest and save imagepath to tourItem
-            MapQuest mapQuest = new MapQuest(Config.mapQuestKey, Config.filePath);
-            mapQuest.GetMap(tour);
-            tour.Distance = MapQuest.Distance;
-            Debug.WriteLine("new Distance: " +tour.Distance);
+            MapQuest mapQuest = new MapQuest(Config.mapQuestKey, Config.filePath, tour);
+
+            float distance = await mapQuest.GetMap();
+
+
+            tour.Distance = distance;
+
+            Debug.WriteLine("new Distance: " + tour.Distance);
+
+            AddTour(tour);
+        }
+
+        public bool AddTour(TourItem tour)
+        {
+            return DataAccess.ImportTour(tour);
+        }*/
+
+        public async void GetTourMap(TourItem tour)
+        {
+            //call maqquest and save imagepath to tourItem
+            MapQuest mapQuest = new MapQuest(Config.mapQuestKey, Config.filePath, tour);
+            float distance = await mapQuest.GetMap();
+
+            tour.Distance = distance;
+
+            AddTour(tour);
+        }
+
+        public bool AddTour(TourItem tour)
+        {
             return DataAccess.ImportTour(tour);
         }
 

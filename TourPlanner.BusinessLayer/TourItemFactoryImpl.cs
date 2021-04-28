@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using TourPlanner.DataAccessLayer;
 using TourPlanner.Models;
@@ -23,7 +25,18 @@ namespace TourPlanner.BusinessLayer
 
         public bool AddTour(TourItem tour)
         {
-            return _tourItemDAO.AddTour(tour);
+            //return _tourItemDAO.AddTour(tour);
+            try
+            {
+                _tourItemDAO.GetTourMap(tour);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+
         }
 
         public bool DeleteTour(TourItem tour)

@@ -173,6 +173,7 @@ namespace TourPlanner.ViewModels
             CreateList();
             RaisePropertyChangedEvent(nameof(Tours));
             RaisePropertyChangedEvent(nameof(CurrentMap));
+            CreateList();
         }
 
         private void Edit(object commandParameter)
