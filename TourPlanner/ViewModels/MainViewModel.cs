@@ -170,6 +170,8 @@ namespace TourPlanner.ViewModels
         {
             _tourFactory.AddTour(tour);
             Tours.Add(tour);
+
+            RaisePropertyChangedEvent(nameof(Tours));
         }
         private void Edit(object commandParameter)
         {
@@ -192,9 +194,12 @@ namespace TourPlanner.ViewModels
             Tours.Add(tour);
             Tours.Remove(CurrentTour);
         }
-        private void Print(TourItem tour)
+        private void Print(object commandParameter)
         {
-            _tourFactory.CreateTourReport(CurrentTour);
+            if (CurrentTour != null)
+            {
+                _tourFactory.CreateTourReport(CurrentTour);
+            }
         }
 
 

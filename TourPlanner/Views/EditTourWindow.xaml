@@ -19,7 +19,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -41,9 +40,6 @@
         <TextBlock Grid.Row="4" Grid.Column="0" Text="To" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="tourTo" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourTo}"></TextBox>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Name="tourDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourDistance}"></TextBox>
-
-        <Button Grid.Row="6" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourCommand}">Send</Button>
+        <Button Grid.Row="5" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourCommand}">Send</Button>
     </Grid>
 </Window>

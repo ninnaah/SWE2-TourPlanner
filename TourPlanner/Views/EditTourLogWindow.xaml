@@ -18,7 +18,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -31,15 +30,12 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Duration" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Name="tourLogDuration" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDuration}"></TextBox>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDistance}"></TextBox>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogRating" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogRating}"></TextBox>
 
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogRating" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogRating}"></TextBox>
-
-        <Button Grid.Row="5" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourLogCommand}">Send</Button>
+        <Button Grid.Row="4" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourLogCommand}">Send</Button>
     </Grid>
 </Window>

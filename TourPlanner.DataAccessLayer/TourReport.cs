@@ -53,7 +53,6 @@ namespace TourPlanner.DataAccessLayer
                     stack.Element().Text($"Distance: {Tour.Distance}");
                 });
 
-                //stack.ConstantColumn(100).Height(50).Placeholder();
             });
         }
 
@@ -89,8 +88,8 @@ namespace TourPlanner.DataAccessLayer
                             {
                                 row.RelativeColumn().Text(log.Date);
                                 row.RelativeColumn().Text(log.Duration);
-                                row.RelativeColumn().Text(log.Report);
-                                row.RelativeColumn().Text(log.Rating);
+                                row.RelativeColumn().AlignRight().Text(log.Report);
+                                row.RelativeColumn().AlignRight().Text(log.Rating);
                             });
                         }
                     });

@@ -6,7 +6,7 @@
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
-        MinHeight="470" MinWidth="700"
+        MinHeight="530" MinWidth="700"
         Height="470" Width="700">
     
     <Grid>
@@ -98,7 +98,7 @@
                                             </StackPanel>
                                         </TabItem.Header>
                                         <StackPanel>
-                                            <Image Source="{Binding CurrentMap}" MinHeight="150" MaxHeight="280" />
+                                            <Image Source="{Binding CurrentMap}" MinHeight="100" MaxHeight="280" />
                                         </StackPanel>
                                     </TabItem>
                                     <TabItem Header="Description" >
@@ -153,7 +153,7 @@
                                     <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30" Command="{Binding OpenEditTourLogWinCommand}">edit</Button>
                                 </Grid>
 
-                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="112" Grid.Row="1" Margin="5">
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="130" Grid.Row="1" Margin="5">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                                         <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
