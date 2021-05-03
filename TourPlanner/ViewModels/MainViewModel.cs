@@ -82,7 +82,6 @@ namespace TourPlanner.ViewModels
             {
                 if (CurrentTour != null)
                 {
-                    //return Path.GetFullPath($"../../../../tours/maps/{CurrentTour.Name}.png");
                     return Path.GetFullPath($"../../../../tours/maps/{CurrentTour.Name}.png");
                 }
                 return null;
@@ -163,19 +162,13 @@ namespace TourPlanner.ViewModels
             addTourVM.AddedTour += (_, tour) => { AddTour(tour); };
             addTourWindow.DataContext = addTourVM;
 
-
             addTourWindow.ShowDialog();
         }
         private void AddTour(TourItem tour)
         {
             _tourFactory.AddTour(tour);
             Tours.Add(tour);
-            CreateList();
-            RaisePropertyChangedEvent(nameof(Tours));
-            RaisePropertyChangedEvent(nameof(CurrentMap));
-            CreateList();
         }
-
         private void Edit(object commandParameter)
         {
             if(CurrentTour != null) 
@@ -186,11 +179,9 @@ namespace TourPlanner.ViewModels
                 editTourVM.EditedTour += (_, tour) => { EditTour(tour); };
                 editTourWindow.DataContext = editTourVM;
 
-
                 editTourWindow.ShowDialog();
             }
         }
-
         private void EditTour(TourItem tour)
         {
             _tourFactory.DeleteTour(CurrentTour);
@@ -208,7 +199,6 @@ namespace TourPlanner.ViewModels
 
             addTourLogVM.AddedTourLog += (_, tourLog) => { AddTourLog(tourLog); };
             addTourLogWindow.DataContext = addTourLogVM;
-
 
             addTourLogWindow.ShowDialog();
         }
@@ -236,11 +226,9 @@ namespace TourPlanner.ViewModels
                 editTourLogVM.EditedTourLog += (_, tourLog) => { EditTourLog(tourLog); };
                 editTourLogWindow.DataContext = editTourLogVM;
 
-
                 editTourLogWindow.ShowDialog();
             }
         }
-
         private void EditTourLog(TourLogItem tourLog)
         {
             _tourFactory.DeleteTourLog(CurrentTourLog);
