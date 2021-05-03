@@ -47,7 +47,7 @@ namespace TourPlanner.DataAccessLayer
 
         }
 
-        public bool ImportTour(ref TourItem tour, string fileName)
+        public bool AddTour(ref TourItem tour, string fileName)
         {
             try
             {
@@ -115,10 +115,9 @@ namespace TourPlanner.DataAccessLayer
                     {
                         Name = reader.GetString(0),
                         Date = reader.GetDateTime(1),
-                        Duration = reader.GetFloat(2),
-                        Distance = reader.GetFloat(3),
-                        Report = reader.GetString(4),
-                        Rating = reader.GetInt32(5)
+                        Distance = reader.GetFloat(2),
+                        Report = reader.GetString(3),
+                        Rating = reader.GetInt32(4)
                     });
 
                 _conn.Close();
@@ -132,18 +131,17 @@ namespace TourPlanner.DataAccessLayer
             return tourLogs;
 
         }
-        public bool ImportTourLog(ref TourLogItem tourLog, string fileName)
+        public bool AddTourLog(ref TourLogItem tourLog, string fileName)
         {
             try
             {
                 _conn.Open();
-                _sql = "insert into tourlog values (@tourname, @date, @duration, @distance, @report, @rating)";
+                _sql = "insert into tourlog values (@tourname, @date, @duration, @report, @rating)";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
                 _cmd.Parameters.AddWithValue("tourname", tourLog.Name);
                 _cmd.Parameters.AddWithValue("date", tourLog.Date);
                 _cmd.Parameters.AddWithValue("duration", tourLog.Duration);
-                _cmd.Parameters.AddWithValue("distance", tourLog.Distance);
                 _cmd.Parameters.AddWithValue("report", tourLog.Report);
                 _cmd.Parameters.AddWithValue("rating", tourLog.Rating);
                 _cmd.ExecuteNonQuery();

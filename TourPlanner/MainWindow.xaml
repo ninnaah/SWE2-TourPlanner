@@ -57,12 +57,14 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Column="0" Text="Tours" VerticalAlignment="Center" Margin="5"></TextBlock>
                                 <Button Name="addTour" Margin="5" Grid.Column="1" MinWidth="15" Command="{Binding OpenAddTourWinCommand}">+</Button>
                                 <Button Name="deleteTour" Margin="5" Grid.Column="2" MinWidth="15" Command="{Binding DeleteCommand}">-</Button>
                                 <Button Name="editTour" Margin="5" Grid.Column="3" MinWidth="30" Command="{Binding OpenEditTourWinCommand}">edit</Button>
+                                <Button Name="printTour" Margin="5" Grid.Column="4" MinWidth="30" Command="{Binding PrintCommand}">print</Button>
                             </Grid>
 
                             <ListBox Grid.Row="1" ItemsSource="{Binding Tours}" SelectionMode="Extended" SelectedItem="{Binding CurrentTour}" DisplayMemberPath="Name" Name="listTours"></ListBox>
