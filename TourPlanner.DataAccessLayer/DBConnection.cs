@@ -47,7 +47,7 @@ namespace TourPlanner.DataAccessLayer
 
         }
 
-        public bool ImportTour(TourItem tour)
+        public bool AddTour(TourItem tour)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace TourPlanner.DataAccessLayer
             return tourLogs;
 
         }
-        public bool ImportTourLog(TourLogItem tourLog)
+        public bool AddTourLog(TourLogItem tourLog)
         {
             try
             {

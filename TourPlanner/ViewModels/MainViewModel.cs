@@ -16,6 +16,7 @@ namespace TourPlanner.ViewModels
         private ITourItemFactory _tourFactory;
         private ICommand _searchCommand;
         private ICommand _deleteCommand;
+        private ICommand _printCommand;
         private TourItem _currentTour;
         private string _searchTour;
         private ICommand _openAddTourWinCommand;
@@ -28,6 +29,7 @@ namespace TourPlanner.ViewModels
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
+        public ICommand PrintCommand => _printCommand ??= new RelayCommand(Print);
         public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
         public ICommand OpenEditTourWinCommand => _openEditTourWinCommand ??= new RelayCommand(Edit);
 
@@ -190,6 +192,11 @@ namespace TourPlanner.ViewModels
             Tours.Add(tour);
             Tours.Remove(CurrentTour);
         }
+        private void Print(TourItem tour)
+        {
+            _tourFactory.CreateTourReport(CurrentTour);
+        }
+
 
         //LOGS
         private void AddLog(object commandParameter)

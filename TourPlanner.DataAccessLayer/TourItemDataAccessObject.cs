@@ -15,13 +15,14 @@ namespace TourPlanner.DataAccessLayer
     {
         protected Config Config;
         protected IDataAccess DataAccess;
-        //protected IDataAccess DataImport;
+        protected FileSystem FileSystem;
         public TourItemDataAccessObject()
         {
             loadConfig();
             DataAccess = new DBConnection(Config);
-            //DataImport = new FileSystem(Config);
+            FileSystem = new FileSystem(Config);
         }
+
         public void loadConfig()
         {
             string jsonString = File.ReadAllText(@"../../../../config.json");
@@ -33,33 +34,6 @@ namespace TourPlanner.DataAccessLayer
             return DataAccess.GetTours();
         }
 
-        /*public void ImportTour(string fileName)
-        {
-            TourItem newTour = new TourItem();
-            DataImport.ImportTour(ref newTour, fileName);
-            DataAccess.ImportTour(ref newTour, fileName);
-
-        }*/
-
-        /*public async void GetTourMap(TourItem tour)
-        {
-            //call maqquest and save imagepath to tourItem
-            MapQuest mapQuest = new MapQuest(Config.mapQuestKey, Config.filePath, tour);
-
-            float distance = await mapQuest.GetMap();
-
-
-            tour.Distance = distance;
-
-            Debug.WriteLine("new Distance: " + tour.Distance);
-
-            AddTour(tour);
-        }
-
-        public bool AddTour(TourItem tour)
-        {
-            return DataAccess.ImportTour(tour);
-        }*/
 
         public async void GetTourMap(TourItem tour)
         {
@@ -74,7 +48,7 @@ namespace TourPlanner.DataAccessLayer
 
         public bool AddTour(TourItem tour)
         {
-            return DataAccess.ImportTour(tour);
+            return DataAccess.AddTour(tour);
         }
 
         public bool DeleteTour(TourItem tour)
@@ -83,6 +57,20 @@ namespace TourPlanner.DataAccessLayer
             return DataAccess.DeleteTour(tour);
         }
 
+        public void CreateTourReport(TourItem tour)
+        {
+            List<TourLogItem> logs = DataAccess.GetTourLogs();
+
+            foreach (TourLogItem log in logs)
+            {
+                if (log.Name != tour.Name)
+                {
+                    logs.Remove(log);
+                }
+            }
+
+            FileSystem.CreateTourReportPDF(tour, logs);
+        }
 
 
     }

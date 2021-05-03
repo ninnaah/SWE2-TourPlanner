@@ -44,6 +44,11 @@ namespace TourPlanner.BusinessLayer
             return _tourItemDAO.DeleteTour(tour);
         }
 
+        public void CreateTourReport(TourItem tour)
+        {
+            _tourItemDAO.CreateTourReport(tour);
+        }
+
 
 
 
