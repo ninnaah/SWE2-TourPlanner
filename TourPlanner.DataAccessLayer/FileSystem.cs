@@ -4,64 +4,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using TourPlanner.Models;
+using QuestPDF.Fluent;
 
 namespace TourPlanner.DataAccessLayer
 {
-    /*public class FileSystem : IDataAccess
+    public class FileSystem
     {
         private string _filePath;
 
         public FileSystem(Config config)
         {
-            _filePath = $"../../../../{config.filePath}/import";
-            Debug.WriteLine(_filePath);
+            _filePath = config.filePath;
         }
 
-        //??? what for
-        public List<TourItem> GetTours()
+
+        public void CreateTourReportPDF(TourItem tour, List<TourLogItem> logs)
         {
-            return null;
+            string fileName = $"{tour.Name}.pdf";
+
+            var document = new TourReport(tour, logs);
+            document.GeneratePdf(fileName);
+
+            Process.Start("explorer.exe", fileName);
         }
 
-        public bool ImportTour(ref TourItem tour, string fileName)
-        {
-            try{
-                //string jsonString = File.ReadAllText($"{_filePath}/fahrradtourWien.json");
-                string jsonString = File.ReadAllText($"{_filePath}/{fileName}");
-                Debug.WriteLine(jsonString);
-
-                tour = JsonConvert.DeserializeObject<TourItem>(jsonString);
-                return true;
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine("Error: {0}", ex);
-                return false;
-            }
-            
-        }
-
-        public bool DeleteTour(TourItem tour)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public List<TourLogItem> GetTourLogs()
-        {
-            throw new NotImplementedException();
-        }
-        public bool ImportTourLog(ref TourLogItem tourLog, string fileName)
-        {
-            throw new NotImplementedException();
-        }
-        public bool DeleteTourLog(TourLogItem tourLog)
-        {
-            throw new NotImplementedException();
-        }
-
-    }*/
+    }
 }
