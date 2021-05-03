@@ -32,8 +32,9 @@ namespace TourPlanner.DataAccessLayer
                 var reader = _cmd.ExecuteReader();
 
                 while (reader.Read())
-                    tours.Add(new Models.TourItem { Name = reader.GetString(0), Description = reader.GetString(1), Distance = reader.GetInt32(2),
-                                                    From = reader.GetString(4), To = reader.GetString(5)});
+                    tours.Add(new Models.TourItem { Name = reader.GetString(0), Description = reader.GetString(1),
+                                                    From = reader.GetString(2), To = reader.GetString(3), Distance = reader.GetFloat(4)
+                    });
 
                 _conn.Close();
             }
@@ -52,7 +53,7 @@ namespace TourPlanner.DataAccessLayer
             try
             {
                 _conn.Open();
-                _sql = "insert into tour values (@tourname, @description, @distance, 'image', @from, @to)";
+                _sql = "insert into tour values (@tourname, @description, @from, @to, @distance)";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
                 _cmd.Parameters.AddWithValue("tourname", tour.Name);
@@ -115,7 +116,7 @@ namespace TourPlanner.DataAccessLayer
                     {
                         Name = reader.GetString(0),
                         Date = reader.GetDateTime(1),
-                        Distance = reader.GetFloat(2),
+                        Duration = reader.GetFloat(2),
                         Report = reader.GetString(3),
                         Rating = reader.GetInt32(4)
                     });

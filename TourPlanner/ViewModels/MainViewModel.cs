@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
@@ -41,7 +43,7 @@ namespace TourPlanner.ViewModels
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
 
 
-        public TourItem CurrentTour 
+        public TourItem CurrentTour
         {
             get
             {
@@ -50,7 +52,7 @@ namespace TourPlanner.ViewModels
 
             set
             {
-                if((_currentTour != value) && (value != null))
+                if ((_currentTour != value) && (value != null))
                 {
                     _currentTour = value;
                     CreateList();
@@ -73,6 +75,19 @@ namespace TourPlanner.ViewModels
                     _currentTourLog = value;
                     RaisePropertyChangedEvent(nameof(CurrentTourLog));
                 }
+            }
+        }
+
+        public string CurrentMap
+        {
+            get
+            {
+                if (CurrentTour != null)
+                {
+                    return Path.GetFullPath($"../../../../tours/maps/{CurrentTour.Name}.png");
+                }
+                return null;
+
             }
         }
 
@@ -116,6 +131,7 @@ namespace TourPlanner.ViewModels
                     TourLogs.Add(item);
                 }
                 RaisePropertyChangedEvent(nameof(TourLogs));
+                RaisePropertyChangedEvent(nameof(CurrentMap));
             }
         }
 
@@ -131,34 +147,33 @@ namespace TourPlanner.ViewModels
         }
         private void Delete(object commandParameter)
         {
-            if(CurrentTour!= null)
+            if (CurrentTour != null)
             {
-                Tours.Remove(CurrentTour);
                 _tourFactory.DeleteTour(CurrentTour);
+                Tours.Remove(CurrentTour);
             }
-
+            CreateList();
+            RaisePropertyChangedEvent(nameof(Tours));
         }
         private void Add(object commandParameter)
         {
+
             AddTourWindow addTourWindow = new AddTourWindow();
             AddTourViewModel addTourVM = new AddTourViewModel();
 
             addTourVM.AddedTour += (_, tour) => { AddTour(tour); };
             addTourWindow.DataContext = addTourVM;
 
-
             addTourWindow.ShowDialog();
         }
         private void AddTour(TourItem tour)
         {
             _tourFactory.AddTour(tour);
-
             Tours.Add(tour);
         }
-
         private void Edit(object commandParameter)
         {
-            if(CurrentTour != null) 
+            if (CurrentTour != null)
             {
                 EditTourWindow editTourWindow = new EditTourWindow();
                 EditTourViewModel editTourVM = new EditTourViewModel(CurrentTour);
@@ -166,11 +181,9 @@ namespace TourPlanner.ViewModels
                 editTourVM.EditedTour += (_, tour) => { EditTour(tour); };
                 editTourWindow.DataContext = editTourVM;
 
-
                 editTourWindow.ShowDialog();
             }
         }
-
         private void EditTour(TourItem tour)
         {
             _tourFactory.DeleteTour(CurrentTour);
@@ -186,7 +199,6 @@ namespace TourPlanner.ViewModels
             {
                 _tourFactory.CreateTourReport(CurrentTour);
             }
-
         }
 
         //LOGS
@@ -197,7 +209,6 @@ namespace TourPlanner.ViewModels
 
             addTourLogVM.AddedTourLog += (_, tourLog) => { AddTourLog(tourLog); };
             addTourLogWindow.DataContext = addTourLogVM;
-
 
             addTourLogWindow.ShowDialog();
         }
@@ -225,11 +236,9 @@ namespace TourPlanner.ViewModels
                 editTourLogVM.EditedTourLog += (_, tourLog) => { EditTourLog(tourLog); };
                 editTourLogWindow.DataContext = editTourLogVM;
 
-
                 editTourLogWindow.ShowDialog();
             }
         }
-
         private void EditTourLog(TourLogItem tourLog)
         {
             _tourFactory.DeleteTourLog(CurrentTourLog);
@@ -238,6 +247,8 @@ namespace TourPlanner.ViewModels
             TourLogs.Add(tourLog);
             TourLogs.Remove(CurrentTourLog);
         }
+
+
 
     }
 
