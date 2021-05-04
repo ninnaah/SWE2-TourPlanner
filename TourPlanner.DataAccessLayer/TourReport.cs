@@ -9,6 +9,9 @@ using QuestPDF.Drawing;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using TourPlanner.Models;
+using System.Drawing;
+using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace TourPlanner.DataAccessLayer
 {
@@ -16,12 +19,21 @@ namespace TourPlanner.DataAccessLayer
     {
         public TourItem Tour { get; }
         public List<TourLogItem> TourLogs;
-        public object Model { get; private set; }
+        public byte[] ImageData;
 
-        public TourReport(TourItem tour, List<TourLogItem> logs)
+        public TourReport(TourItem tour, List<TourLogItem> logs, string filePath)
         {
             Tour = tour;
             TourLogs = logs;
+
+            string fullFilePath = $"{filePath}/maps/{Tour.Name}.png";
+
+            FileStream fs = new FileStream(fullFilePath, FileMode.Open, FileAccess.Read);
+
+            BinaryReader br = new BinaryReader(fs);
+            long numBytes = new FileInfo(fullFilePath).Length;
+            ImageData = br.ReadBytes((int)numBytes);
+
         }
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
@@ -34,7 +46,8 @@ namespace TourPlanner.DataAccessLayer
                 .Page(page =>
                 {
                     page.Header(ComposeHeader);
-                    page.Content(ComposeContent);
+                    page.Content(ComposeMap);
+                    page.Footer(ComposeContent);
                 });
 
         }
@@ -45,8 +58,8 @@ namespace TourPlanner.DataAccessLayer
             {
                 row.RelativeColumn().Stack(stack =>
                 {
-                    stack.Element().Text($"Tour Report");
-                    stack.Element().Text($"Name: {Tour.Name}");
+                    stack.Element().AlignCenter().Text($"Tour Report", TextStyle.Default.Size(20));
+                    stack.Element().Text($"{Tour.Name}", TextStyle.Default.Size(16));
                     stack.Element().Text($"Description: {Tour.Description}");
                     stack.Element().Text($"Start: {Tour.From}");
                     stack.Element().Text($"End: {Tour.To}");
@@ -56,16 +69,37 @@ namespace TourPlanner.DataAccessLayer
             });
         }
 
-        void ComposeContent(IContainer container)
+        void ComposeMap(IContainer container)
         {
             container.PaddingVertical(40).PageableStack(stack =>
             {
                 stack.Spacing(5);
-                stack.Element().Text($"Tour Log: ");
-                stack.Element(ComposeTable);
+                stack.Element().Text($"Tour Map", TextStyle.Default.Size(20));
+                stack.Element(ComposeImage);
             });
+
+        }
+        void ComposeImage(IContainer container)
+        {
+            container.Image(ImageData, ImageScaling.FitHeight);
         }
 
+        void ComposeContent(IContainer container)
+        {
+
+            container.PaddingVertical(40).PageableStack(stack =>
+            {
+                stack.Spacing(5);
+                stack.Element().Text($"Tour Logs", TextStyle.Default.Size(20));
+
+                if (TourLogs.Count != 0)
+                    stack.Element(ComposeTable);
+
+                stack.Element().AlignRight().PageNumber("{number}");
+            });
+            
+
+        }
         void ComposeTable(IContainer container)
         {
             container.Section(section =>

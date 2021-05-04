@@ -21,11 +21,34 @@ namespace TourPlanner.DataAccessLayer
         public void CreateTourReportPDF(TourItem tour, List<TourLogItem> logs)
         {
             string fileName = $"{tour.Name}.pdf";
+            string path = $"{_filePath}/report/{fileName}";
 
-            var document = new TourReport(tour, logs);
-            document.GeneratePdf(fileName);
+            var document = new TourReport(tour, logs, _filePath);
+            document.GeneratePdf(path);
 
-            Process.Start("explorer.exe", fileName);
+            //Process.Start("explorer.exe", fileName);
+        }
+
+        public void CreateSummarizeReportPDF(List<TourLogItem> logs, List<TourItem> tours)
+        {
+            string fileName = $"summarizeReport.pdf";
+            string path = $"{_filePath}/report/{fileName}";
+            float totalTime = 0;
+            float totalDistance = 0;
+
+            foreach(TourLogItem log in logs)
+            {
+                totalTime += log.Duration;
+            }
+            foreach (TourItem tour in tours)
+            {
+                totalDistance += tour.Distance;
+            }
+
+            var document = new SummarizeReport(totalTime, totalDistance);
+            document.GeneratePdf(path);
+
+            //Process.Start("explorer.exe", fileName);
         }
 
     }

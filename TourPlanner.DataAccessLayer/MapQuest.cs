@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
@@ -19,6 +20,8 @@ namespace TourPlanner.DataAccessLayer
         private static string _key;
         private static string _dirPath;
 
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(MapQuest));
+
         public MapQuest(string key, string dirPath, TourItem tour)
         {
             _tour = tour;
@@ -28,6 +31,8 @@ namespace TourPlanner.DataAccessLayer
 
         public async Task<float> GetMap()
         {
+            _logger.Info("Starting MapQuest Request");
+            _logger.Error("Starting MapQuest Request");
             Task<float> distanceTask = SendRouteRequest();
             float distance = await distanceTask;
 
@@ -71,6 +76,8 @@ namespace TourPlanner.DataAccessLayer
 
             using WebClient client = new();
             await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);
+
+            _logger.Info("Downloaded MapQuest File");
         }
 
 

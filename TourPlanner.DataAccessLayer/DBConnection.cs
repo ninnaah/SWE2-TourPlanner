@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using log4net.Config;
+using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,8 @@ namespace TourPlanner.DataAccessLayer
         private string _sql;
         private NpgsqlCommand _cmd;
 
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(DBConnection));
+
         public DBConnection(Config config)
         {
             _connectionString = $"Server={config.server};Port={config.port};User Id={config.user};Password={config.password};Database={config.database};";
@@ -26,6 +30,11 @@ namespace TourPlanner.DataAccessLayer
             List<TourItem> tours = new List<TourItem>();
             try
             {
+
+                //XmlConfigurator.Configure(new System.IO.FileInfo("log4net.config.xml"));
+                _logger.Info("DB Get Tours");
+                _logger.Error("DB Get Tours");
+
                 _conn.Open();
                 _sql = "select * from tour";
                 _cmd = new NpgsqlCommand(_sql, _conn);

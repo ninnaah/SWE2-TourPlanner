@@ -20,7 +20,21 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Name="file" Margin="5" Grid.Column="0" MinWidth="50">File</Button>
+                <!--<Button Name="file" Margin="5" Grid.Column="0" MinWidth="50">File</Button>-->
+
+                <DockPanel Grid.Column="0" Margin="5">
+                    <Menu>
+                        <MenuItem Header="File">
+                            <MenuItem Header="Print tour report" Command="{Binding PrintTourReportCommand}" />
+                            <MenuItem Header="Print summarize report" Command="{Binding PrintSummarizeReportCommand}" />
+                            <MenuItem Header="Import tour" />
+                            <MenuItem Header="Export tour" />
+                        </MenuItem>
+                    </Menu>
+                </DockPanel>
+
+
+
                 <Button Name="edit" Margin="5" Grid.Column="1" MinWidth="50">Edit</Button>
                 <Button Name="options" Margin="5" Grid.Column="2" MinWidth="60">Options</Button>
                 <Button Name="help" Margin="5" Grid.Column="3" MinWidth="50">Help</Button>
@@ -58,14 +72,12 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Column="0" Text="Tours" VerticalAlignment="Center" Margin="5"></TextBlock>
                                 <Button Name="addTour" Margin="5" Grid.Column="1" MinWidth="15" Command="{Binding OpenAddTourWinCommand}">+</Button>
                                 <Button Name="deleteTour" Margin="5" Grid.Column="2" MinWidth="15" Command="{Binding DeleteCommand}">-</Button>
                                 <Button Name="editTour" Margin="5" Grid.Column="3" MinWidth="30" Command="{Binding OpenEditTourWinCommand}">edit</Button>
-                                <Button Name="printTour" Margin="5" Grid.Column="4" MinWidth="30" Command="{Binding PrintCommand}">print</Button>
                             </Grid>
 
                             <ListBox Grid.Row="1" ItemsSource="{Binding Tours}" SelectionMode="Extended" SelectedItem="{Binding CurrentTour}" DisplayMemberPath="Name" Name="listTours"></ListBox>

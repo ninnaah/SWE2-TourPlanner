@@ -16,6 +16,7 @@ namespace TourPlanner.DataAccessLayer
         protected Config Config;
         protected IDataAccess DataAccess;
         protected FileSystem FileSystem;
+
         public TourItemDataAccessObject()
         {
             loadConfig();
@@ -59,17 +60,26 @@ namespace TourPlanner.DataAccessLayer
 
         public void CreateTourReport(TourItem tour)
         {
-            List<TourLogItem> logs = DataAccess.GetTourLogs();
+            List<TourLogItem> allLogs = DataAccess.GetTourLogs();
+            List<TourLogItem> logs = new List<TourLogItem>();
 
-            foreach (TourLogItem log in logs)
+            foreach (TourLogItem log in allLogs)
             {
-                if (log.Name != tour.Name)
+                if (log.Name == tour.Name)
                 {
-                    logs.Remove(log);
+                    logs.Add(log);
                 }
             }
 
             FileSystem.CreateTourReportPDF(tour, logs);
+        }
+
+        public void CreateSummarizeReport()
+        {
+            List<TourLogItem> allLogs = DataAccess.GetTourLogs();
+            List<TourItem> allTours = DataAccess.GetTours();
+
+            FileSystem.CreateSummarizeReportPDF(allLogs, allTours);
         }
 
 

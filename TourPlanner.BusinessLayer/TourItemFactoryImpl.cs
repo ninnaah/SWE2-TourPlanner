@@ -16,13 +16,11 @@ namespace TourPlanner.BusinessLayer
         {
             return _tourItemDAO.GetTours();
         }
-
         public IEnumerable<TourItem> Search(string tourName)
         {
             IEnumerable<TourItem> tours = GetTours();
             return tours.Where(x => x.Name.Contains(tourName));
         }
-
         public bool AddTour(TourItem tour)
         {
             //return _tourItemDAO.AddTour(tour);
@@ -38,7 +36,6 @@ namespace TourPlanner.BusinessLayer
             }
 
         }
-
         public bool DeleteTour(TourItem tour)
         {
             return _tourItemDAO.DeleteTour(tour);
@@ -47,6 +44,11 @@ namespace TourPlanner.BusinessLayer
         public void CreateTourReport(TourItem tour)
         {
             _tourItemDAO.CreateTourReport(tour);
+        }
+
+        public void CreateSummarizeReport()
+        {
+            _tourItemDAO.CreateSummarizeReport();
         }
 
 
