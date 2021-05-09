@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,8 +27,20 @@ namespace TourPlanner.DataAccessLayer
 
         public void loadConfig()
         {
-            string jsonString = File.ReadAllText(@"../../../../config.json");
-            Config = JsonConvert.DeserializeObject<Config>(jsonString);
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("config.json", true)
+                .Build();
+
+            Config = config.Get<Config>();
+
+            /*Debug.WriteLine("Configuration:");
+            config
+                .AsEnumerable()
+                .OrderBy(x => x.Key)
+                .ToList()
+                .ForEach(x => Debug.WriteLine("|" + x.Key + "|" + x.Value + "|")); // see that it is a key-value store and not a complex structured json (the json is a lie!)
+
+            */
         }
 
         public List<TourItem> GetTours()
@@ -39,7 +52,7 @@ namespace TourPlanner.DataAccessLayer
         public async void GetTourMap(TourItem tour)
         {
             //call maqquest and save imagepath to tourItem
-            MapQuest mapQuest = new MapQuest(Config.mapQuestKey, Config.filePath, tour);
+            MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath, tour);
             float distance = await mapQuest.GetMap();
 
             tour.Distance = distance;
@@ -84,4 +97,7 @@ namespace TourPlanner.DataAccessLayer
 
 
     }
+
+
+
 }

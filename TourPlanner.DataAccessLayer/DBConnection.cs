@@ -21,7 +21,8 @@ namespace TourPlanner.DataAccessLayer
 
         public DBConnection(Config config)
         {
-            _connectionString = $"Server={config.server};Port={config.port};User Id={config.user};Password={config.password};Database={config.database};";
+            //_connectionString = $"Server={config.server};Port={config.port};User Id={config.user};Password={config.password};Database={config.database};";
+            _connectionString = config.ConnectionString;
             _conn = new NpgsqlConnection(_connectionString);
         }
 
