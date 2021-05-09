@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows.Input;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
@@ -159,7 +160,6 @@ namespace TourPlanner.ViewModels
         }
         private void Add(object commandParameter)
         {
-            
             AddTourWindow addTourWindow = new AddTourWindow();
             AddTourViewModel addTourVM = new AddTourViewModel();
 
@@ -193,8 +193,11 @@ namespace TourPlanner.ViewModels
             _tourFactory.DeleteTour(CurrentTour);
             _tourFactory.AddTour(tour);
 
-            Tours.Add(tour);
             Tours.Remove(CurrentTour);
+            Tours.Add(tour);
+
+            RaisePropertyChangedEvent(nameof(Tours));
+            CreateList();
         }
         private void PrintTourReport(object commandParameter)
         {

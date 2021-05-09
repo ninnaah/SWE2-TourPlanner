@@ -17,7 +17,6 @@ namespace TourPlanner.ViewModels
         private ICommand _closeWinCommand;
         public Action CloseWin { get; set; }
         private float _tourLogDuration;
-        private float _tourLogDistance;
         private string _tourLogReport;
         private int _tourLogRating;
         public event EventHandler<TourLogItem> EditedTourLog;
@@ -29,6 +28,9 @@ namespace TourPlanner.ViewModels
         {
             _currentTourName = tourName;
             CurrentTourLog = currentTourLog;
+            _tourLogDuration = CurrentTourLog.Duration;
+            _tourLogRating = CurrentTourLog.Rating;
+            _tourLogReport = CurrentTourLog.Report;
         }
 
         public float TourLogDuration
@@ -44,22 +46,6 @@ namespace TourPlanner.ViewModels
                 {
                     _tourLogDuration = value;
                     RaisePropertyChangedEvent(nameof(TourLogDuration));
-                }
-            }
-        }
-        public float TourLogDistance
-        {
-            get
-            {
-                return _tourLogDistance;
-            }
-
-            set
-            {
-                if (_tourLogDistance != value)
-                {
-                    _tourLogDistance = value;
-                    RaisePropertyChangedEvent(nameof(TourLogDistance));
                 }
             }
         }

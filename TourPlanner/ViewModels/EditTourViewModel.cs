@@ -19,7 +19,7 @@ namespace TourPlanner.ViewModels
         private string _tourDescription;
         private string _tourFrom;
         private string _tourTo;
-        private int _tourDistance;
+
         public event EventHandler<TourItem> EditedTour;
 
         public ICommand SendEditTourCommand => _sendEditTourCommand ??= new RelayCommand(EditTour);
@@ -28,14 +28,16 @@ namespace TourPlanner.ViewModels
         public EditTourViewModel(TourItem currentTour)
         {
             CurrentTour = currentTour;
+            _tourName = CurrentTour.Name;
+            _tourDescription = CurrentTour.Description;
+            _tourFrom = CurrentTour.From;
+            _tourTo = CurrentTour.To;
         }
 
         public string TourName
         {
             get
             {
-                //_tourName = CurrentTour.Name;
-                //return CurrentTour.Name;
                 return _tourName;
             }
 
@@ -52,8 +54,6 @@ namespace TourPlanner.ViewModels
         {
             get
             {
-                //_tourDescription = CurrentTour.Description;
-                //return CurrentTour.Description;
                 return _tourDescription;
             }
 
@@ -71,7 +71,6 @@ namespace TourPlanner.ViewModels
             get
             {
                 return _tourFrom;
-                //return CurrentTour.From;
             }
 
             set
@@ -88,7 +87,6 @@ namespace TourPlanner.ViewModels
             get
             {
                 return _tourTo;
-                //return CurrentTour.To;
             }
 
             set
@@ -97,24 +95,6 @@ namespace TourPlanner.ViewModels
                 {
                     _tourTo = value;
                     RaisePropertyChangedEvent(nameof(TourTo));
-                }
-            }
-        }
-        public int TourDistance
-        {
-            get
-            {
-                //_tourDistance = CurrentTour.Distance;
-                //return CurrentTour.Distance;
-                return _tourDistance;
-            }
-
-            set
-            {
-                if (_tourDistance != value)
-                {
-                    _tourDistance = value;
-                    RaisePropertyChangedEvent(nameof(TourDistance));
                 }
             }
         }
