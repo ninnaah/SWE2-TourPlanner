@@ -48,13 +48,12 @@ namespace TourPlanner.DataAccessLayer
             return DataAccess.GetTours();
         }
 
-
         public async void GetTourMap(TourItem tour)
         {
             //call maqquest and save imagepath to tourItem
             MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath, tour);
-            float distance = await mapQuest.GetMap();
 
+            float distance = await mapQuest.GetDistance();
             tour.Distance = distance;
 
             AddTour(tour);
@@ -78,7 +77,7 @@ namespace TourPlanner.DataAccessLayer
 
             foreach (TourLogItem log in allLogs)
             {
-                if (log.Name == tour.Name)
+                if (log.TourName == tour.Name)
                 {
                     logs.Add(log);
                 }

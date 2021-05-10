@@ -98,7 +98,7 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
-
+        
 
         private void EditTour(object commandParameter)
         {

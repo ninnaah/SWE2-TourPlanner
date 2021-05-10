@@ -16,7 +16,9 @@ namespace TourPlanner.ViewModels
         private ICommand _sendAddTourLogCommand;
         private ICommand _closeWinCommand;
         public Action CloseWin { get; set; }
-        private float _tourLogDuration;
+        private string _tourLogTransportMode;
+        private string _tourLogWeather;
+        private int _tourLogEffort;
         private string _tourLogReport;
         private int _tourLogRating;
         public event EventHandler<TourLogItem> AddedTourLog;
@@ -29,23 +31,54 @@ namespace TourPlanner.ViewModels
             _currentTourName = tourName;
         }
 
-        public float TourLogDuration
+        public string TourLogTransportMode
         {
             get
             {
-                return _tourLogDuration;
+                return _tourLogTransportMode;
             }
 
             set
             {
-                if (_tourLogDuration != value)
+                if (_tourLogTransportMode != value)
                 {
-                    _tourLogDuration = value;
-                    RaisePropertyChangedEvent(nameof(TourLogDuration));
+                    _tourLogTransportMode = value;
+                    RaisePropertyChangedEvent(nameof(TourLogTransportMode));
                 }
             }
         }
+        public string TourLogWeather
+        {
+            get
+            {
+                return _tourLogWeather;
+            }
 
+            set
+            {
+                if (_tourLogWeather != value)
+                {
+                    _tourLogWeather = value;
+                    RaisePropertyChangedEvent(nameof(TourLogWeather));
+                }
+            }
+        }
+        public int TourLogEffort
+        {
+            get
+            {
+                return _tourLogEffort;
+            }
+
+            set
+            {
+                if (_tourLogEffort != value)
+                {
+                    _tourLogEffort = value;
+                    RaisePropertyChangedEvent(nameof(TourLogEffort));
+                }
+            }
+        }
         public string TourLogReport
         {
             get
@@ -82,7 +115,7 @@ namespace TourPlanner.ViewModels
 
         private void AddTourLog(object commandParameter)
         {
-            AddedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDuration, _tourLogReport, _tourLogRating ));
+            AddedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogTransportMode, _tourLogReport, _tourLogRating, _tourLogWeather, _tourLogEffort ));
         }
 
 

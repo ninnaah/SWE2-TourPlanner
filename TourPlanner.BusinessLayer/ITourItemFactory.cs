@@ -15,7 +15,7 @@ namespace TourPlanner.BusinessLayer
 
 
         IEnumerable<TourLogItem> GetTourLogsForTour(string name);
-        bool AddTourLog(TourLogItem tourLog);
+        bool AddTourLog(TourLogItem tourLog, TourItem tour);
         bool DeleteTourLog(TourLogItem tourLog);
     }
 }

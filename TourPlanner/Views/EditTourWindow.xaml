@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EditTourViewModel}"
         mc:Ignorable="d"
-        Height="270"
+        Height="250"
         Width="300"
-        MinHeight="10"
+        MinHeight="250"
         MinWidth="300"
         Title="EditTour">
     <Grid>
@@ -39,7 +39,7 @@
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="To" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="tourTo" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourTo}"></TextBox>
-
+        
         <Button Grid.Row="5" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourCommand}">Send</Button>
     </Grid>
 </Window>

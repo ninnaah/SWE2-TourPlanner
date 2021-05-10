@@ -6,7 +6,7 @@
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
-        MinHeight="530" MinWidth="700"
+        MinHeight="530" MinWidth="840"
         Height="470" Width="700">
     
     <Grid>
@@ -165,11 +165,16 @@
                                     <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30" Command="{Binding OpenEditTourLogWinCommand}">edit</Button>
                                 </Grid>
 
-                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="130" Grid.Row="1" Margin="5">
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="130" Grid.Row="1" Margin="0,5,5,0">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                                        <DataGridTextColumn Header="Transport mode" Binding="{Binding TransportMode}"/>
                                         <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-                                        <DataGridTextColumn Header="Distance" Binding="{Binding CurrentTour.Distance}"/>
+                                        <DataGridTextColumn Header="Distance" Binding="{Binding Distance}"/>
+                                        <DataGridTextColumn Header="Average speed" Binding="{Binding AverageSpeed}"/>
+                                        <DataGridTextColumn Header="Fuel used" Binding="{Binding FuelUsed}"/>
+                                        <DataGridTextColumn Header="Weather" Binding="{Binding Weather}"/>
+                                        <DataGridTextColumn Header="Effort" Binding="{Binding Effort}"/>
                                         <DataGridTextColumn Header="Report" Binding="{Binding Report}"/>
                                         <DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
                                     </DataGrid.Columns>

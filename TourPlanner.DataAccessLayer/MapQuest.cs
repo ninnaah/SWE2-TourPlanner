@@ -15,6 +15,7 @@ namespace TourPlanner.DataAccessLayer
     public class MapQuest
     {
         public static TourItem _tour;
+        public static TourLogItem _tourLog;
         private static string _sessionId;
         private static JObject _boundingBox;
         private static string _key;
@@ -29,7 +30,16 @@ namespace TourPlanner.DataAccessLayer
             _key = key;
         }
 
-        public async Task<float> GetMap()
+        public MapQuest(string key, TourLogItem log, TourItem tour)
+        {
+            _tourLog = log;
+            _tour = tour;
+            _key = key;
+        }
+
+
+        //TOUR
+        public async Task<float> GetDistance()
         {
             _logger.Info("Starting MapQuest Request");
             _logger.Error("Starting MapQuest Request");
@@ -51,9 +61,8 @@ namespace TourPlanner.DataAccessLayer
             _boundingBox = obj["route"]["boundingBox"] as JObject;
 
             _sessionId = (string)obj["route"]["sessionId"];
-            float distance = (float)obj["route"]["distance"];
 
-            return distance;
+            return (float)obj["route"]["distance"]; //in km
         }
 
         public static async void SendMapRequest()
@@ -63,21 +72,51 @@ namespace TourPlanner.DataAccessLayer
             string upperLeftLng = (string)_boundingBox["ul"]["lng"];
             string upperLeftLat = (string)_boundingBox["ul"]["lat"];
 
+
             Directory.CreateDirectory($@"{_dirPath}/maps/");
             string filePath = $@"{_dirPath}/maps/{_tour.Name}.png";
 
             string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={_sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
 
-            /*byte[] byteArray = await _httpClient.GetByteArrayAsync(getRequest);
-
-            Debug.WriteLine(byteArray);
-
-            File.WriteAllBytes(filePath, byteArray);*/
-
             using WebClient client = new();
             await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);
 
             _logger.Info("Downloaded MapQuest File");
+        }
+
+
+
+        //LOG
+        public async Task<float[]> GetRouteData()
+        {
+            _logger.Info("Starting MapQuest Request");
+            _logger.Error("Starting MapQuest Request");
+            Task<float[]> routeValuesTask = SendRouteDataRequest();
+            float[] routeValues = await routeValuesTask;
+
+            return routeValues;
+        }
+
+        public static async Task<float[]> SendRouteDataRequest()
+        {
+            string mode = _tourLog.TransportMode;
+            float[] routeValues = new float[3];
+
+            if (mode == "Car")
+                mode = "fastest";
+
+            string getRequest = $"http://www.mapquestapi.com/directions/v2/route?key={_key}&from={_tour.From}&to={_tour.To}&routeType={mode}";
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync(getRequest);
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
+
+            routeValues[0] = (float)obj["route"]["distance"]; //in km
+            routeValues[1] = (float)obj["route"]["time"]; //in sec
+            routeValues[2] = (float)obj["route"]["fuelUsed"]; //in liter
+
+            return routeValues;
         }
 
 

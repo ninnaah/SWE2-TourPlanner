@@ -8,25 +8,44 @@ namespace TourPlanner.Models
 {
     public class TourLogItem
     {
-        public string Name { get; set; }
+        public string TourName { get; set; }
         public DateTime Date { get; set; }
-        public float Duration { get; set; }
+        public string TransportMode { get; set; }
+        public float Distance { get; set; } //mapQuest?
+        public float Duration { get; set; } //mapQuest?
+        public float AverageSpeed { get; set; } //mapQuest
+        public float FuelUsed { get; set; } //mapQuest
+        public string Weather { get; set; }
+        public int Effort { get; set; }
         public string Report { get; set; }
         public int Rating { get; set; }
 
-        public TourLogItem(string name, DateTime date, float duration, string report, int rating)
+        public TourLogItem(string name, DateTime date, string mode, float distance, float duration, string report, int rating, float speed, float fuel, string weather, int effort)
         {
-            Name = name;
+            TourName = name;
             Date = date;
+            TransportMode = mode;
+            Distance = distance;
             Duration = duration;
             Report = report;
-           
-            if(rating <= 5 && rating >= 1)
-                Rating = rating;
-            else
-                Rating = 0;
+            Rating = rating;
+            AverageSpeed = speed;
+            FuelUsed = fuel;
+            Weather = weather;
+            Effort=effort;
             
         }
+        public TourLogItem(string name, DateTime date, string mode, string report, int rating, string weather, int effort)
+        {
+            TourName = name;
+            Date = date;
+            TransportMode = mode;
+            Report = report;
+            Rating = rating;
+            Weather = weather;
+            Effort = effort;
+        }
+
         public TourLogItem()
         {
 

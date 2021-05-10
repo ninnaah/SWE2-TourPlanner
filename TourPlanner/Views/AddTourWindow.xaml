@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddTourViewModel}"
         mc:Ignorable="d"
-        Height="240"
+        Height="250"
         Width="300"
-        MinHeight="10"
+        MinHeight="250"
         MinWidth="300"
         Title="AddTour" >
     <Grid>

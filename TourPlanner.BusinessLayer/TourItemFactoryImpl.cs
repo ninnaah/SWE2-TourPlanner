@@ -63,7 +63,7 @@ namespace TourPlanner.BusinessLayer
 
             foreach(TourLogItem item in allLogs)
             {
-                if(item.Name == name)
+                if(item.TourName == name)
                 {
                     currentLogs.Add(item);
                 }
@@ -72,9 +72,21 @@ namespace TourPlanner.BusinessLayer
             return currentLogs;
         }
 
-        public bool AddTourLog(TourLogItem tourLog)
+        public bool AddTourLog(TourLogItem tourLog, TourItem tour)
         {
-            return _tourLogItemDAO.AddTourLog(tourLog);
+            //return _tourLogItemDAO.AddTourLog(tourLog);
+
+            try
+            {
+                _tourLogItemDAO.GetTourLogData(tourLog, tour);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: {0}", ex);
+                return false;
+            }
+
         }
 
         public bool DeleteTourLog(TourLogItem tourLog)

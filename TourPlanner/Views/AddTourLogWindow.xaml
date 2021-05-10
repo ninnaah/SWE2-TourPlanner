@@ -6,13 +6,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddTourLogViewModel}"
         mc:Ignorable="d"
-        Height="240"
+        Height="280"
         Width="300"
-        MinHeight="10"
+        MinHeight="280"
         MinWidth="300"
         Title="AddTourLog">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -27,16 +29,28 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Add Tour Log" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
         <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = AddTourLogWin}">Close</Button>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Duration" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="tourLogDuration" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDuration}"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Transport mode" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="7,7,30,7" VerticalAlignment="Center">
+            <ComboBox Text="{Binding TourLogTransportMode}">
+                <TextBlock>Car</TextBlock>
+                <TextBlock>Pedestrian</TextBlock>
+                <TextBlock>Bicycle</TextBlock>
+            </ComboBox>
+        </StackPanel>
+        
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Weather" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogWeather" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogWeather}"></TextBox>
+        
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Effort" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogEffort" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogEffort}"></TextBox>
+        
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="1" Name="tourLogRating" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogRating}"></TextBox>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogRating" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogRating}"></TextBox>
-
-        <Button Grid.Row="4" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourLogCommand}">Send</Button>
+        <Button Grid.Row="6" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourLogCommand}">Send</Button>
 
     </Grid>
 </Window>
