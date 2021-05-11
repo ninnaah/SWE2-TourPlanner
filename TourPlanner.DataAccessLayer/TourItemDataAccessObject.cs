@@ -43,6 +43,11 @@ namespace TourPlanner.DataAccessLayer
             */
         }
 
+        public string GetFilePath()
+        {
+            return Config.FilePath;
+        }
+
         public List<TourItem> GetTours()
         {
             return DataAccess.GetTours();
@@ -53,8 +58,9 @@ namespace TourPlanner.DataAccessLayer
 
             float[] routeValues = await mapQuest.GetTourValues();
             tour.Distance = routeValues[0]; //in km
-            tour.Duration = routeValues[1]; //in sec
+            tour.Duration = routeValues[1]/60; //in min
             tour.FuelUsed = routeValues[2]; //in liter
+
 
             AddTour(tour);
         }

@@ -46,9 +46,9 @@ namespace TourPlanner.DataAccessLayer
             {
                 stack.Spacing(5);
                 stack.Element().Text($"Summarize Report\n", TextStyle.Default.Size(20));
-                stack.Element().Text("Total time: ");
+                stack.Element().Text("Total time (in min): ");
                 stack.Element().Text($"{TotalTime}");
-                stack.Element().Text("Total distance: ");
+                stack.Element().Text("Total distance (in km): ");
                 stack.Element().Text($"{TotalDistance}");
             });
 

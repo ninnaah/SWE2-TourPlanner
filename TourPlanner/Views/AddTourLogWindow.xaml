@@ -31,13 +31,13 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Add Tour Log" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
         <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = AddTourLogWin}">Close</Button>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Distance" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Distance (km)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Name="tourLogDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDistance}"></TextBox>
 
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Duration" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Duration (min)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogDuration" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDuration}"></TextBox>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Used fuel" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Used fuel (liter)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogFuelUsed" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogFuelUsed}"></TextBox>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Weather" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>

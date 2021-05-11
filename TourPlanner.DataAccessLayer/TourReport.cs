@@ -64,9 +64,9 @@ namespace TourPlanner.DataAccessLayer
                     stack.Element().Text($"Start: {Tour.From}");
                     stack.Element().Text($"End: {Tour.To}");
                     stack.Element().Text($"Transport mode: {Tour.TransportMode}");
-                    stack.Element().Text($"Distance: {Tour.Distance}");
-                    stack.Element().Text($"Duration: {Tour.Duration}");
-                    stack.Element().Text($"Used fuel: {Tour.FuelUsed}");
+                    stack.Element().Text($"Distance (km): {Tour.Distance}");
+                    stack.Element().Text($"Duration (min): {Tour.Duration}");
+                    stack.Element().Text($"Used fuel (liter): {Tour.FuelUsed}");
                 });
 
             });
@@ -94,11 +94,14 @@ namespace TourPlanner.DataAccessLayer
             {
                 stack.Spacing(5);
                 stack.Element().Text($"Tour Logs", TextStyle.Default.Size(20));
-
                 if (TourLogs.Count != 0)
+                {
                     stack.Element(ComposeTable);
-
-                stack.Element().AlignRight().PageNumber("{number}");
+                }
+                else
+                {
+                    stack.Element().Text($"No Logs available!");
+                }
             });
             
 
@@ -110,10 +113,10 @@ namespace TourPlanner.DataAccessLayer
                 section.Header().BorderBottom(1).Padding(5).Row(row =>
                 {
                     row.RelativeColumn().Text("Date");
-                    row.RelativeColumn().Text("Distance");
-                    row.RelativeColumn().Text("Duration");
-                    row.RelativeColumn().Text("Average speed");
-                    row.RelativeColumn().Text("Fuel used");
+                    row.RelativeColumn().Text("Distance (km)");
+                    row.RelativeColumn().Text("Duration (min)");
+                    row.RelativeColumn().Text("Average speed (km/h)");
+                    row.RelativeColumn().Text("Fuel used (liter)");
                     row.RelativeColumn().AlignRight().Text("Weather");
                     row.RelativeColumn().AlignRight().Text("Effort");
                     row.RelativeColumn().AlignRight().Text("Report");

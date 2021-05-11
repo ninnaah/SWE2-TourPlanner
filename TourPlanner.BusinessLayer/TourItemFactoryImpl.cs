@@ -12,6 +12,11 @@ namespace TourPlanner.BusinessLayer
     {
         private TourItemDataAccessObject _tourItemDAO = new TourItemDataAccessObject();
         private TourLogItemDataAccessObject _tourLogItemDAO = new TourLogItemDataAccessObject();
+
+        public string GetFilePath()
+        {
+            return _tourItemDAO.GetFilePath();
+        }
         public IEnumerable<TourItem> GetTours()
         {
             return _tourItemDAO.GetTours();

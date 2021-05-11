@@ -131,9 +131,9 @@
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="1" Grid.Column="0" Text="Start:"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="2" Grid.Column="0" Text="End:"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="3" Grid.Column="0" Text="Transport mode:"></TextBlock>
-                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="4" Grid.Column="0" Text="Distance:"></TextBlock>
-                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="5" Grid.Column="0" Text="Duration:"></TextBlock>
-                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="6" Grid.Column="0" Text="Used fuel:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="4" Grid.Column="0" Text="Distance (km):"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="5" Grid.Column="0" Text="Duration (min):"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="6" Grid.Column="0" Text="Used fuel (liter):"></TextBlock>
 
                                             <TextBlock VerticalAlignment="Center" Margin="5,5,5,5" Grid.Row="0" Grid.Column="1" Text="{Binding CurrentTour.Description}"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="1" Grid.Column="1" Text="{Binding CurrentTour.From}"></TextBlock>
@@ -175,10 +175,10 @@
                                 <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="100" Grid.Row="1" Margin="0,5,5,0">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
-                                        <DataGridTextColumn Header="Distance" Binding="{Binding Distance}"/>
-                                        <DataGridTextColumn Header="Average speed" Binding="{Binding AverageSpeed}"/>
-                                        <DataGridTextColumn Header="Fuel used" Binding="{Binding FuelUsed}"/>
+                                        <DataGridTextColumn Header="Duration (min)" Binding="{Binding Duration}"/>
+                                        <DataGridTextColumn Header="Distance (km)" Binding="{Binding Distance}"/>
+                                        <DataGridTextColumn Header="Average speed (km/h)" Binding="{Binding AverageSpeed}"/>
+                                        <DataGridTextColumn Header="Fuel used (liter)" Binding="{Binding FuelUsed}"/>
                                         <DataGridTextColumn Header="Weather" Binding="{Binding Weather}"/>
                                         <DataGridTextColumn Header="Effort" Binding="{Binding Effort}"/>
                                         <DataGridTextColumn Header="Report" Binding="{Binding Report}"/>

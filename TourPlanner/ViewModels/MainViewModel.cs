@@ -5,7 +5,10 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using TourPlanner.BusinessLayer;
 using TourPlanner.Models;
 using TourPlanner.Views;
@@ -15,6 +18,7 @@ namespace TourPlanner.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private ITourItemFactory _tourFactory;
+        private string _filePath;
         private ICommand _searchCommand;
         private ICommand _deleteCommand;
         private ICommand _printTourReportCommand;
@@ -81,14 +85,33 @@ namespace TourPlanner.ViewModels
             }
         }
 
-        public string CurrentMap
+        public ImageSource CurrentMap
         {
+            
             get
             {
                 if (CurrentTour != null)
                 {
-                    return Path.GetFullPath($"../../../../tours/maps/{CurrentTour.Name}.png");
+                    string filePath = $"{_filePath}/maps/{CurrentTour.Name}.png";
+                    if (File.Exists(filePath))
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                        bitmap.UriSource = new Uri(filePath);
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+
+                        return bitmap;
+                    }
                 }
+                
+                    
+                    
+                    /*if (CurrentTour != null)
+                {
+                    return new Uri($"{_filePath}/maps/{CurrentTour.Name}.png");
+                }*/
                 return null;
                 
             }
@@ -115,6 +138,7 @@ namespace TourPlanner.ViewModels
         {
             _tourFactory = TourItemFactory.GetInstance();
             CreateList();
+            _filePath = _tourFactory.GetFilePath();
         }
 
         protected void CreateList()

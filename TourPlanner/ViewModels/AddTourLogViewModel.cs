@@ -18,7 +18,6 @@ namespace TourPlanner.ViewModels
         public Action CloseWin { get; set; }
         private float _tourLogDistance;
         private float _tourLogDuration;
-        private float _tourLogAverageSpeed;
         private float _tourLogFuelUsed;
         private string _tourLogWeather;
         private int _tourLogEffort;
@@ -63,22 +62,6 @@ namespace TourPlanner.ViewModels
                 {
                     _tourLogDuration = value;
                     RaisePropertyChangedEvent(nameof(TourLogDuration));
-                }
-            }
-        }
-        public float TourLogAverageSpeed
-        {
-            get
-            {
-                return _tourLogAverageSpeed;
-            }
-
-            set
-            {
-                if (_tourLogAverageSpeed != value)
-                {
-                    _tourLogAverageSpeed = value;
-                    RaisePropertyChangedEvent(nameof(TourLogAverageSpeed));
                 }
             }
         }
@@ -166,7 +149,7 @@ namespace TourPlanner.ViewModels
 
         private void AddTourLog(object commandParameter)
         {
-            AddedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogAverageSpeed, _tourLogFuelUsed, _tourLogWeather, _tourLogEffort ));
+            AddedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating,  _tourLogFuelUsed, _tourLogWeather, _tourLogEffort ));
         }
 
 

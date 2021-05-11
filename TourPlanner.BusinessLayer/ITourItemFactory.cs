@@ -6,6 +6,7 @@ namespace TourPlanner.BusinessLayer
     //abstract Factory
     public interface ITourItemFactory
     {
+        string GetFilePath();
         IEnumerable<TourItem> GetTours();
         IEnumerable<TourItem> Search(string tourName);
         bool AddTour(TourItem tour);
