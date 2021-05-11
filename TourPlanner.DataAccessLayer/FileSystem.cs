@@ -36,7 +36,7 @@ namespace TourPlanner.DataAccessLayer
             //Process.Start("explorer.exe", fileName);*/
         }
 
-        public void CreateSummarizeReportPDF(List<TourLogItem> logs, List<TourItem> tours)
+        public void CreateSummarizeReportPDF(List<TourLogItem> logs)
         {
             string fileName = $"summarizeReport.pdf";
             float totalTime = 0;
@@ -45,10 +45,7 @@ namespace TourPlanner.DataAccessLayer
             foreach(TourLogItem log in logs)
             {
                 totalTime += log.Duration;
-            }
-            foreach (TourItem tour in tours)
-            {
-                totalDistance += tour.Distance;
+                totalDistance += log.Distance;
             }
 
             var document = new SummarizeReport(totalTime, totalDistance);

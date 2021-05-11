@@ -47,14 +47,14 @@ namespace TourPlanner.DataAccessLayer
         {
             return DataAccess.GetTours();
         }
-
         public async void GetTourMap(TourItem tour)
         {
-            //call maqquest and save imagepath to tourItem
             MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath, tour);
 
-            float distance = await mapQuest.GetDistance();
-            tour.Distance = distance;
+            float[] routeValues = await mapQuest.GetTourValues();
+            tour.Distance = routeValues[0]; //in km
+            tour.Duration = routeValues[1]; //in sec
+            tour.FuelUsed = routeValues[2]; //in liter
 
             AddTour(tour);
         }
@@ -89,9 +89,7 @@ namespace TourPlanner.DataAccessLayer
         public void CreateSummarizeReport()
         {
             List<TourLogItem> allLogs = DataAccess.GetTourLogs();
-            List<TourItem> allTours = DataAccess.GetTours();
-
-            FileSystem.CreateSummarizeReportPDF(allLogs, allTours);
+            FileSystem.CreateSummarizeReportPDF(allLogs);
         }
 
 

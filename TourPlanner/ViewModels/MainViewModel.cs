@@ -225,16 +225,8 @@ namespace TourPlanner.ViewModels
         }
         private void AddTourLog(TourLogItem tourLog)
         {
-            TourItem tourForLog = new TourItem();
-            foreach(TourItem tour in Tours)
-            {
-                if(tour.Name == tourLog.TourName)
-                {
-                    tourForLog = tour;
-                }
-            }
 
-            _tourFactory.AddTourLog(tourLog, tourForLog);
+            _tourFactory.AddTourLog(tourLog);
 
             TourLogs.Add(tourLog);
 
@@ -263,17 +255,9 @@ namespace TourPlanner.ViewModels
         }
         private void EditTourLog(TourLogItem tourLog)
         {
-            TourItem tourForLog = new TourItem();
-            foreach (TourItem tour in Tours)
-            {
-                if (tour.Name == tourLog.TourName)
-                {
-                    tourForLog = tour;
-                }
-            }
 
             _tourFactory.DeleteTourLog(CurrentTourLog);
-            _tourFactory.AddTourLog(tourLog, tourForLog);
+            _tourFactory.AddTourLog(tourLog);
 
             TourLogs.Add(tourLog);
             TourLogs.Remove(CurrentTourLog);

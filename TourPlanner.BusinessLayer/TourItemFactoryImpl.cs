@@ -72,20 +72,9 @@ namespace TourPlanner.BusinessLayer
             return currentLogs;
         }
 
-        public bool AddTourLog(TourLogItem tourLog, TourItem tour)
+        public bool AddTourLog(TourLogItem tourLog)
         {
-            //return _tourLogItemDAO.AddTourLog(tourLog);
-
-            try
-            {
-                _tourLogItemDAO.GetTourLogData(tourLog, tour);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: {0}", ex);
-                return false;
-            }
+            return _tourLogItemDAO.AddTourLog(tourLog);
 
         }
 

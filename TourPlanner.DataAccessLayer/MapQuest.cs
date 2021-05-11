@@ -15,7 +15,6 @@ namespace TourPlanner.DataAccessLayer
     public class MapQuest
     {
         public static TourItem _tour;
-        public static TourLogItem _tourLog;
         private static string _sessionId;
         private static JObject _boundingBox;
         private static string _key;
@@ -30,29 +29,28 @@ namespace TourPlanner.DataAccessLayer
             _key = key;
         }
 
-        public MapQuest(string key, TourLogItem log, TourItem tour)
-        {
-            _tourLog = log;
-            _tour = tour;
-            _key = key;
-        }
-
-
-        //TOUR
-        public async Task<float> GetDistance()
+        public async Task<float[]> GetTourValues()
         {
             _logger.Info("Starting MapQuest Request");
             _logger.Error("Starting MapQuest Request");
-            Task<float> distanceTask = SendRouteRequest();
-            float distance = await distanceTask;
+
+            Task<float[]> routeValuesTask = SendRouteRequest();
+            float[] routeValues = await routeValuesTask;
 
             SendMapRequest();
-            return distance;
+
+            return routeValues;
         }
 
-        public static async Task<float> SendRouteRequest()
+        public static async Task<float[]> SendRouteRequest()
         {
-            string getRequest = $"http://www.mapquestapi.com/directions/v2/route?key={_key}&from={_tour.From}&to={_tour.To}";
+            string mode = _tour.TransportMode;
+            float[] routeValues = new float[3];
+
+            if (mode == "Car")
+                mode = "fastest";
+
+            string getRequest = $"http://www.mapquestapi.com/directions/v2/route?key={_key}&from={_tour.From}&to={_tour.To}&routeType={mode}";
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage response = await httpClient.GetAsync(getRequest);
             string responseBody = await response.Content.ReadAsStringAsync();
@@ -62,7 +60,11 @@ namespace TourPlanner.DataAccessLayer
 
             _sessionId = (string)obj["route"]["sessionId"];
 
-            return (float)obj["route"]["distance"]; //in km
+            routeValues[0] = (float)obj["route"]["distance"]; //in km
+            routeValues[1] = (float)obj["route"]["time"]; //in sec
+            routeValues[2] = (float)obj["route"]["fuelUsed"]; //in liter
+
+            return routeValues;
         }
 
         public static async void SendMapRequest()
@@ -84,40 +86,7 @@ namespace TourPlanner.DataAccessLayer
             _logger.Info("Downloaded MapQuest File");
         }
 
-
-
-        //LOG
-        public async Task<float[]> GetRouteData()
-        {
-            _logger.Info("Starting MapQuest Request");
-            _logger.Error("Starting MapQuest Request");
-            Task<float[]> routeValuesTask = SendRouteDataRequest();
-            float[] routeValues = await routeValuesTask;
-
-            return routeValues;
-        }
-
-        public static async Task<float[]> SendRouteDataRequest()
-        {
-            string mode = _tourLog.TransportMode;
-            float[] routeValues = new float[3];
-
-            if (mode == "Car")
-                mode = "fastest";
-
-            string getRequest = $"http://www.mapquestapi.com/directions/v2/route?key={_key}&from={_tour.From}&to={_tour.To}&routeType={mode}";
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync(getRequest);
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
-
-            routeValues[0] = (float)obj["route"]["distance"]; //in km
-            routeValues[1] = (float)obj["route"]["time"]; //in sec
-            routeValues[2] = (float)obj["route"]["fuelUsed"]; //in liter
-
-            return routeValues;
-        }
+        
 
 
     }

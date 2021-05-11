@@ -19,7 +19,7 @@ namespace TourPlanner.ViewModels
         private string _tourDescription;
         private string _tourFrom;
         private string _tourTo;
-
+        private string _tourTransportMode;
         public event EventHandler<TourItem> EditedTour;
 
         public ICommand SendEditTourCommand => _sendEditTourCommand ??= new RelayCommand(EditTour);
@@ -98,11 +98,28 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
-        
+
+        public string TourTransportMode
+        {
+            get
+            {
+                return _tourTransportMode;
+            }
+
+            set
+            {
+                if (_tourTransportMode != value)
+                {
+                    _tourTransportMode = value;
+                    RaisePropertyChangedEvent(nameof(TourTransportMode));
+                }
+            }
+        }
+
 
         private void EditTour(object commandParameter)
         {
-            EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo));
+            EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourTransportMode));
         }
 
 

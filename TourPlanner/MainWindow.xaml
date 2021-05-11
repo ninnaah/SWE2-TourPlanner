@@ -6,8 +6,8 @@
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
-        MinHeight="530" MinWidth="840"
-        Height="470" Width="700">
+        MinHeight="670" MinWidth="650"
+        Height="670" Width="650">
     
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -19,8 +19,6 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <!--<Button Name="file" Margin="5" Grid.Column="0" MinWidth="50">File</Button>-->
 
                 <DockPanel Grid.Column="0" Margin="5">
                     <Menu>
@@ -52,7 +50,7 @@
                 <Button Name="search" Margin="5" Grid.Column="2" MinWidth="50" Command="{Binding SearchCommand}">Search</Button>
             </Grid>
 
-            <Grid MinHeight="370">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -89,7 +87,7 @@
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Border BorderBrush="Black" BorderThickness="1" Margin="0,0,5,0">
@@ -110,12 +108,15 @@
                                             </StackPanel>
                                         </TabItem.Header>
                                         <StackPanel>
-                                            <Image Source="{Binding CurrentMap}" MinHeight="100" MaxHeight="280" />
+                                            <Image Source="{Binding CurrentMap}" MinHeight="100" MaxHeight="540" />
                                         </StackPanel>
                                     </TabItem>
                                     <TabItem Header="Description" >
-                                        <Grid MinHeight="150">
+                                        <Grid MinHeight="365">
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
                                                 <RowDefinition Height="Auto"/>
@@ -129,12 +130,18 @@
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,5,5,5" Grid.Row="0" Grid.Column="0" Text="Description:"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="1" Grid.Column="0" Text="Start:"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="2" Grid.Column="0" Text="End:"></TextBlock>
-                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="3" Grid.Column="0" Text="Distance:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="3" Grid.Column="0" Text="Transport mode:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="4" Grid.Column="0" Text="Distance:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="5" Grid.Column="0" Text="Duration:"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,5" Grid.Row="6" Grid.Column="0" Text="Used fuel:"></TextBlock>
 
                                             <TextBlock VerticalAlignment="Center" Margin="5,5,5,5" Grid.Row="0" Grid.Column="1" Text="{Binding CurrentTour.Description}"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="1" Grid.Column="1" Text="{Binding CurrentTour.From}"></TextBlock>
                                             <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="2" Grid.Column="1" Text="{Binding CurrentTour.To}"></TextBlock>
-                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="3" Grid.Column="1" Text="{Binding CurrentTour.Distance}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="3" Grid.Column="1" Text="{Binding CurrentTour.TransportMode}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="4" Grid.Column="1" Text="{Binding CurrentTour.Distance}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="5" Grid.Column="1" Text="{Binding CurrentTour.Duration}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="6" Grid.Column="1" Text="{Binding CurrentTour.FuelUsed}"></TextBlock>
                                         </Grid>
                                     </TabItem>
                                 </TabControl>
@@ -148,7 +155,7 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Row="0">
@@ -165,10 +172,9 @@
                                     <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30" Command="{Binding OpenEditTourLogWinCommand}">edit</Button>
                                 </Grid>
 
-                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="130" Grid.Row="1" Margin="0,5,5,0">
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="100" Grid.Row="1" Margin="0,5,5,0">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                                        <DataGridTextColumn Header="Transport mode" Binding="{Binding TransportMode}"/>
                                         <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
                                         <DataGridTextColumn Header="Distance" Binding="{Binding Distance}"/>
                                         <DataGridTextColumn Header="Average speed" Binding="{Binding AverageSpeed}"/>

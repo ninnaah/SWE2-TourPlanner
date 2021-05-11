@@ -6,13 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EditTourViewModel}"
         mc:Ignorable="d"
-        Height="250"
+        Height="280"
         Width="300"
-        MinHeight="250"
+        MinHeight="280"
         MinWidth="300"
         Title="EditTour">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -39,7 +40,16 @@
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="To" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="tourTo" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourTo}"></TextBox>
-        
-        <Button Grid.Row="5" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourCommand}">Send</Button>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Transport mode" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <StackPanel Grid.Row="5" Grid.Column="1" Margin="7,7,30,7" VerticalAlignment="Center">
+            <ComboBox Text="{Binding TourTransportMode}">
+                <TextBlock>Car</TextBlock>
+                <TextBlock>Pedestrian</TextBlock>
+                <TextBlock>Bicycle</TextBlock>
+            </ComboBox>
+        </StackPanel>
+
+        <Button Grid.Row="6" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourCommand}">Send</Button>
     </Grid>
 </Window>

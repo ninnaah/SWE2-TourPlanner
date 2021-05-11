@@ -63,7 +63,10 @@ namespace TourPlanner.DataAccessLayer
                     stack.Element().Text($"Description: {Tour.Description}");
                     stack.Element().Text($"Start: {Tour.From}");
                     stack.Element().Text($"End: {Tour.To}");
+                    stack.Element().Text($"Transport mode: {Tour.TransportMode}");
                     stack.Element().Text($"Distance: {Tour.Distance}");
+                    stack.Element().Text($"Duration: {Tour.Duration}");
+                    stack.Element().Text($"Used fuel: {Tour.FuelUsed}");
                 });
 
             });
@@ -107,12 +110,12 @@ namespace TourPlanner.DataAccessLayer
                 section.Header().BorderBottom(1).Padding(5).Row(row =>
                 {
                     row.RelativeColumn().Text("Date");
-                    row.RelativeColumn().Text("Transport mode");
+                    row.RelativeColumn().Text("Distance");
                     row.RelativeColumn().Text("Duration");
                     row.RelativeColumn().Text("Average speed");
                     row.RelativeColumn().Text("Fuel used");
-                    row.RelativeColumn().Text("Weather");
-                    row.RelativeColumn().Text("Effort");
+                    row.RelativeColumn().AlignRight().Text("Weather");
+                    row.RelativeColumn().AlignRight().Text("Effort");
                     row.RelativeColumn().AlignRight().Text("Report");
                     row.RelativeColumn().AlignRight().Text("Rating");
                 });
@@ -126,12 +129,12 @@ namespace TourPlanner.DataAccessLayer
                             stack.Element().BorderBottom(1).BorderColor("CCC").Padding(5).Row(row =>
                             {
                                 row.RelativeColumn().Text(log.Date);
-                                row.RelativeColumn().Text(log.TransportMode);
+                                row.RelativeColumn().Text(log.Distance);
                                 row.RelativeColumn().Text(log.Duration);
                                 row.RelativeColumn().Text(log.AverageSpeed);
                                 row.RelativeColumn().Text(log.FuelUsed);
-                                row.RelativeColumn().Text(log.Weather);
-                                row.RelativeColumn().Text(log.Effort);
+                                row.RelativeColumn().AlignRight().Text(log.Weather);
+                                row.RelativeColumn().AlignRight().Text(log.Effort);
                                 row.RelativeColumn().AlignRight().Text(log.Report);
                                 row.RelativeColumn().AlignRight().Text(log.Rating);
                             });
