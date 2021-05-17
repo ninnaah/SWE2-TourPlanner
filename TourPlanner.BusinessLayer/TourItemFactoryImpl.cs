@@ -87,5 +87,12 @@ namespace TourPlanner.BusinessLayer
         {
             return _tourLogItemDAO.DeleteTourLog(tourLog);
         }
+
+
+
+        public void ExportTours()
+        {
+            _tourItemDAO.ExportTours();
+        }
     }
 }

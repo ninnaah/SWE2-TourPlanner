@@ -20,7 +20,7 @@ namespace TourPlanner.DataAccessLayer
 
         public void CreateTourReportPDF(TourItem tour, List<TourLogItem> logs)
         {
-            string fileName = $"{tour.Name}.pdf";
+            string fileName = "{tour.Name}.pdf";
 
             var document = new TourReport(tour, logs, _filePath);
             document.GeneratePdf(fileName);
@@ -38,7 +38,7 @@ namespace TourPlanner.DataAccessLayer
 
         public void CreateSummarizeReportPDF(List<TourLogItem> logs)
         {
-            string fileName = $"summarizeReport.pdf";
+            string fileName = "summarizeReport.pdf";
             float totalTime = 0;
             float totalDistance = 0;
 
@@ -71,6 +71,17 @@ namespace TourPlanner.DataAccessLayer
             document.GeneratePdf(path);
 
             //Process.Start("explorer.exe", fileName);*/
+        }
+
+
+        public void ExportTours(List<TourItem> tours)
+        {
+            string fileName= "tours.json";
+            string jsonString;
+            jsonString = JsonConvert.SerializeObject(tours);
+
+            File.WriteAllText(@"tours.json", jsonString);
+            Process.Start("explorer.exe", fileName);
         }
 
     }

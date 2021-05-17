@@ -98,6 +98,12 @@ namespace TourPlanner.DataAccessLayer
             FileSystem.CreateSummarizeReportPDF(allLogs);
         }
 
+        public void ExportTours()
+        {
+            List<TourItem> tours = DataAccess.GetTours();
+            FileSystem.ExportTours(tours);
+        }
+
 
     }
 

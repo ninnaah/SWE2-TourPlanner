@@ -14,6 +14,8 @@ namespace TourPlanner.BusinessLayer
         void CreateTourReport(TourItem tour);
         void CreateSummarizeReport();
 
+        void ExportTours();
+
 
         IEnumerable<TourLogItem> GetTourLogsForTour(string name);
         bool AddTourLog(TourLogItem tourLog);

@@ -25,8 +25,8 @@
                         <MenuItem Header="File">
                             <MenuItem Header="Print tour report" Command="{Binding PrintTourReportCommand}" />
                             <MenuItem Header="Print summarize report" Command="{Binding PrintSummarizeReportCommand}" />
-                            <MenuItem Header="Import tour" />
-                            <MenuItem Header="Export tour" />
+                            <MenuItem Header="Import tours" Command="{Binding OpenImportToursWinCommand}"/>
+                            <MenuItem Header="Export tours" Command="{Binding ExportToursCommand}"/>
                         </MenuItem>
                     </Menu>
                 </DockPanel>

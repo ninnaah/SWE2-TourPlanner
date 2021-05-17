@@ -17,7 +17,9 @@ namespace TourPlanner.DataAccessLayer
         private string _sql;
         private NpgsqlCommand _cmd;
 
-        private static readonly ILog _logger = LogManager.GetLogger(typeof(DBConnection));
+        //private static readonly ILog _logger = LogManager.GetLogger(typeof(DBConnection));
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger("DBConnection.cs");
+        
 
         public DBConnection(Config config)
         {
@@ -30,10 +32,12 @@ namespace TourPlanner.DataAccessLayer
             List<TourItem> tours = new List<TourItem>();
             try
             {
-
+                //log.Info(String.Format("No Image Found for Tour: {0} \n  Error: {1}", tour.ID, e.Message));
                 //XmlConfigurator.Configure(new System.IO.FileInfo("log4net.config.xml"));
-                _logger.Info("DB Get Tours");
-                _logger.Error("DB Get Tours");
+                log.Info("DB get tours");
+
+                //_logger.Info("DB Get Tours");
+                //_logger.Error("DB Get Tours");
 
                 _conn.Open();
                 _sql = "select * from tour";

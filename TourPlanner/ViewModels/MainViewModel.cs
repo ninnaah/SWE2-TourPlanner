@@ -33,6 +33,8 @@ namespace TourPlanner.ViewModels
         private ICommand _deleteLogCommand;
         private TourLogItem _currentTourLog;
 
+        private ICommand _exportToursCommand;
+
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
         public ICommand PrintTourReportCommand => _printTourReportCommand ??= new RelayCommand(PrintTourReport);
@@ -45,6 +47,8 @@ namespace TourPlanner.ViewModels
         public ICommand DeleteLogCommand => _deleteLogCommand ??= new RelayCommand(DeleteLog);
         public ICommand OpenEditTourLogWinCommand => _openEditTourLogWinCommand ??= new RelayCommand(EditLog);
 
+
+        public ICommand ExportToursCommand => _exportToursCommand ??= new RelayCommand(ExportTours);
 
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
@@ -288,6 +292,15 @@ namespace TourPlanner.ViewModels
 
             RaisePropertyChangedEvent(nameof(TourLogs));
         }
+
+        private void ExportTours(object commandParameter)
+        {
+            _tourFactory.ExportTours();
+        }
+
+
+
+
 
     }
 
