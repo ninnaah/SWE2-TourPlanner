@@ -94,5 +94,10 @@ namespace TourPlanner.BusinessLayer
         {
             _tourItemDAO.ExportTours();
         }
+
+        public IEnumerable<TourItem> ImportTours(string filePath)
+        {
+            return _tourItemDAO.ImportTours(filePath);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -34,13 +35,14 @@ namespace TourPlanner.ViewModels
         private TourLogItem _currentTourLog;
 
         private ICommand _exportToursCommand;
+        private ICommand _openImportToursWinCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
         public ICommand PrintTourReportCommand => _printTourReportCommand ??= new RelayCommand(PrintTourReport);
         public ICommand PrintSummarizeReportCommand => _printSummarizeReportCommand ??= new RelayCommand(PrintSummarizeReport);
-        public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(Add);
-        public ICommand OpenEditTourWinCommand => _openEditTourWinCommand ??= new RelayCommand(Edit);
+        public ICommand OpenAddTourWinCommand => _openAddTourWinCommand ??= new RelayCommand(AddTour);
+        public ICommand OpenEditTourWinCommand => _openEditTourWinCommand ??= new RelayCommand(EditTour);
 
 
         public ICommand OpenAddTourLogWinCommand => _openAddTourLogWinCommand ??= new RelayCommand(AddLog);
@@ -49,6 +51,7 @@ namespace TourPlanner.ViewModels
 
 
         public ICommand ExportToursCommand => _exportToursCommand ??= new RelayCommand(ExportTours);
+        public ICommand OpenImportToursWinCommand => _openImportToursWinCommand ??= new RelayCommand(ImportTours);
 
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
@@ -109,15 +112,8 @@ namespace TourPlanner.ViewModels
                         return bitmap;
                     }
                 }
-                
-                    
-                    
-                    /*if (CurrentTour != null)
-                {
-                    return new Uri($"{_filePath}/maps/{CurrentTour.Name}.png");
-                }*/
+
                 return null;
-                
             }
         }
 
@@ -186,37 +182,37 @@ namespace TourPlanner.ViewModels
             CreateList();
             RaisePropertyChangedEvent(nameof(Tours));
         }
-        private void Add(object commandParameter)
+        private void AddTour(object commandParameter)
         {
             AddTourWindow addTourWindow = new AddTourWindow();
             AddTourViewModel addTourVM = new AddTourViewModel();
 
-            addTourVM.AddedTour += (_, tour) => { AddTour(tour); };
+            addTourVM.AddedTour += (_, tour) => { Add(tour); };
             addTourWindow.DataContext = addTourVM;
 
             addTourWindow.ShowDialog();
         }
-        private void AddTour(TourItem tour)
+        private void Add(TourItem tour)
         {
             _tourFactory.AddTour(tour);
             Tours.Add(tour);
 
             RaisePropertyChangedEvent(nameof(Tours));
         }
-        private void Edit(object commandParameter)
+        private void EditTour(object commandParameter)
         {
             if(CurrentTour != null) 
             {
                 EditTourWindow editTourWindow = new EditTourWindow();
                 EditTourViewModel editTourVM = new EditTourViewModel(CurrentTour);
 
-                editTourVM.EditedTour += (_, tour) => { EditTour(tour); };
+                editTourVM.EditedTour += (_, tour) => { Edit(tour); };
                 editTourWindow.DataContext = editTourVM;
 
                 editTourWindow.ShowDialog();
             }
         }
-        private void EditTour(TourItem tour)
+        private void Edit(TourItem tour)
         {
             _tourFactory.DeleteTour(CurrentTour);
             _tourFactory.AddTour(tour);
@@ -297,9 +293,29 @@ namespace TourPlanner.ViewModels
         {
             _tourFactory.ExportTours();
         }
+        private void ImportTours(object commandParameter)
+        {
+            ImportToursWindow importToursWindow = new ImportToursWindow();
+            ImportToursViewModel importToursVM = new ImportToursViewModel();
 
+            importToursVM.ImportedTours += (_, filePath) => { Import(filePath); };
+            importToursWindow.DataContext = importToursVM;
 
+            importToursWindow.ShowDialog();
+        }
 
+        private void Import(string filePath)
+        {
+            IEnumerable<TourItem> tours = _tourFactory.ImportTours(filePath);
+
+            foreach(TourItem tour in tours)
+            {
+                _tourFactory.AddTour(tour);
+                Tours.Add(tour);
+            }
+            
+            RaisePropertyChangedEvent(nameof(Tours));
+        }
 
 
     }

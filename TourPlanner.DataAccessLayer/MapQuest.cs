@@ -55,10 +55,14 @@ namespace TourPlanner.DataAccessLayer
             HttpResponseMessage response = await httpClient.GetAsync(getRequest);
             string responseBody = await response.Content.ReadAsStringAsync();
 
+            Debug.WriteLine("Body: " + responseBody);
+
             JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
             _boundingBox = obj["route"]["boundingBox"] as JObject;
 
             _sessionId = (string)obj["route"]["sessionId"];
+
+            Debug.WriteLine(_tour.Name+" - Sessionid1: " + _sessionId);
 
             routeValues[0] = (float)obj["route"]["distance"]; //in km
             routeValues[1] = (float)obj["route"]["time"]; //in sec
@@ -79,6 +83,9 @@ namespace TourPlanner.DataAccessLayer
             string filePath = $@"{_dirPath}/maps/{_tour.Name}.png";
 
             string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={_sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
+
+            Debug.WriteLine(_tour.Name + " - Sessionid2: " + _sessionId);
+
 
             using WebClient client = new();
             await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);

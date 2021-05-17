@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using TourPlanner.Models;
 using QuestPDF.Fluent;
+using Newtonsoft.Json.Linq;
 
 namespace TourPlanner.DataAccessLayer
 {
@@ -82,6 +83,12 @@ namespace TourPlanner.DataAccessLayer
 
             File.WriteAllText(@"tours.json", jsonString);
             Process.Start("explorer.exe", fileName);
+        }
+
+        public IEnumerable<TourItem> ImportTours(string filePath)
+        {
+            List<TourItem> tours = JsonConvert.DeserializeObject<List<TourItem>>(File.ReadAllText(filePath));
+            return tours;
         }
 
     }

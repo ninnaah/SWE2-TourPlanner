@@ -104,6 +104,11 @@ namespace TourPlanner.DataAccessLayer
             FileSystem.ExportTours(tours);
         }
 
+        public IEnumerable<TourItem> ImportTours(string filePath)
+        {
+            return FileSystem.ImportTours(filePath);
+        }
+
 
     }
 
