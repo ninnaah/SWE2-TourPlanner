@@ -6,9 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ImportToursViewModel}"
         mc:Ignorable="d"
-        Height="280"
+        Height="150"
         Width="300"
-        MinHeight="280"
+        MinHeight="150"
         MinWidth="300"
         Title="ImportTours">
     <Grid>
@@ -25,7 +25,7 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Import Tour" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
         <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = ImportToursWin}">Close</Button>
 
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="FilePath" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="File path:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="1" Grid.Column="1" Name="filePath" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding FilePath}"></TextBox>
 
 

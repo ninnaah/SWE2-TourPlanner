@@ -27,16 +27,7 @@ namespace TourPlanner.DataAccessLayer
             document.GeneratePdf(fileName);
 
             Process.Start("explorer.exe", fileName);
-
-            /*string fileName = $"{tour.Name}.pdf";
-            string path = $"{_filePath}/report/{fileName}";
-
-            var document = new TourReport(tour, logs, _filePath);
-            document.GeneratePdf(path);
-
-            //Process.Start("explorer.exe", fileName);*/
         }
-
         public void CreateSummarizeReportPDF(List<TourLogItem> logs)
         {
             string fileName = "summarizeReport.pdf";
@@ -53,25 +44,6 @@ namespace TourPlanner.DataAccessLayer
             document.GeneratePdf(fileName);
 
             Process.Start("explorer.exe", fileName);
-
-            /*string fileName = $"summarizeReport.pdf";
-            string path = $"{_filePath}/report/{fileName}";
-            float totalTime = 0;
-            float totalDistance = 0;
-
-            foreach(TourLogItem log in logs)
-            {
-                totalTime += log.Duration;
-            }
-            foreach (TourItem tour in tours)
-            {
-                totalDistance += tour.Distance;
-            }
-
-            var document = new SummarizeReport(totalTime, totalDistance);
-            document.GeneratePdf(path);
-
-            //Process.Start("explorer.exe", fileName);*/
         }
 
 
@@ -79,12 +51,11 @@ namespace TourPlanner.DataAccessLayer
         {
             string fileName= "tours.json";
             string jsonString;
-            jsonString = JsonConvert.SerializeObject(tours);
+            jsonString = JsonConvert.SerializeObject(tours, Formatting.Indented);
 
             File.WriteAllText(@"tours.json", jsonString);
             Process.Start("explorer.exe", fileName);
         }
-
         public IEnumerable<TourItem> ImportTours(string filePath)
         {
             List<TourItem> tours = JsonConvert.DeserializeObject<List<TourItem>>(File.ReadAllText(filePath));

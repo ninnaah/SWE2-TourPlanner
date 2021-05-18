@@ -32,15 +32,6 @@ namespace TourPlanner.DataAccessLayer
                 .Build();
 
             Config = config.Get<Config>();
-
-            /*Debug.WriteLine("Configuration:");
-            config
-                .AsEnumerable()
-                .OrderBy(x => x.Key)
-                .ToList()
-                .ForEach(x => Debug.WriteLine("|" + x.Key + "|" + x.Value + "|")); // see that it is a key-value store and not a complex structured json (the json is a lie!)
-
-            */
         }
 
         public string GetFilePath()
@@ -54,13 +45,12 @@ namespace TourPlanner.DataAccessLayer
         }
         public async void GetTourMap(TourItem tour)
         {
-            MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath, tour);
+            MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath);
 
-            float[] routeValues = await mapQuest.GetTourValues();
+            float[] routeValues = await mapQuest.GetTourValues(tour);
             tour.Distance = routeValues[0]; //in km
             tour.Duration = routeValues[1]/60; //in min
             tour.FuelUsed = routeValues[2]; //in liter
-
 
             AddTour(tour);
         }
@@ -72,7 +62,12 @@ namespace TourPlanner.DataAccessLayer
 
         public bool DeleteTour(TourItem tour)
         {
-            //File.Delete(@$"{Config.filePath}/maps/{tour.Name}.png");
+            if (File.Exists($"{Config.FilePath}/maps/{tour.Name}.png"))
+            {
+                File.Move($"{Config.FilePath}/maps/{tour.Name}.png", $"{Config.FilePath}/maps/{tour.Name}-tmp.png");
+                File.Delete(@$"{Config.FilePath}/maps/{tour.Name}-tmp.png");
+            }
+            
             return DataAccess.DeleteTour(tour);
         }
 

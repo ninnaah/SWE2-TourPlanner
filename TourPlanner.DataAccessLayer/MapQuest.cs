@@ -14,78 +14,69 @@ namespace TourPlanner.DataAccessLayer
 {
     public class MapQuest
     {
-        public static TourItem _tour;
-        private static string _sessionId;
         private static JObject _boundingBox;
         private static string _key;
         private static string _dirPath;
 
         private static readonly ILog _logger = LogManager.GetLogger(typeof(MapQuest));
 
-        public MapQuest(string key, string dirPath, TourItem tour)
+        public MapQuest(string key, string dirPath)
         {
-            _tour = tour;
             _dirPath = dirPath;
             _key = key;
         }
 
-        public async Task<float[]> GetTourValues()
+        public async Task<float[]> GetTourValues(TourItem tour)
         {
             _logger.Info("Starting MapQuest Request");
             _logger.Error("Starting MapQuest Request");
 
-            Task<float[]> routeValuesTask = SendRouteRequest();
+            Task<float[]> routeValuesTask = SendRouteRequest(tour);
             float[] routeValues = await routeValuesTask;
-
-            SendMapRequest();
 
             return routeValues;
         }
 
-        public static async Task<float[]> SendRouteRequest()
+        public static async Task<float[]> SendRouteRequest(TourItem tour)
         {
-            string mode = _tour.TransportMode;
+            string mode = tour.TransportMode;
+
             float[] routeValues = new float[3];
 
             if (mode == "Car")
                 mode = "fastest";
 
-            string getRequest = $"http://www.mapquestapi.com/directions/v2/route?key={_key}&from={_tour.From}&to={_tour.To}&routeType={mode}";
+            string getRequest = $"http://www.mapquestapi.com/directions/v2/route?key={_key}&from={tour.From}&to={tour.To}&routeType={mode}";
+
             HttpClient httpClient = new HttpClient();
             HttpResponseMessage response = await httpClient.GetAsync(getRequest);
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            Debug.WriteLine("Body: " + responseBody);
-
             JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
+
             _boundingBox = obj["route"]["boundingBox"] as JObject;
-
-            _sessionId = (string)obj["route"]["sessionId"];
-
-            Debug.WriteLine(_tour.Name+" - Sessionid1: " + _sessionId);
+            string sessionId = (string)obj["route"]["sessionId"];
 
             routeValues[0] = (float)obj["route"]["distance"]; //in km
             routeValues[1] = (float)obj["route"]["time"]; //in sec
             routeValues[2] = (float)obj["route"]["fuelUsed"]; //in liter
 
+            SendMapRequest(tour, sessionId);
+
             return routeValues;
         }
 
-        public static async void SendMapRequest()
+        public static async void SendMapRequest(TourItem tour, string sessionId)
         {
             string lowerRightLng = (string)_boundingBox["lr"]["lng"];
             string lowerRightLat = (string)_boundingBox["lr"]["lat"];
             string upperLeftLng = (string)_boundingBox["ul"]["lng"];
             string upperLeftLat = (string)_boundingBox["ul"]["lat"];
 
-
             Directory.CreateDirectory($@"{_dirPath}/maps/");
-            string filePath = $@"{_dirPath}/maps/{_tour.Name}.png";
+            string filePath = $@"{_dirPath}/maps/{tour.Name}.png";
 
-            string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={_sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
-
-            Debug.WriteLine(_tour.Name + " - Sessionid2: " + _sessionId);
-
+            string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
 
             using WebClient client = new();
             await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);

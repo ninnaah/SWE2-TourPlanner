@@ -55,7 +55,14 @@ namespace TourPlanner.ViewModels
 
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
-        
+
+
+        public MainViewModel()
+        {
+            _tourFactory = TourItemFactory.GetInstance();
+            CreateList();
+            _filePath = _tourFactory.GetFilePath();
+        }
 
         public TourItem CurrentTour 
         {
@@ -134,12 +141,6 @@ namespace TourPlanner.ViewModels
             }
         }
 
-        public MainViewModel()
-        {
-            _tourFactory = TourItemFactory.GetInstance();
-            CreateList();
-            _filePath = _tourFactory.GetFilePath();
-        }
 
         protected void CreateList()
         {
@@ -221,7 +222,6 @@ namespace TourPlanner.ViewModels
             Tours.Add(tour);
 
             RaisePropertyChangedEvent(nameof(Tours));
-            CreateList();
         }
         private void PrintTourReport(object commandParameter)
         {
@@ -249,7 +249,6 @@ namespace TourPlanner.ViewModels
         }
         private void AddTourLog(TourLogItem tourLog)
         {
-
             _tourFactory.AddTourLog(tourLog);
 
             TourLogs.Add(tourLog);
