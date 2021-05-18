@@ -21,7 +21,7 @@ namespace TourPlanner.DataAccessLayer
 
         public void CreateTourReportPDF(TourItem tour, List<TourLogItem> logs)
         {
-            string fileName = "{tour.Name}.pdf";
+            string fileName = $"{tour.Name}.pdf";
 
             var document = new TourReport(tour, logs, _filePath);
             document.GeneratePdf(fileName);

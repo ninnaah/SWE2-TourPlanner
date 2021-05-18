@@ -112,7 +112,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 section.Header().BorderBottom(1).Padding(5).Row(row =>
                 {
-                    row.RelativeColumn().Text("Date");
+                    row.ConstantColumn(70).Text("Date");
                     row.RelativeColumn().Text("Distance (km)");
                     row.RelativeColumn().Text("Duration (min)");
                     row.RelativeColumn().Text("Average speed (km/h)");
@@ -131,7 +131,7 @@ namespace TourPlanner.DataAccessLayer
                         {
                             stack.Element().BorderBottom(1).BorderColor("CCC").Padding(5).Row(row =>
                             {
-                                row.RelativeColumn().Text(log.Date);
+                                row.ConstantColumn(70).Text(log.Date.ToString("MM/dd/yyyy"));
                                 row.RelativeColumn().Text(log.Distance);
                                 row.RelativeColumn().Text(log.Duration);
                                 row.RelativeColumn().Text(log.AverageSpeed);

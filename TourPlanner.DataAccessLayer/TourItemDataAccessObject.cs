@@ -54,12 +54,10 @@ namespace TourPlanner.DataAccessLayer
 
             AddTour(tour);
         }
-
         public bool AddTour(TourItem tour)
         {
             return DataAccess.AddTour(tour);
         }
-
         public bool DeleteTour(TourItem tour)
         {
             if (File.Exists($"{Config.FilePath}/maps/{tour.Name}.png"))
@@ -70,6 +68,8 @@ namespace TourPlanner.DataAccessLayer
             
             return DataAccess.DeleteTour(tour);
         }
+
+
 
         public void CreateTourReport(TourItem tour)
         {
@@ -86,19 +86,18 @@ namespace TourPlanner.DataAccessLayer
 
             FileSystem.CreateTourReportPDF(tour, logs);
         }
-
         public void CreateSummarizeReport()
         {
             List<TourLogItem> allLogs = DataAccess.GetTourLogs();
             FileSystem.CreateSummarizeReportPDF(allLogs);
         }
 
+
         public void ExportTours()
         {
             List<TourItem> tours = DataAccess.GetTours();
             FileSystem.ExportTours(tours);
         }
-
         public IEnumerable<TourItem> ImportTours(string filePath)
         {
             return FileSystem.ImportTours(filePath);

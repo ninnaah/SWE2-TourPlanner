@@ -11,6 +11,7 @@ namespace TourPlanner.BusinessLayer
         IEnumerable<TourItem> Search(string tourName);
         bool AddTour(TourItem tour);
         bool DeleteTour(TourItem tour);
+
         void CreateTourReport(TourItem tour);
         void CreateSummarizeReport();
 

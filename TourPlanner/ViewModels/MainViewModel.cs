@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,7 @@ namespace TourPlanner.ViewModels
     {
         private ITourItemFactory _tourFactory;
         private string _filePath;
+
         private ICommand _searchCommand;
         private ICommand _deleteCommand;
         private ICommand _printTourReportCommand;
@@ -35,7 +37,7 @@ namespace TourPlanner.ViewModels
         private TourLogItem _currentTourLog;
 
         private ICommand _exportToursCommand;
-        private ICommand _openImportToursWinCommand;
+        private ICommand _openFileDialogCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
@@ -51,7 +53,7 @@ namespace TourPlanner.ViewModels
 
 
         public ICommand ExportToursCommand => _exportToursCommand ??= new RelayCommand(ExportTours);
-        public ICommand OpenImportToursWinCommand => _openImportToursWinCommand ??= new RelayCommand(ImportTours);
+        public ICommand OpenFileDialogCommand => _openFileDialogCommand ??= new RelayCommand(ImportTours);
 
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
@@ -216,9 +218,15 @@ namespace TourPlanner.ViewModels
         private void Edit(TourItem tour)
         {
             _tourFactory.DeleteTour(CurrentTour);
-            _tourFactory.AddTour(tour);
+           
+            Tours.Clear();
 
-            Tours.Remove(CurrentTour);
+            foreach (TourItem item in this._tourFactory.GetTours())
+            {
+                Tours.Add(item);
+            }
+
+            _tourFactory.AddTour(tour);
             Tours.Add(tour);
 
             RaisePropertyChangedEvent(nameof(Tours));
@@ -288,19 +296,26 @@ namespace TourPlanner.ViewModels
             RaisePropertyChangedEvent(nameof(TourLogs));
         }
 
+
+
         private void ExportTours(object commandParameter)
         {
             _tourFactory.ExportTours();
         }
         private void ImportTours(object commandParameter)
         {
-            ImportToursWindow importToursWindow = new ImportToursWindow();
-            ImportToursViewModel importToursVM = new ImportToursViewModel();
+            string fileName;
 
-            importToursVM.ImportedTours += (_, filePath) => { Import(filePath); };
-            importToursWindow.DataContext = importToursVM;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "json files (*.json)|*.json"; 
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.Multiselect = false;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.ShowDialog();
 
-            importToursWindow.ShowDialog();
+            fileName = openFileDialog.FileName;
+            Import(fileName);
         }
 
         private void Import(string filePath)

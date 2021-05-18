@@ -28,7 +28,6 @@ namespace TourPlanner.BusinessLayer
         }
         public bool AddTour(TourItem tour)
         {
-            //return _tourItemDAO.AddTour(tour);
             try
             {
                 _tourItemDAO.GetTourMap(tour);
@@ -46,16 +45,27 @@ namespace TourPlanner.BusinessLayer
             return _tourItemDAO.DeleteTour(tour);
         }
 
+
+
         public void CreateTourReport(TourItem tour)
         {
             _tourItemDAO.CreateTourReport(tour);
         }
-
         public void CreateSummarizeReport()
         {
             _tourItemDAO.CreateSummarizeReport();
         }
 
+
+
+        public void ExportTours()
+        {
+            _tourItemDAO.ExportTours();
+        }
+        public IEnumerable<TourItem> ImportTours(string filePath)
+        {
+            return _tourItemDAO.ImportTours(filePath);
+        }
 
 
 
@@ -76,28 +86,16 @@ namespace TourPlanner.BusinessLayer
 
             return currentLogs;
         }
-
         public bool AddTourLog(TourLogItem tourLog)
         {
             return _tourLogItemDAO.AddTourLog(tourLog);
 
         }
-
         public bool DeleteTourLog(TourLogItem tourLog)
         {
             return _tourLogItemDAO.DeleteTourLog(tourLog);
         }
 
 
-
-        public void ExportTours()
-        {
-            _tourItemDAO.ExportTours();
-        }
-
-        public IEnumerable<TourItem> ImportTours(string filePath)
-        {
-            return _tourItemDAO.ImportTours(filePath);
-        }
     }
 }

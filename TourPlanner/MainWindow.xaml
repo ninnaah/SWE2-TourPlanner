@@ -25,7 +25,7 @@
                         <MenuItem Header="File">
                             <MenuItem Header="Print tour report" Command="{Binding PrintTourReportCommand}" />
                             <MenuItem Header="Print summarize report" Command="{Binding PrintSummarizeReportCommand}" />
-                            <MenuItem Header="Import tours" Command="{Binding OpenImportToursWinCommand}"/>
+                            <MenuItem Header="Import tours" Command="{Binding OpenFileDialogCommand}"/>
                             <MenuItem Header="Export tours" Command="{Binding ExportToursCommand}"/>
                         </MenuItem>
                     </Menu>
@@ -78,7 +78,13 @@
                                 <Button Name="editTour" Margin="5" Grid.Column="3" MinWidth="30" Command="{Binding OpenEditTourWinCommand}">edit</Button>
                             </Grid>
 
-                            <ListBox Grid.Row="1" ItemsSource="{Binding Tours}" SelectionMode="Extended" SelectedItem="{Binding CurrentTour}" DisplayMemberPath="Name" Name="listTours"></ListBox>
+                            <ListView Grid.Row="1" ItemsSource="{Binding Tours}" SelectedItem="{Binding CurrentTour}" Name="listTours">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
                         </Grid>
                     </Grid>
