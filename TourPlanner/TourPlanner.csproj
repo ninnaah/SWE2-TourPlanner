@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\TourPlanner.Models.csproj" />
+    <ProjectReference Include="..\RatingControl\RatingControl.csproj" />
     <ProjectReference Include="..\TourPlanner.BusinessLayer\TourPlanner.BusinessLayer.csproj" />
   </ItemGroup>
 

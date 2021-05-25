@@ -4,7 +4,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddTourLogViewModel}"
+        xmlns:viewmodels="clr-namespace:TourPlanner.ViewModels" 
+        xmlns:rating="clr-namespace:RatingControl;assembly=RatingControl"
+        d:DataContext="{d:DesignInstance Type=viewmodels:AddTourLogViewModel}"
         mc:Ignorable="d"
         Height="340"
         Width="300"
@@ -42,15 +44,15 @@
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Weather" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogWeather" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogWeather}"></TextBox>
-        
+
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Effort" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Name="tourLogEffort" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogEffort}"></TextBox>
-        
+        <Slider Grid.Row="5" Grid.Column="1" Maximum="10" Margin="7,7,30,7" Value="{Binding TourLogEffort}"/>
+
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="6" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="7" Grid.Column="1" Name="tourLogRating" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogRating}"></TextBox>
+        <rating:Rating Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="7,7,30,7" Value="{Binding TourLogRating, Mode=TwoWay}"/>
 
         <Button Grid.Row="8" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourLogCommand}">Send</Button>
 
