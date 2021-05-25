@@ -14,15 +14,14 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10*"/>
                 </Grid.ColumnDefinitions>
 
                 <DockPanel Grid.Column="0" Margin="5">
                     <Menu>
-                        <MenuItem Header="File">
+                        <MenuItem Header="File" >
                             <MenuItem Header="Print tour report" Command="{Binding PrintTourReportCommand}" />
                             <MenuItem Header="Print summarize report" Command="{Binding PrintSummarizeReportCommand}" />
                             <MenuItem Header="Import tours" Command="{Binding OpenFileDialogCommand}"/>
@@ -31,11 +30,20 @@
                     </Menu>
                 </DockPanel>
 
+                <DockPanel Grid.Column="1" Margin="5">
+                    <Menu>
+                        <MenuItem Header="Edit">
+                            <MenuItem Header="Add tour" Command="{Binding OpenAddTourWinCommand}" />
+                            <MenuItem Header="Delete tour" Command="{Binding DeleteCommand}" />
+                            <MenuItem Header="Edit tour" Command="{Binding OpenEditTourWinCommand}"/>
+                            <MenuItem Header="Add tour log" Command="{Binding OpenAddTourLogWinCommand}" />
+                            <MenuItem Header="Delete tour log" Command="{Binding DeleteLogCommand}" />
+                            <MenuItem Header="Edit tour log" Command="{Binding OpenEditTourLogWinCommand}"/>
+                        </MenuItem>
+                    </Menu>
+                </DockPanel>
 
-
-                <Button Name="edit" Margin="5" Grid.Column="1" MinWidth="50">Edit</Button>
-                <Button Name="options" Margin="5" Grid.Column="2" MinWidth="60">Options</Button>
-                <Button Name="help" Margin="5" Grid.Column="3" MinWidth="50">Help</Button>
+                <Button Name="help" Margin="5" Grid.Column="2" MinWidth="50" HorizontalAlignment="Right">Help</Button>
             </Grid>
 
             <Grid>
@@ -178,7 +186,7 @@
                                     <Button Grid.Column="3" Name="editLog" Margin="5" MinWidth="30" Command="{Binding OpenEditTourLogWinCommand}">edit</Button>
                                 </Grid>
 
-                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" SelectedItem="{Binding CurrentTourLog}" MinHeight="100" Grid.Row="1" Margin="0,5,5,0">
+                                <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding TourLogs}" SelectionMode="Extended" ColumnWidth="*" SelectedItem="{Binding CurrentTourLog}" MinHeight="100" Grid.Row="1" Margin="0,5,5,0">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                                         <DataGridTextColumn Header="Duration (min)" Binding="{Binding Duration}"/>
@@ -186,9 +194,10 @@
                                         <DataGridTextColumn Header="Average speed (km/h)" Binding="{Binding AverageSpeed}"/>
                                         <DataGridTextColumn Header="Fuel used (liter)" Binding="{Binding FuelUsed}"/>
                                         <DataGridTextColumn Header="Weather" Binding="{Binding Weather}"/>
-                                        <DataGridTextColumn Header="Effort" Binding="{Binding Effort}"/>
+                                        <DataGridTextColumn Header="Temperature (°C)" Binding="{Binding Temperature}"/>
+                                        <DataGridTextColumn Header="Effort (0-10)" Binding="{Binding Effort}"/>
                                         <DataGridTextColumn Header="Report" Binding="{Binding Report}"/>
-                                        <DataGridTextColumn Header="Rating" Binding="{Binding Rating}"/>
+                                        <DataGridTextColumn Header="Rating (0-5)" Binding="{Binding Rating}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
 

@@ -247,13 +247,16 @@ namespace TourPlanner.ViewModels
         //LOGS
         private void AddLog(object commandParameter)
         {
-            AddTourLogWindow addTourLogWindow = new AddTourLogWindow();
-            AddTourLogViewModel addTourLogVM = new AddTourLogViewModel(CurrentTour.Name);
+            if (CurrentTour != null)
+            {
+                AddTourLogWindow addTourLogWindow = new AddTourLogWindow();
+                AddTourLogViewModel addTourLogVM = new AddTourLogViewModel(CurrentTour.Name);
 
-            addTourLogVM.AddedTourLog += (_, tourLog) => { AddTourLog(tourLog); };
-            addTourLogWindow.DataContext = addTourLogVM;
+                addTourLogVM.AddedTourLog += (_, tourLog) => { AddTourLog(tourLog); };
+                addTourLogWindow.DataContext = addTourLogVM;
 
-            addTourLogWindow.ShowDialog();
+                addTourLogWindow.ShowDialog();
+            }
         }
         private void AddTourLog(TourLogItem tourLog)
         {

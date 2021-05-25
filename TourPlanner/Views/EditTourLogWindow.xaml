@@ -9,12 +9,13 @@
         d:DataContext="{d:DesignInstance Type=viewmodels:EditTourLogViewModel}"
         mc:Ignorable="d"
         Title="EditTourLog"
-        Height="340"
-        Width="300"
-        MinHeight="340"
-        MinWidth="300">
+        Height="380"
+        Width="340"
+        MinHeight="380"
+        MinWidth="340">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -45,16 +46,19 @@
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Weather" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogWeather" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogWeather}"></TextBox>
 
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Effort" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <Slider Grid.Row="5" Grid.Column="1" Maximum="10" Margin="7,7,30,7" Value="{Binding TourLogEffort}"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Temperature (°C)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="1" Name="tourLogTemperature" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogTemperature}"></TextBox>
 
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="6" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Effort" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <Slider Grid.Row="6" Grid.Column="1" Maximum="10" Margin="7,7,30,7" Value="{Binding TourLogEffort}"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <rating:Rating Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="7,7,30,7" Value="{Binding TourLogRating, Mode=TwoWay}"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
 
-        <Button Grid.Row="8" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourLogCommand}">Send</Button>
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
+        <rating:Rating Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="7,7,30,7" Value="{Binding TourLogRating, Mode=TwoWay}"/>
+
+        <Button Grid.Row="9" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendEditTourLogCommand}">Send</Button>
 
     </Grid>
 </Window>

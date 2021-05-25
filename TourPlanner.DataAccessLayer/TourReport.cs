@@ -118,6 +118,7 @@ namespace TourPlanner.DataAccessLayer
                     row.RelativeColumn().Text("Average speed (km/h)");
                     row.RelativeColumn().Text("Fuel used (liter)");
                     row.RelativeColumn().AlignRight().Text("Weather");
+                    row.RelativeColumn().AlignRight().Text("Temperature (°C)");
                     row.RelativeColumn().AlignRight().Text("Effort");
                     row.RelativeColumn().AlignRight().Text("Report");
                     row.RelativeColumn().AlignRight().Text("Rating");
@@ -137,6 +138,7 @@ namespace TourPlanner.DataAccessLayer
                                 row.RelativeColumn().Text(log.AverageSpeed);
                                 row.RelativeColumn().Text(log.FuelUsed);
                                 row.RelativeColumn().AlignRight().Text(log.Weather);
+                                row.RelativeColumn().AlignRight().Text(log.Temperature);
                                 row.RelativeColumn().AlignRight().Text(log.Effort);
                                 row.RelativeColumn().AlignRight().Text(log.Report);
                                 row.RelativeColumn().AlignRight().Text(log.Rating);

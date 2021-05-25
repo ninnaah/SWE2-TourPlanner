@@ -20,6 +20,7 @@ namespace TourPlanner.ViewModels
         private float _tourLogDuration;
         private float _tourLogFuelUsed;
         private string _tourLogWeather;
+        private float _tourLogTemperature;
         private int _tourLogEffort;
         private string _tourLogReport;
         private int _tourLogRating;
@@ -99,6 +100,22 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
+        public float TourLogTemperature
+        {
+            get
+            {
+                return _tourLogTemperature;
+            }
+
+            set
+            {
+                if (_tourLogTemperature != value)
+                {
+                    _tourLogTemperature = value;
+                    RaisePropertyChangedEvent(nameof(TourLogTemperature));
+                }
+            }
+        }
         public int TourLogEffort
         {
             get
@@ -151,7 +168,7 @@ namespace TourPlanner.ViewModels
 
         private void EditTourLog(object commandParameter)
         {
-            EditedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogFuelUsed, _tourLogWeather, _tourLogEffort));
+            EditedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogFuelUsed, _tourLogWeather, _tourLogTemperature, _tourLogEffort));
         }
 
 

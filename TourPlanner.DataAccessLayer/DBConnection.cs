@@ -138,7 +138,8 @@ namespace TourPlanner.DataAccessLayer
                         Duration = reader.GetFloat(6),
                         AverageSpeed = reader.GetFloat(7),
                         FuelUsed = reader.GetFloat(8),
-                        Distance = reader.GetFloat(9)
+                        Distance = reader.GetFloat(9),
+                        Temperature = reader.GetFloat(10)
                     });
 
                 _conn.Close();
@@ -157,7 +158,7 @@ namespace TourPlanner.DataAccessLayer
             try
             {
                 _conn.Open();
-                _sql = "insert into tourlog values (@tourname, @date, @report, @rating, @weather, @effort, @duration, @speed, @fuel, @distance)";
+                _sql = "insert into tourlog values (@tourname, @date, @report, @rating, @weather, @effort, @duration, @speed, @fuel, @distance, @temperature)";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
                 _cmd.Parameters.AddWithValue("tourname", tourLog.TourName);
@@ -170,6 +171,7 @@ namespace TourPlanner.DataAccessLayer
                 _cmd.Parameters.AddWithValue("weather", tourLog.Weather);
                 _cmd.Parameters.AddWithValue("effort", tourLog.Effort);
                 _cmd.Parameters.AddWithValue("distance", tourLog.Distance);
+                _cmd.Parameters.AddWithValue("temperature", tourLog.Temperature);
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
