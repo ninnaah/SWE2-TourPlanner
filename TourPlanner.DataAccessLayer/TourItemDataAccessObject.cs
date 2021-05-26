@@ -58,15 +58,15 @@ namespace TourPlanner.DataAccessLayer
         {
             return DataAccess.AddTour(tour);
         }
-        public bool DeleteTour(TourItem tour)
+        public bool DeleteTour(string tourName)
         {
-            if (File.Exists($"{Config.FilePath}/maps/{tour.Name}.png"))
+            if (File.Exists($"{Config.FilePath}/maps/{tourName}.png"))
             {
-                File.Move($"{Config.FilePath}/maps/{tour.Name}.png", $"{Config.FilePath}/maps/{tour.Name}-tmp.png");
-                File.Delete(@$"{Config.FilePath}/maps/{tour.Name}-tmp.png");
+                File.Move($"{Config.FilePath}/maps/{tourName}.png", $"{Config.FilePath}/maps/{tourName}-tmp.png");
+                File.Delete(@$"{Config.FilePath}/maps/{tourName}-tmp.png");
             }
             
-            return DataAccess.DeleteTour(tour);
+            return DataAccess.DeleteTour(tourName);
         }
 
 

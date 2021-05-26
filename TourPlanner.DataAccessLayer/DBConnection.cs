@@ -2,6 +2,7 @@
 using log4net.Config;
 using Newtonsoft.Json;
 using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -66,14 +67,26 @@ namespace TourPlanner.DataAccessLayer
                 _sql = "insert into tour values (@tourname, @description, @from, @to, @distance, @mode, @duration, @fuel)";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
-                _cmd.Parameters.AddWithValue("tourname", tour.Name);
-                _cmd.Parameters.AddWithValue("description", tour.Description);
-                _cmd.Parameters.AddWithValue("from", tour.From);
-                _cmd.Parameters.AddWithValue("to", tour.To);
-                _cmd.Parameters.AddWithValue("distance", tour.Distance);
-                _cmd.Parameters.AddWithValue("mode", tour.TransportMode);
-                _cmd.Parameters.AddWithValue("duration", tour.Duration);
-                _cmd.Parameters.AddWithValue("fuel", tour.FuelUsed);
+                _cmd.Parameters.Add(new NpgsqlParameter("tourname", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("description", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("from", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("to", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("distance", NpgsqlDbType.Numeric));
+                _cmd.Parameters.Add(new NpgsqlParameter("mode", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("duration", NpgsqlDbType.Numeric));
+                _cmd.Parameters.Add(new NpgsqlParameter("fuel", NpgsqlDbType.Numeric));
+
+                _cmd.Prepare();
+
+                _cmd.Parameters[0].Value = tour.Name;
+                _cmd.Parameters[1].Value = tour.Description;
+                _cmd.Parameters[2].Value = tour.From;
+                _cmd.Parameters[3].Value = tour.To;
+                _cmd.Parameters[4].Value = tour.Distance;
+                _cmd.Parameters[5].Value = tour.TransportMode;
+                _cmd.Parameters[6].Value = tour.Duration;
+                _cmd.Parameters[7].Value = tour.FuelUsed;
+
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
@@ -87,7 +100,7 @@ namespace TourPlanner.DataAccessLayer
             }
 
         }
-        public bool DeleteTour(TourItem tour)
+        public bool DeleteTour(string tourName)
         {
             try
             {
@@ -95,12 +108,17 @@ namespace TourPlanner.DataAccessLayer
                 _sql = "delete from tour where tourname=@name";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
-                _cmd.Parameters.AddWithValue("name", tour.Name);
+                _cmd.Parameters.Add(new NpgsqlParameter("tourname", NpgsqlDbType.Varchar));
+
+                _cmd.Prepare();
+
+                _cmd.Parameters[0].Value = tourName;
+
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
 
-                DeleteTourLog(tour.Name);
+                DeleteTourLog(tourName);
 
                 return true;
             }
@@ -161,17 +179,33 @@ namespace TourPlanner.DataAccessLayer
                 _sql = "insert into tourlog values (@tourname, @date, @report, @rating, @weather, @effort, @duration, @speed, @fuel, @distance, @temperature)";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
-                _cmd.Parameters.AddWithValue("tourname", tourLog.TourName);
-                _cmd.Parameters.AddWithValue("date", tourLog.Date);
-                _cmd.Parameters.AddWithValue("duration", tourLog.Duration);
-                _cmd.Parameters.AddWithValue("report", tourLog.Report);
-                _cmd.Parameters.AddWithValue("rating", tourLog.Rating);
-                _cmd.Parameters.AddWithValue("speed", tourLog.AverageSpeed);
-                _cmd.Parameters.AddWithValue("fuel", tourLog.FuelUsed);
-                _cmd.Parameters.AddWithValue("weather", tourLog.Weather);
-                _cmd.Parameters.AddWithValue("effort", tourLog.Effort);
-                _cmd.Parameters.AddWithValue("distance", tourLog.Distance);
-                _cmd.Parameters.AddWithValue("temperature", tourLog.Temperature);
+
+                _cmd.Parameters.Add(new NpgsqlParameter("tourname", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("date", NpgsqlDbType.Timestamp));
+                _cmd.Parameters.Add(new NpgsqlParameter("report", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("rating", NpgsqlDbType.Integer));
+                _cmd.Parameters.Add(new NpgsqlParameter("weather", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("effort", NpgsqlDbType.Integer));
+                _cmd.Parameters.Add(new NpgsqlParameter("duration", NpgsqlDbType.Numeric));
+                _cmd.Parameters.Add(new NpgsqlParameter("speed", NpgsqlDbType.Numeric));
+                _cmd.Parameters.Add(new NpgsqlParameter("fuel", NpgsqlDbType.Numeric));
+                _cmd.Parameters.Add(new NpgsqlParameter("distance", NpgsqlDbType.Numeric));
+                _cmd.Parameters.Add(new NpgsqlParameter("temperature", NpgsqlDbType.Numeric));
+
+                _cmd.Prepare();
+
+                _cmd.Parameters[0].Value = tourLog.TourName;
+                _cmd.Parameters[1].Value = tourLog.Date;
+                _cmd.Parameters[2].Value = tourLog.Report;
+                _cmd.Parameters[3].Value = tourLog.Rating;
+                _cmd.Parameters[4].Value = tourLog.Weather;
+                _cmd.Parameters[5].Value = tourLog.Effort;
+                _cmd.Parameters[6].Value = tourLog.Duration;
+                _cmd.Parameters[7].Value = tourLog.AverageSpeed;
+                _cmd.Parameters[8].Value = tourLog.FuelUsed;
+                _cmd.Parameters[9].Value = tourLog.Distance;
+                _cmd.Parameters[10].Value = tourLog.Temperature;
+
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
@@ -193,8 +227,14 @@ namespace TourPlanner.DataAccessLayer
                 _sql = "delete from tourLog where tourname=@name and logdate=@date";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
-                _cmd.Parameters.AddWithValue("name", tourLog.TourName);
-                _cmd.Parameters.AddWithValue("date", tourLog.Date);
+                _cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("date", NpgsqlDbType.Timestamp));
+
+                _cmd.Prepare();
+
+                _cmd.Parameters[0].Value = tourLog.TourName;
+                _cmd.Parameters[1].Value = tourLog.Date;
+
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();
@@ -217,7 +257,12 @@ namespace TourPlanner.DataAccessLayer
                 _sql = "delete from tourLog where tourname=@name";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
-                _cmd.Parameters.AddWithValue("name", tourName);
+                _cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlDbType.Varchar));
+
+                _cmd.Prepare();
+
+                _cmd.Parameters[0].Value = tourName;
+
                 _cmd.ExecuteNonQuery();
 
                 _conn.Close();

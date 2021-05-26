@@ -42,7 +42,7 @@ namespace TourPlanner.BusinessLayer
         }
         public bool DeleteTour(TourItem tour)
         {
-            return _tourItemDAO.DeleteTour(tour);
+            return _tourItemDAO.DeleteTour(tour.Name);
         }
 
 

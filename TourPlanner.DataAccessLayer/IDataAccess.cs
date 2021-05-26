@@ -8,7 +8,7 @@ namespace TourPlanner.DataAccessLayer
         //Tours
         public List<TourItem> GetTours();
         public bool AddTour(TourItem tour);
-        public bool DeleteTour(TourItem tour);
+        public bool DeleteTour(string tourName);
 
         //Logs
         public List<TourLogItem> GetTourLogs();

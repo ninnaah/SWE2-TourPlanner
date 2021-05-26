@@ -27,15 +27,17 @@ namespace TourPlanner.ViewModels
         
         public string TourName
         {
-            get
-            {
-                return _tourName;
-            }
+            get { return _tourName; }
 
             set
             {
                 if (_tourName != value)
                 {
+                    if(value.Length < 5 || value.Length > 15)
+                    {
+                        throw new ArgumentException("Tourname should be between 5 and 15 characters long");
+                    }
+
                     _tourName = value;
                     RaisePropertyChangedEvent(nameof(TourName));
                 }
@@ -43,15 +45,17 @@ namespace TourPlanner.ViewModels
         }
         public string TourDescription
         {
-            get
-            {
-                return _tourDescription;
-            }
+            get { return _tourDescription; }
 
             set
             {
                 if (_tourDescription != value)
                 {
+                    if (value.Length < 5 || value.Length > 50)
+                    {
+                        throw new ArgumentException("Description should be between 5 and 50 characters long");
+                    }
+
                     _tourDescription = value;
                     RaisePropertyChangedEvent(nameof(TourDescription));
                 }
@@ -59,15 +63,17 @@ namespace TourPlanner.ViewModels
         }
         public string TourFrom
         {
-            get
-            {
-                return _tourFrom;
-            }
+            get { return _tourFrom; }
 
             set
             {
                 if (_tourFrom != value)
                 {
+                    if (value.Length < 3 || value.Length > 20)
+                    {
+                        throw new ArgumentException("Starting point should be between 3 and 20 characters long");
+                    }
+
                     _tourFrom = value;
                     RaisePropertyChangedEvent(nameof(TourFrom));
                 }
@@ -75,15 +81,16 @@ namespace TourPlanner.ViewModels
         }
         public string TourTo
         {
-            get
-            {
-                return _tourTo;
-            }
+            get { return _tourTo; }
 
             set
             {
                 if (_tourTo != value)
                 {
+                    if (value.Length < 3 || value.Length > 20)
+                    {
+                        throw new ArgumentException("End point should be between 3 and 20 characters long");
+                    }
                     _tourTo = value;
                     RaisePropertyChangedEvent(nameof(TourTo));
                 }
@@ -92,15 +99,16 @@ namespace TourPlanner.ViewModels
 
         public string TourTransportMode
         {
-            get
-            {
-                return _tourTransportMode;
-            }
+            get { return _tourTransportMode; }
 
             set
             {
                 if (_tourTransportMode != value)
                 {
+                    if (String.IsNullOrEmpty(value))
+                    {
+                        throw new ArgumentException("Please choose transport mode");
+                    }
                     _tourTransportMode = value;
                     RaisePropertyChangedEvent(nameof(TourTransportMode));
                 }
@@ -110,7 +118,15 @@ namespace TourPlanner.ViewModels
 
         private void AddTour(object commandParameter)
         {
+            if(String.IsNullOrEmpty(_tourName) || String.IsNullOrEmpty(_tourDescription) || String.IsNullOrEmpty(_tourFrom) 
+                || String.IsNullOrEmpty(_tourTo) || String.IsNullOrEmpty(_tourTransportMode))
+            {
+                throw new ArgumentException("Please enter all fields");
+            }
+
             AddedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourTransportMode));
+            
+            
         }
 
 

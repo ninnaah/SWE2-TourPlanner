@@ -13,6 +13,20 @@
         MinHeight="380"
         MinWidth="340"
         Title="AddTourLog">
+    <Window.Resources>
+        <Style x:Key="ErrorStyle">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Right" Foreground="red" FontSize="12pt" Text="  !" ToolTip="{Binding ElementName=placeholder, Path= AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -35,28 +49,28 @@
         <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = AddTourLogWin}">Close</Button>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Distance (km)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="tourLogDistance" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDistance}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="tourLogDistance" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourLogDistance, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Duration (min)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogDuration" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogDuration}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="tourLogDuration" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourLogDuration, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Used fuel (liter)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogFuelUsed" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogFuelUsed}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="tourLogFuelUsed" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourLogFuelUsed , ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Weather" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogWeather" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogWeather}"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="tourLogWeather" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourLogWeather, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Temperature (°C)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Name="tourLogTemperature" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogTemperature}"></TextBox>
+        <TextBox Grid.Row="5" Grid.Column="1" Name="tourLogTemperature" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourLogTemperature, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Effort" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <Slider Grid.Row="6" Grid.Column="1" Maximum="10" Margin="7,7,30,7" Value="{Binding TourLogEffort}"/>
+        <Slider Grid.Row="6" Grid.Column="1" Maximum="10" Margin="7,7,30,7"  Value="{Binding TourLogEffort, ValidatesOnExceptions=True}"/>
 
         <TextBlock Grid.Row="7" Grid.Column="0" Text="Report" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="7" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourLogReport}"></TextBox>
+        <TextBox Grid.Row="7" Grid.Column="1" Name="tourLogReport" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourLogReport, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="8" Grid.Column="0" Text="Rating" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <rating:Rating Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="7,7,30,7" Value="{Binding TourLogRating, Mode=TwoWay}"/>
+        <rating:Rating Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="7,7,30,7" Value="{Binding TourLogRating, Mode=TwoWay, ValidatesOnExceptions=True}"/>
 
         <Button Grid.Row="9" Grid.Column="1" Name="send" Margin="0,0,30,0" MinWidth="50" HorizontalAlignment="Right" Command="{Binding SendAddTourLogCommand}">Send</Button>
 

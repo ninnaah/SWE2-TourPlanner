@@ -11,6 +11,22 @@
         MinHeight="280"
         MinWidth="300"
         Title="AddTour" >
+
+    <Window.Resources>
+        <Style x:Key="ErrorStyle">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Right" Foreground="red" FontSize="12pt" Text="  !" ToolTip="{Binding ElementName=placeholder, Path= AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -25,25 +41,27 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
+        
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Add Tour" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>
         <Button Grid.Row="0" Grid.Column="1" Name="close" Margin="0,0,30,0" MinWidth="50" Height="20" HorizontalAlignment="Right" Command="{Binding CloseWinCommand, Mode=OneWay}" CommandParameter="{Binding ElementName = AddTourWin}">Close</Button>
         
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Tourname" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="tourName" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourName}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="tourName" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourName, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Description" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="tourDescription" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourDescription}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="tourDescription" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourDescription, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="From" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Name="tourFrom" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourFrom}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="tourFrom" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}"  Text="{Binding TourFrom, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="To" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Name="tourTo" VerticalAlignment="Center" Margin="7,7,30,7" Text="{Binding TourTo}"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Name="tourTo" VerticalAlignment="Center" Margin="7,7,30,7" Style="{StaticResource ErrorStyle}" Text="{Binding TourTo, ValidatesOnExceptions=True}"></TextBox>
 
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Transport mode" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7"></TextBlock>
         <StackPanel Grid.Row="5" Grid.Column="1" Margin="7,7,30,7" VerticalAlignment="Center">
-            <ComboBox Text="{Binding TourTransportMode}">
+            <ComboBox Style="{StaticResource ErrorStyle}" Text="{Binding TourTransportMode, ValidatesOnExceptions=True}">
                 <TextBlock>Car</TextBlock>
                 <TextBlock>Pedestrian</TextBlock>
                 <TextBlock>Bicycle</TextBlock>

@@ -27,7 +27,7 @@ namespace TourPlanner.DataAccessLayer
         }
 
         public async Task<float[]> GetTourValues(TourItem tour)
-        {
+        {            
             _logger.Info("Starting MapQuest Request");
             _logger.Error("Starting MapQuest Request");
 

@@ -11,7 +11,7 @@ namespace TourPlanner.ViewModels
 {
     public class EditTourLogViewModel : MainViewModel
     {
-        private string _currentTourName;
+        private TourItem _currentTour;
 
         private ICommand _sendEditTourLogCommand;
         private ICommand _closeWinCommand;
@@ -29,24 +29,30 @@ namespace TourPlanner.ViewModels
         public ICommand SendEditTourLogCommand => _sendEditTourLogCommand ??= new RelayCommand(EditTourLog);
         public ICommand CloseWinCommand => _closeWinCommand ??= new RelayCommand(CloseWindow);
 
-        public EditTourLogViewModel(string tourName, TourLogItem currentTourLog)
+        public EditTourLogViewModel(TourItem currentTour, TourLogItem currentTourLog)
         {
-            _currentTourName = tourName;
-            CurrentTourLog = currentTourLog;
-            _tourLogRating = CurrentTourLog.Rating;
-            _tourLogReport = CurrentTourLog.Report;
+            _currentTour = currentTour;
+            _tourLogDistance = currentTourLog.Distance;
+            _tourLogDuration = currentTourLog.Duration;
+            _tourLogFuelUsed = currentTourLog.FuelUsed;
+            _tourLogWeather = currentTourLog.Weather;
+            _tourLogTemperature = currentTourLog.Temperature;
+            _tourLogEffort = currentTourLog.Effort;
+            _tourLogReport = currentTourLog.Report;
+            _tourLogRating = currentTourLog.Rating;
         }
         public float TourLogDistance
         {
-            get
-            {
-                return _tourLogDistance;
-            }
+            get { return _tourLogDistance; }
 
             set
             {
                 if (_tourLogDistance != value)
                 {
+                    if (value < (_currentTour.Distance - 50) || value > (_currentTour.Distance + 50))
+                    {
+                        throw new ArgumentException("Distance should be about (+-50 km) the same as the tour");
+                    }
                     _tourLogDistance = value;
                     RaisePropertyChangedEvent(nameof(TourLogDistance));
                 }
@@ -54,15 +60,16 @@ namespace TourPlanner.ViewModels
         }
         public float TourLogDuration
         {
-            get
-            {
-                return _tourLogDuration;
-            }
+            get { return _tourLogDuration; }
 
             set
             {
                 if (_tourLogDuration != value)
                 {
+                    if (value < (_currentTour.Duration - 120) || value > (_currentTour.Duration + 120))
+                    {
+                        throw new ArgumentException("Duration should be about (+-120 min) the same as the tour");
+                    }
                     _tourLogDuration = value;
                     RaisePropertyChangedEvent(nameof(TourLogDuration));
                 }
@@ -70,15 +77,16 @@ namespace TourPlanner.ViewModels
         }
         public float TourLogFuelUsed
         {
-            get
-            {
-                return _tourLogFuelUsed;
-            }
+            get { return _tourLogFuelUsed; }
 
             set
             {
                 if (_tourLogFuelUsed != value)
                 {
+                    if (value < (_currentTour.FuelUsed - 10) || value > (_currentTour.FuelUsed + 10))
+                    {
+                        throw new ArgumentException("Used fuel should be about (+-10 liter) the same as the tour");
+                    }
                     _tourLogFuelUsed = value;
                     RaisePropertyChangedEvent(nameof(TourLogFuelUsed));
                 }
@@ -86,15 +94,16 @@ namespace TourPlanner.ViewModels
         }
         public string TourLogWeather
         {
-            get
-            {
-                return _tourLogWeather;
-            }
+            get { return _tourLogWeather; }
 
             set
             {
                 if (_tourLogWeather != value)
                 {
+                    if (value.Length < 5 || value.Length > 10)
+                    {
+                        throw new ArgumentException("Weather should be between 5 and 10 characters long");
+                    }
                     _tourLogWeather = value;
                     RaisePropertyChangedEvent(nameof(TourLogWeather));
                 }
@@ -102,15 +111,16 @@ namespace TourPlanner.ViewModels
         }
         public float TourLogTemperature
         {
-            get
-            {
-                return _tourLogTemperature;
-            }
+            get { return _tourLogTemperature; }
 
             set
             {
                 if (_tourLogTemperature != value)
                 {
+                    if (value < -20 || value > 40)
+                    {
+                        throw new ArgumentException("Temperature should be between -20 and 40 °C");
+                    }
                     _tourLogTemperature = value;
                     RaisePropertyChangedEvent(nameof(TourLogTemperature));
                 }
@@ -118,10 +128,7 @@ namespace TourPlanner.ViewModels
         }
         public int TourLogEffort
         {
-            get
-            {
-                return _tourLogEffort;
-            }
+            get { return _tourLogEffort; }
 
             set
             {
@@ -134,15 +141,16 @@ namespace TourPlanner.ViewModels
         }
         public string TourLogReport
         {
-            get
-            {
-                return _tourLogReport;
-            }
+            get { return _tourLogReport; }
 
             set
             {
                 if (_tourLogReport != value)
                 {
+                    if (value.Length < 5 || value.Length > 50)
+                    {
+                        throw new ArgumentException("Report should be between 5 and 50 characters long");
+                    }
                     _tourLogReport = value;
                     RaisePropertyChangedEvent(nameof(TourLogReport));
                 }
@@ -150,10 +158,7 @@ namespace TourPlanner.ViewModels
         }
         public int TourLogRating
         {
-            get
-            {
-                return _tourLogRating;
-            }
+            get { return _tourLogRating; }
 
             set
             {
@@ -168,7 +173,7 @@ namespace TourPlanner.ViewModels
 
         private void EditTourLog(object commandParameter)
         {
-            EditedTourLog?.Invoke(this, new TourLogItem(_currentTourName, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogFuelUsed, _tourLogWeather, _tourLogTemperature, _tourLogEffort));
+            EditedTourLog?.Invoke(this, new TourLogItem(_currentTour.Name, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogFuelUsed, _tourLogWeather, _tourLogTemperature, _tourLogEffort));
         }
 
 

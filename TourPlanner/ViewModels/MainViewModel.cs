@@ -250,7 +250,7 @@ namespace TourPlanner.ViewModels
             if (CurrentTour != null)
             {
                 AddTourLogWindow addTourLogWindow = new AddTourLogWindow();
-                AddTourLogViewModel addTourLogVM = new AddTourLogViewModel(CurrentTour.Name);
+                AddTourLogViewModel addTourLogVM = new AddTourLogViewModel(CurrentTour);
 
                 addTourLogVM.AddedTourLog += (_, tourLog) => { AddTourLog(tourLog); };
                 addTourLogWindow.DataContext = addTourLogVM;
@@ -279,7 +279,7 @@ namespace TourPlanner.ViewModels
             if (CurrentTourLog != null)
             {
                 EditTourLogWindow editTourLogWindow = new EditTourLogWindow();
-                EditTourLogViewModel editTourLogVM = new EditTourLogViewModel(CurrentTour.Name, CurrentTourLog);
+                EditTourLogViewModel editTourLogVM = new EditTourLogViewModel(CurrentTour, CurrentTourLog);
 
                 editTourLogVM.EditedTourLog += (_, tourLog) => { EditTourLog(tourLog); };
                 editTourLogWindow.DataContext = editTourLogVM;
