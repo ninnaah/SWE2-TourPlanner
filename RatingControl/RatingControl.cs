@@ -11,7 +11,7 @@ namespace RatingControl
             new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(RatingChanged)));
 
 
-        private static readonly int _max = 5;
+        private static readonly int _maxStars = 5;
 
         public int Value
         {
@@ -24,8 +24,8 @@ namespace RatingControl
                 if (value < 0)
                     SetValue(ValueProperty, 0);
 
-                else if (value > _max)
-                    SetValue(ValueProperty, _max);
+                else if (value > _maxStars)
+                    SetValue(ValueProperty, _maxStars);
 
                 else
                     SetValue(ValueProperty, value);

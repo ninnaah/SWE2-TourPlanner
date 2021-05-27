@@ -51,11 +51,13 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Tour:" VerticalAlignment="Center" Margin="5,0,5,0"></TextBlock>
                 <TextBox Grid.Column="1" Name="tourSearch" VerticalAlignment="Center" Margin="5,0,5,0" Text="{Binding SearchTour, Mode = TwoWay}"></TextBox>
                 <Button Name="search" Margin="5" Grid.Column="2" MinWidth="50" Command="{Binding SearchCommand}">Search</Button>
+                <Button Name="clear" Margin="5" Grid.Column="3" MinWidth="50" Command="{Binding ClearCommand}">Clear</Button>
             </Grid>
 
             <Grid>

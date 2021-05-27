@@ -23,6 +23,7 @@ namespace TourPlanner.ViewModels
         private string _filePath;
 
         private ICommand _searchCommand;
+        private ICommand _clearCommand;
         private ICommand _deleteCommand;
         private ICommand _printTourReportCommand;
         private ICommand _printSummarizeReportCommand;
@@ -40,6 +41,7 @@ namespace TourPlanner.ViewModels
         private ICommand _openFileDialogCommand;
 
         public ICommand SearchCommand => _searchCommand ??= new RelayCommand(Search);
+        public ICommand ClearCommand => _clearCommand ??= new RelayCommand(Clear);
         public ICommand DeleteCommand => _deleteCommand ??= new RelayCommand(Delete);
         public ICommand PrintTourReportCommand => _printTourReportCommand ??= new RelayCommand(PrintTourReport);
         public ICommand PrintSummarizeReportCommand => _printSummarizeReportCommand ??= new RelayCommand(PrintSummarizeReport);
@@ -78,7 +80,7 @@ namespace TourPlanner.ViewModels
                 if((_currentTour != value) && (value != null))
                 {
                     _currentTour = value;
-                    CreateList();
+                    CreateList(); 
                     RaisePropertyChangedEvent(nameof(CurrentTour));
                 }
             }
@@ -168,12 +170,25 @@ namespace TourPlanner.ViewModels
         //TOURS
         private void Search(object commandParameter)
         {
-            IEnumerable foundTours = this._tourFactory.Search(SearchTour);
-            Tours.Clear();
-            foreach (TourItem item in foundTours)
+            if (String.IsNullOrEmpty(SearchTour))
+                Clear(commandParameter);
+            else
             {
-                Tours.Add(item);
+                IEnumerable foundTours = this._tourFactory.Search(SearchTour);
+                Tours.Clear();
+                foreach (TourItem item in foundTours)
+                {
+                    Tours.Add(item);
+                }
+                RaisePropertyChangedEvent(nameof(Tours));
             }
+        }
+        private void Clear(object commandParameter)
+        {
+            _searchTour = null;
+            CreateList(); 
+            RaisePropertyChangedEvent(nameof(Tours));
+            RaisePropertyChangedEvent(nameof(SearchTour));
         }
         private void Delete(object commandParameter)
         {

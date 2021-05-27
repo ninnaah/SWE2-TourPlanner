@@ -21,10 +21,39 @@ namespace TourPlanner.BusinessLayer
         {
             return _tourItemDAO.GetTours();
         }
-        public IEnumerable<TourItem> Search(string tourName)
+        public IEnumerable<TourItem> Search(string searchText)
         {
-            IEnumerable<TourItem> tours = GetTours();
-            return tours.Where(x => x.Name.Contains(tourName));
+            IEnumerable<TourItem> allTours = GetTours();
+
+            IEnumerable<TourItem> foundTours = allTours.Where(tour => tour.Name.ToLower().Contains(searchText.ToLower()) 
+                                                                    || tour.Description.ToLower().Contains(searchText.ToLower())
+                                                                    || tour.From.ToLower().Contains(searchText.ToLower())
+                                                                    || tour.To.ToLower().Contains(searchText.ToLower())
+                                                                    || tour.TransportMode.ToLower().Contains(searchText.ToLower()));
+
+            List<TourItem> foundToursList = new List<TourItem>();
+            foreach(TourItem tour in foundTours)
+            {
+                foundToursList.Add(tour);
+            }
+
+            IEnumerable<TourLogItem> allTourLogs = _tourLogItemDAO.GetTourLogs();
+
+            IEnumerable<TourLogItem> foundTourLogs = allTourLogs.Where(log => log.Weather.ToLower().Contains(searchText.ToLower())
+                                                                    || log.Report.ToLower().Contains(searchText.ToLower()));
+
+            foreach(TourLogItem log in foundTourLogs)
+            {
+                foreach(TourItem tour in allTours)
+                {
+                    if(log.TourName == tour.Name)
+                    {
+                        foundToursList.Add(tour);
+                    }
+                }
+            }
+
+            return foundToursList;
         }
         public bool AddTour(TourItem tour)
         {
