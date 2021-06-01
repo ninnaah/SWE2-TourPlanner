@@ -212,11 +212,7 @@ namespace TourPlanner.ViewModels
         }
         private void Add(TourItem tour)
         {
-            Dictionary<string, string> direction = _tourFactory.AddTour(tour);
-
-
-
-
+            _tourFactory.AddTour(tour);
 
             Tours.Add(tour);
 

@@ -9,7 +9,7 @@ namespace TourPlanner.BusinessLayer
         string GetFilePath();
         IEnumerable<TourItem> GetTours();
         IEnumerable<TourItem> Search(string tourName);
-        Dictionary<string, string> AddTour(TourItem tour);
+        bool AddTour(TourItem tour);
         bool DeleteTour(TourItem tour);
 
         void CreateTourReport(TourItem tour);

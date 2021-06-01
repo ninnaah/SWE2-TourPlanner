@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace TourPlanner.Models
 {
@@ -12,7 +13,7 @@ namespace TourPlanner.Models
         public float Distance { get; set; } //mapQuest
         public float Duration { get; set; } //mapQuest
         public float FuelUsed { get; set; } //mapQuest
-  
+        public List<TourItemDirection> Direction  { get; set; } //mapQuest
 
         public TourItem(string name, string description, string from, string to, string mode)
         {
@@ -21,9 +22,10 @@ namespace TourPlanner.Models
             From = from;
             To = to;
             TransportMode = mode;
+            Direction = new List<TourItemDirection>();
         }
 
-        public TourItem(string name, string description, string from, string to, string mode, float distance, float duration, float fuelUsed)
+        public TourItem(string name, string description, string from, string to, string mode, float distance, float duration, float fuelUsed, List<TourItemDirection> direction)
         {
             Name = name;
             Description = description;
@@ -33,6 +35,7 @@ namespace TourPlanner.Models
             Distance = distance;
             Duration = duration;
             FuelUsed = fuelUsed;
+            Direction = direction;
         }
 
         public TourItem()

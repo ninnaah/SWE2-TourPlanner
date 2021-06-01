@@ -55,17 +55,17 @@ namespace TourPlanner.BusinessLayer
 
             return foundToursList;
         }
-        public Dictionary<string, string> AddTour(TourItem tour)
+        public bool AddTour(TourItem tour)
         {
             try
             {
                 _tourItemDAO.GetTourMap(tour);
-                return _tourItemDAO.Direction;
+                return true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Error: {0}", ex);
-                return null;
+                return false;
             }
 
         }

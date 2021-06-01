@@ -18,7 +18,6 @@ namespace TourPlanner.DataAccessLayer
         protected Config Config;
         protected IDataAccess DataAccess;
         protected FileSystem FileSystem;
-        public Dictionary<string, string> Direction;
 
         public TourItemDataAccessObject()
         {
@@ -49,14 +48,6 @@ namespace TourPlanner.DataAccessLayer
         {
             MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath);
 
-            /*float[] routeValues = await mapQuest.GetTourValues(tour);
-            tour.Distance = routeValues[0]; //in km
-            tour.Duration = routeValues[1]/60; //in min
-            tour.FuelUsed = routeValues[2]; //in liter*/
-
-
-            Direction = new Dictionary<string, string>();
-
             string responseBody = await mapQuest.GetTourValues(tour);
             JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
 
@@ -74,7 +65,10 @@ namespace TourPlanner.DataAccessLayer
 
             foreach(JObject maneuver in maneuvers)
             {
-                Direction.Add((string)maneuver["narrative"], (string)maneuver["iconUrl"]);
+                TourItemDirection direction = new TourItemDirection();
+                direction.Text = (string)maneuver["narrative"];
+                direction.Image = (string)maneuver["iconUrl"];
+                tour.Direction.Add(direction);
             }
 
             AddTour(tour);
