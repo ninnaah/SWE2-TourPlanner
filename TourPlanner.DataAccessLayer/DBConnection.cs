@@ -108,7 +108,7 @@ namespace TourPlanner.DataAccessLayer
                 _sql = "delete from tour where tourname=@name";
                 _cmd = new NpgsqlCommand(_sql, _conn);
 
-                _cmd.Parameters.Add(new NpgsqlParameter("tourname", NpgsqlDbType.Varchar));
+                _cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlDbType.Varchar));
 
                 _cmd.Prepare();
 

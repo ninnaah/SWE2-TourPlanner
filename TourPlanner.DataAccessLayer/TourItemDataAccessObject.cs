@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,6 +18,7 @@ namespace TourPlanner.DataAccessLayer
         protected Config Config;
         protected IDataAccess DataAccess;
         protected FileSystem FileSystem;
+        public Dictionary<string, string> Direction;
 
         public TourItemDataAccessObject()
         {
@@ -47,13 +49,37 @@ namespace TourPlanner.DataAccessLayer
         {
             MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath);
 
-            float[] routeValues = await mapQuest.GetTourValues(tour);
+            /*float[] routeValues = await mapQuest.GetTourValues(tour);
             tour.Distance = routeValues[0]; //in km
             tour.Duration = routeValues[1]/60; //in min
-            tour.FuelUsed = routeValues[2]; //in liter
+            tour.FuelUsed = routeValues[2]; //in liter*/
+
+
+            Direction = new Dictionary<string, string>();
+
+            string responseBody = await mapQuest.GetTourValues(tour);
+            JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
+
+            tour.Distance = (float)obj["route"]["distance"]; //in km
+            tour.Duration = (float)obj["route"]["time"]; //in sec
+            tour.FuelUsed = (float)obj["route"]["fuelUsed"]; //in liter
+
+            JObject legs = obj["route"]["legs"][0] as JObject;
+            
+            List<JObject> maneuvers = new List<JObject>();
+            foreach (JObject maneuver in legs["maneuvers"])
+            {
+                maneuvers.Add(maneuver);
+            }
+
+            foreach(JObject maneuver in maneuvers)
+            {
+                Direction.Add((string)maneuver["narrative"], (string)maneuver["iconUrl"]);
+            }
 
             AddTour(tour);
         }
+
         public bool AddTour(TourItem tour)
         {
             return DataAccess.AddTour(tour);

@@ -26,22 +26,30 @@ namespace TourPlanner.DataAccessLayer
             _key = key;
         }
 
-        public async Task<float[]> GetTourValues(TourItem tour)
+        //public async Task<float[]> GetTourValues(TourItem tour)
+        public async Task<string> GetTourValues(TourItem tour)
         {            
             _logger.Info("Starting MapQuest Request");
             _logger.Error("Starting MapQuest Request");
 
-            Task<float[]> routeValuesTask = SendRouteRequest(tour);
+            /*Task<float[]> routeValuesTask = SendRouteRequest(tour);
             float[] routeValues = await routeValuesTask;
 
-            return routeValues;
+            return routeValues;*/
+
+            Task<string> responseBodyTask = SendRouteRequest(tour);
+            string responseBody = await responseBodyTask;
+
+            return responseBody;
+
         }
 
-        public static async Task<float[]> SendRouteRequest(TourItem tour)
+        //public static async Task<float[]> SendRouteRequest(TourItem tour)
+        public static async Task<string> SendRouteRequest(TourItem tour)
         {
             string mode = tour.TransportMode;
 
-            float[] routeValues = new float[3];
+            //float[] routeValues = new float[3];
 
             if (mode == "Car")
                 mode = "fastest";
@@ -57,13 +65,14 @@ namespace TourPlanner.DataAccessLayer
             _boundingBox = obj["route"]["boundingBox"] as JObject;
             string sessionId = (string)obj["route"]["sessionId"];
 
-            routeValues[0] = (float)obj["route"]["distance"]; //in km
+            /*routeValues[0] = (float)obj["route"]["distance"]; //in km
             routeValues[1] = (float)obj["route"]["time"]; //in sec
-            routeValues[2] = (float)obj["route"]["fuelUsed"]; //in liter
+            routeValues[2] = (float)obj["route"]["fuelUsed"]; //in liter*/
 
             SendMapRequest(tour, sessionId);
 
-            return routeValues;
+            //return routeValues;
+            return responseBody;
         }
 
         public static async void SendMapRequest(TourItem tour, string sessionId)

@@ -160,6 +160,15 @@
                                             <TextBlock VerticalAlignment="Center" Margin="5,0,5,5" Grid.Row="6" Grid.Column="1" Text="{Binding CurrentTour.FuelUsed}"></TextBlock>
                                         </Grid>
                                     </TabItem>
+                                    <TabItem Header="Direction">
+                                        <ListView MinHeight="365">
+                                            
+                                            
+                                        </ListView>
+
+
+
+                                    </TabItem>
                                 </TabControl>
                             </Grid>
                         </Grid>
