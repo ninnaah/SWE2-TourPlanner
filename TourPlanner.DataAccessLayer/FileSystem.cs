@@ -19,6 +19,20 @@ namespace TourPlanner.DataAccessLayer
         }
 
 
+        public void DeleteTour(string tourName)
+        {
+            if (File.Exists($"{_filePath}/maps/{tourName}.png"))
+            {
+                File.Move($"{_filePath}/maps/{tourName}.png", $"{_filePath}/maps/{tourName}-tmp.png");
+                File.Delete(@$"{_filePath}/maps/{tourName}-tmp.png");
+            }
+
+            if (File.Exists($"{_filePath}/direction/{tourName}.json"))
+            {
+                File.Delete(@$"{_filePath}/direction/{tourName}.json");
+            }
+        }
+
         public void CreateTourReportPDF(TourItem tour, List<TourLogItem> logs)
         {
             string fileName = $"{tour.Name}.pdf";
@@ -59,6 +73,24 @@ namespace TourPlanner.DataAccessLayer
         public IEnumerable<TourItem> ImportTours(string filePath)
         {
             List<TourItem> tours = JsonConvert.DeserializeObject<List<TourItem>>(File.ReadAllText(filePath));
+            return tours;
+        }
+
+        public void ExportTourDirection(TourItem tour)
+        {
+            string fileName = $"{tour.Name}.json";
+            string jsonString;
+            jsonString = JsonConvert.SerializeObject(tour.Direction, Formatting.Indented);
+
+            File.WriteAllText(@$"{_filePath}/direction/{fileName}", jsonString);
+        }
+        public List<TourItem> GetTourDirection(List<TourItem> tours)
+        {
+            foreach(TourItem tour in tours)
+            {
+                tour.Direction = JsonConvert.DeserializeObject<List<TourItemDirection>>(File.ReadAllText($"{_filePath}/direction/{tour.Name}.json"));
+            }
+
             return tours;
         }
 

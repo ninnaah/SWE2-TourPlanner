@@ -42,6 +42,10 @@ namespace TourPlanner.ViewModels
             {
                 if (_tourName != value)
                 {
+                    if (CheckIfTourNameUnique(value) == false)
+                    {
+                        throw new ArgumentException("Tourname should be unique");
+                    }
                     if (value.Length < 5 || value.Length > 15)
                     {
                         throw new ArgumentException("Tourname should be between 5 and 15 characters long");

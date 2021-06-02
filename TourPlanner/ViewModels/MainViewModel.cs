@@ -350,6 +350,19 @@ namespace TourPlanner.ViewModels
             RaisePropertyChangedEvent(nameof(Tours));
         }
 
+        protected bool CheckIfTourNameUnique(string tourname)
+        {
+            foreach (TourItem tour in Tours)
+            {
+                if (tourname == tour.Name)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
 
     }
 

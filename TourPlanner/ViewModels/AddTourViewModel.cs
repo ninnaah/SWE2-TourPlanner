@@ -33,6 +33,10 @@ namespace TourPlanner.ViewModels
             {
                 if (_tourName != value)
                 {
+                    if(CheckIfTourNameUnique(value) == false)
+                    {
+                        throw new ArgumentException("Tourname should be unique");
+                    }
                     if(value.Length < 5 || value.Length > 15)
                     {
                         throw new ArgumentException("Tourname should be between 5 and 15 characters long");
@@ -118,11 +122,11 @@ namespace TourPlanner.ViewModels
 
         private void AddTour(object commandParameter)
         {
-            if(String.IsNullOrEmpty(_tourName) || String.IsNullOrEmpty(_tourDescription) || String.IsNullOrEmpty(_tourFrom) 
+            /*if(String.IsNullOrEmpty(_tourName) || String.IsNullOrEmpty(_tourDescription) || String.IsNullOrEmpty(_tourFrom) 
                 || String.IsNullOrEmpty(_tourTo) || String.IsNullOrEmpty(_tourTransportMode))
             {
                 throw new ArgumentException("Please enter all fields");
-            }
+            }*/
 
             AddedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourTransportMode));
             
