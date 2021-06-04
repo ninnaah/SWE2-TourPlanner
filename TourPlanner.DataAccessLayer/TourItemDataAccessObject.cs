@@ -54,6 +54,11 @@ namespace TourPlanner.DataAccessLayer
             string responseBody = await mapQuest.GetTourValues(tour);
             JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
 
+            if((float)obj["route"]["distance"] == 0)
+            {
+                throw new ArgumentException("Starting or end point doesn't exist");
+            }
+
             tour.Distance = (float)obj["route"]["distance"]; //in km
             tour.Duration = (float)obj["route"]["time"]; //in sec
             tour.FuelUsed = (float)obj["route"]["fuelUsed"]; //in liter
@@ -63,7 +68,7 @@ namespace TourPlanner.DataAccessLayer
             List<JObject> maneuvers = new List<JObject>();
             foreach (JObject maneuver in legs["maneuvers"])
             {
-                maneuvers.Add(maneuver);
+               maneuvers.Add(maneuver);
             }
 
             foreach(JObject maneuver in maneuvers)

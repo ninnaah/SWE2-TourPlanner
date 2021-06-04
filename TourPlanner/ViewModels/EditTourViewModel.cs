@@ -46,12 +46,15 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Tourname should be unique");
                     }
-                    if (value.Length < 5 || value.Length > 15)
+                    else if (value.Length < 5 || value.Length > 15)
                     {
                         throw new ArgumentException("Tourname should be between 5 and 15 characters long");
                     }
-                    _tourName = value;
-                    RaisePropertyChangedEvent(nameof(TourName));
+                    else
+                    {
+                        _tourName = value;
+                        RaisePropertyChangedEvent(nameof(TourName));
+                    }
                 }
             }
         }
@@ -67,8 +70,11 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Description should be between 5 and 50 characters long");
                     }
-                    _tourDescription = value;
-                    RaisePropertyChangedEvent(nameof(TourDescription));
+                    else 
+                    {
+                        _tourDescription = value;
+                        RaisePropertyChangedEvent(nameof(TourDescription));
+                    }
                 }
             }
         }
@@ -84,8 +90,11 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Starting point should be between 3 and 20 characters long");
                     }
-                    _tourFrom = value;
-                    RaisePropertyChangedEvent(nameof(TourFrom));
+                    else
+                    {
+                        _tourFrom = value;
+                        RaisePropertyChangedEvent(nameof(TourFrom));
+                    }
                 }
             }
         }
@@ -101,8 +110,12 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("End point should be between 3 and 20 characters long");
                     }
-                    _tourTo = value;
-                    RaisePropertyChangedEvent(nameof(TourTo));
+                    else
+                    {
+                        _tourTo = value;
+                        RaisePropertyChangedEvent(nameof(TourTo));
+                    }
+                    
                 }
             }
         }
@@ -119,8 +132,11 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Please choose transport mode");
                     }
-                    _tourTransportMode = value;
-                    RaisePropertyChangedEvent(nameof(TourTransportMode));
+                    else
+                    {
+                        _tourTransportMode = value;
+                        RaisePropertyChangedEvent(nameof(TourTransportMode));
+                    }
                 }
             }
         }
@@ -128,7 +144,11 @@ namespace TourPlanner.ViewModels
 
         private void EditTour(object commandParameter)
         {
-            EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourTransportMode));
+            if (!String.IsNullOrEmpty(_tourName) && !String.IsNullOrEmpty(_tourDescription) && !String.IsNullOrEmpty(_tourFrom)
+                && !String.IsNullOrEmpty(_tourTo) && !String.IsNullOrEmpty(_tourTransportMode))
+            {
+                EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourTransportMode));
+            }
         }
 
 

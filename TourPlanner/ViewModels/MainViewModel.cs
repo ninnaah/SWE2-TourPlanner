@@ -208,8 +208,18 @@ namespace TourPlanner.ViewModels
             addTourVM.AddedTour += (_, tour) => { Add(tour); };
             addTourWindow.DataContext = addTourVM;
 
-            addTourWindow.ShowDialog();
+            try
+            {
+                addTourWindow.ShowDialog();
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                CreateList();
+                RaisePropertyChangedEvent(nameof(Tours));
+            }
+            
         }
+
         private void Add(TourItem tour)
         {
             _tourFactory.AddTour(tour);

@@ -55,8 +55,6 @@ namespace TourPlanner.DataAccessLayer
             _boundingBox = obj["route"]["boundingBox"] as JObject;
             string sessionId = (string)obj["route"]["sessionId"];
 
-            Debug.WriteLine("SESSIONID 1: " + sessionId);
-
             SendMapRequest(tour, sessionId);
 
             return responseBody;
@@ -74,13 +72,19 @@ namespace TourPlanner.DataAccessLayer
 
             string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
 
-            Debug.WriteLine("SESSIONID 2: " + sessionId);
-
-
-            using WebClient client = new();
-            await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);
+            try
+            {
+                using WebClient client = new();
+                await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);
+            }catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                File.Delete(@filePath);
+            }
+            
 
             _logger.Info("Downloaded MapQuest File");
+            
         }
 
         

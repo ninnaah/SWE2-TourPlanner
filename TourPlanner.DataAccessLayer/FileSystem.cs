@@ -88,7 +88,11 @@ namespace TourPlanner.DataAccessLayer
         {
             foreach(TourItem tour in tours)
             {
-                tour.Direction = JsonConvert.DeserializeObject<List<TourItemDirection>>(File.ReadAllText($"{_filePath}/direction/{tour.Name}.json"));
+                if (File.Exists($"{_filePath}/direction/{tour.Name}.json"))
+                {
+                    tour.Direction = JsonConvert.DeserializeObject<List<TourItemDirection>>(File.ReadAllText($"{_filePath}/direction/{tour.Name}.json"));
+                }
+                
             }
 
             return tours;

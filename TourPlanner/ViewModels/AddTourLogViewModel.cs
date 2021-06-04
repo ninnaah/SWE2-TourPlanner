@@ -47,8 +47,11 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Distance should be about (+-50 km) the same as the tour");
                     }
-                    _tourLogDistance = value;
-                    RaisePropertyChangedEvent(nameof(TourLogDistance));
+                    else
+                    {
+                        _tourLogDistance = value;
+                        RaisePropertyChangedEvent(nameof(TourLogDistance));
+                    }
                 }
             }
         }
@@ -64,8 +67,12 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Duration should be about (+-120 min) the same as the tour");
                     }
-                    _tourLogDuration = value;
-                    RaisePropertyChangedEvent(nameof(TourLogDuration));
+                    else
+                    {
+                        _tourLogDuration = value;
+                        RaisePropertyChangedEvent(nameof(TourLogDuration));
+                    }
+                    
                 }
             }
         }
@@ -81,8 +88,11 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Used fuel should be about (+-10 liter) the same as the tour");
                     }
-                    _tourLogFuelUsed = value;
-                    RaisePropertyChangedEvent(nameof(TourLogFuelUsed));
+                    else
+                    { 
+                        _tourLogFuelUsed = value;
+                        RaisePropertyChangedEvent(nameof(TourLogFuelUsed));
+                    }
                 }
             }
         }
@@ -98,8 +108,12 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Weather should be between 5 and 10 characters long");
                     }
-                    _tourLogWeather = value;
-                    RaisePropertyChangedEvent(nameof(TourLogWeather));
+                    else
+                    {
+                        _tourLogWeather = value;
+                        RaisePropertyChangedEvent(nameof(TourLogWeather));
+                    }
+                    
                 }
             }
         }
@@ -115,8 +129,12 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Temperature should be between -20 and 40 °C");
                     }
-                    _tourLogTemperature = value;
-                    RaisePropertyChangedEvent(nameof(TourLogTemperature));
+                    else
+                    {
+                        _tourLogTemperature = value;
+                        RaisePropertyChangedEvent(nameof(TourLogTemperature));
+                    }
+                    
                 }
             }
         }
@@ -145,8 +163,12 @@ namespace TourPlanner.ViewModels
                     {
                         throw new ArgumentException("Report should be between 5 and 50 characters long");
                     }
-                    _tourLogReport = value;
-                    RaisePropertyChangedEvent(nameof(TourLogReport));
+                    else
+                    {
+                        _tourLogReport = value;
+                        RaisePropertyChangedEvent(nameof(TourLogReport));
+                    }
+                    
                 }
             }
         }
@@ -167,8 +189,11 @@ namespace TourPlanner.ViewModels
 
         private void AddTourLog(object commandParameter)
         {
-            AddedTourLog?.Invoke(this, new TourLogItem(_currentTour.Name, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating,  _tourLogFuelUsed, _tourLogWeather, _tourLogTemperature, _tourLogEffort ));
-            CloseWindow(commandParameter);
+            if (_tourLogDistance != 0 && _tourLogDuration != 0 && !String.IsNullOrEmpty(_tourLogReport)
+                && !String.IsNullOrEmpty(_tourLogWeather) && _tourLogTemperature != 0 )
+            {
+                AddedTourLog?.Invoke(this, new TourLogItem(_currentTour.Name, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogFuelUsed, _tourLogWeather, _tourLogTemperature, _tourLogEffort));
+            }
         }
 
 

@@ -161,7 +161,7 @@
                                         </Grid>
                                     </TabItem>
                                     <TabItem Header="Direction">
-                                        <ListView MinHeight="365" MaxHeight="540" ItemsSource="{Binding CurrentTour.Direction}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                        <ListView MaxHeight="365"  ItemsSource="{Binding CurrentTour.Direction}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid>

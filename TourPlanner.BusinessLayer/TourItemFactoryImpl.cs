@@ -57,17 +57,8 @@ namespace TourPlanner.BusinessLayer
         }
         public bool AddTour(TourItem tour)
         {
-            try
-            {
-                _tourItemDAO.GetTourMap(tour);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error: {0}", ex);
-                return false;
-            }
-
+            _tourItemDAO.GetTourMap(tour);
+            return true;
         }
         public bool DeleteTour(TourItem tour)
         {
