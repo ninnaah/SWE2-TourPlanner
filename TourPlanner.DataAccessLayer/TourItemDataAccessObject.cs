@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using log4net;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -19,6 +20,8 @@ namespace TourPlanner.DataAccessLayer
         protected IDataAccess DataAccess;
         protected FileSystem FileSystem;
 
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(TourItemDataAccessObject));
+
         public TourItemDataAccessObject()
         {
             loadConfig();
@@ -33,6 +36,8 @@ namespace TourPlanner.DataAccessLayer
                 .Build();
 
             Config = config.Get<Config>();
+
+            _logger.Info($"Loaded config file");
         }
 
         public string GetFilePath()
@@ -56,6 +61,7 @@ namespace TourPlanner.DataAccessLayer
 
             if((float)obj["route"]["distance"] == 0)
             {
+                _logger.Error($"Get tour Map: Starting or end point doesn't exist");
                 throw new ArgumentException("Starting or end point doesn't exist");
             }
 
@@ -84,16 +90,14 @@ namespace TourPlanner.DataAccessLayer
 
         public bool AddTour(TourItem tour)
         {
-            FileSystem.ExportTourDirection(tour);
+            FileSystem.SaveTourDirection(tour);
             return DataAccess.AddTour(tour);
         }
         public bool DeleteTour(string tourName)
         {
             FileSystem.DeleteTour(tourName);
-
             return DataAccess.DeleteTour(tourName);
         }
-
 
 
         public void CreateTourReport(TourItem tour)

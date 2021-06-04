@@ -32,11 +32,6 @@ namespace TourPlanner.DataAccessLayer
             List<TourItem> tours = new List<TourItem>();
             try
             {
-                //XmlConfigurator.Configure(new System.IO.FileInfo("log4net.config.xml"));
-
-                _logger.Info("DB Get Tours");
-                _logger.Error("DB Get Tours");
-
                 _conn.Open();
                 _sql = "select * from tour";
                 _cmd = new NpgsqlCommand(_sql, _conn);
@@ -53,6 +48,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot get tours: {ex.Message}");
             }
 
             return tours;
@@ -96,6 +92,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot add tour: {ex.Message}");
                 return false;
             }
 
@@ -126,6 +123,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot delete tour: {ex.Message}");
                 return false;
             }
 
@@ -166,6 +164,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot get tour logs: {ex.Message}");
             }
 
             return tourLogs;
@@ -215,6 +214,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot add tour log: {ex.Message}");
                 return false;
             }
 
@@ -244,6 +244,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot delete tour logs: {ex.Message}");
                 return false;
             }
 
@@ -272,6 +273,7 @@ namespace TourPlanner.DataAccessLayer
             {
                 _conn.Close();
                 Debug.WriteLine("Error: {0}", ex);
+                _logger.Error($"Cannot delete tour logs: {ex.Message}");
                 return false;
             }
 

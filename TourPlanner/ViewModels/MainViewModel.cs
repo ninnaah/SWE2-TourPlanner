@@ -1,9 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using log4net;
+using log4net.Config;
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -60,12 +63,15 @@ namespace TourPlanner.ViewModels
         public ObservableCollection<TourItem> Tours { get; set; }
         public ObservableCollection<TourLogItem> TourLogs { get; set; }
 
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(MainViewModel));
+
 
         public MainViewModel()
         {
             _tourFactory = TourItemFactory.GetInstance();
             CreateList();
             _filePath = _tourFactory.GetFilePath();
+            XmlConfigurator.Configure();
         }
 
         public TourItem CurrentTour 
@@ -213,6 +219,7 @@ namespace TourPlanner.ViewModels
                 addTourWindow.ShowDialog();
             }catch(Exception ex)
             {
+                _logger.Error($"Cannot add tour: {ex.Message}");
                 MessageBox.Show(ex.Message);
                 CreateList();
                 RaisePropertyChangedEvent(nameof(Tours));

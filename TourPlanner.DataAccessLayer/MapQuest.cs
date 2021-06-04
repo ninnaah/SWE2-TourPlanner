@@ -26,15 +26,11 @@ namespace TourPlanner.DataAccessLayer
         }
 
         public async Task<string> GetTourValues(TourItem tour)
-        {            
-            _logger.Info("Starting MapQuest Request");
-            _logger.Error("Starting MapQuest Request");
-
+        {       
             Task<string> responseBodyTask = SendRouteRequest(tour);
             string responseBody = await responseBodyTask;
 
             return responseBody;
-
         }
 
         public static async Task<string> SendRouteRequest(TourItem tour)
@@ -55,6 +51,8 @@ namespace TourPlanner.DataAccessLayer
             _boundingBox = obj["route"]["boundingBox"] as JObject;
             string sessionId = (string)obj["route"]["sessionId"];
 
+            _logger.Info("Got response from directions API");
+
             SendMapRequest(tour, sessionId);
 
             return responseBody;
@@ -62,28 +60,31 @@ namespace TourPlanner.DataAccessLayer
 
         public static async void SendMapRequest(TourItem tour, string sessionId)
         {
-            string lowerRightLng = (string)_boundingBox["lr"]["lng"];
-            string lowerRightLat = (string)_boundingBox["lr"]["lat"];
-            string upperLeftLng = (string)_boundingBox["ul"]["lng"];
-            string upperLeftLat = (string)_boundingBox["ul"]["lat"];
-
-            Directory.CreateDirectory($@"{_dirPath}/maps/");
-            string filePath = $@"{_dirPath}/maps/{tour.Name}.png";
-
-            string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
-
             try
             {
+                string lowerRightLng = (string)_boundingBox["lr"]["lng"];
+                string lowerRightLat = (string)_boundingBox["lr"]["lat"];
+                string upperLeftLng = (string)_boundingBox["ul"]["lng"];
+                string upperLeftLat = (string)_boundingBox["ul"]["lat"];
+
+                Directory.CreateDirectory($@"{_dirPath}/maps/");
+                string filePath = $@"{_dirPath}/maps/{tour.Name}.png";
+
+                string getRequest = $"https://www.mapquestapi.com/staticmap/v5/map?key={_key}&size=1240,960&session={sessionId}&boundingBox={upperLeftLat},{upperLeftLng},{lowerRightLat},{lowerRightLng}&zoom=15";
+
                 using WebClient client = new();
                 await client.DownloadFileTaskAsync(new Uri(getRequest), filePath);
-            }catch(Exception ex)
+                _logger.Info("Got response from staticMap API");
+            }
+            catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                File.Delete(@filePath);
+                File.Delete(@$"{_dirPath}/maps/{tour.Name}.png");
+                _logger.Error($"Cannot load tourmap: {ex.Message}");
             }
             
 
-            _logger.Info("Downloaded MapQuest File");
+            _logger.Info("Downloaded tourmap");
             
         }
 
