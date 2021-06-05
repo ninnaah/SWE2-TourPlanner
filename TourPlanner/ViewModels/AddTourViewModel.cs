@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,22 @@ namespace TourPlanner.ViewModels
 
         public ICommand SendAddTourCommand => _sendAddTourCommand ??= new RelayCommand(AddTour);
         public ICommand CloseWinCommand => _closeWinCommand ??= new RelayCommand(CloseWindow);
-        
+
+        public AddTourViewModel(ObservableCollection<TourItem> tours, string name, string desc, string from, string to, string transportMode)
+        {
+            Tours = tours;
+            TourName = name;
+            TourDescription = desc;
+            TourFrom = from;
+            TourTo = to;
+            TourTransportMode = transportMode;
+        }
+
+        public AddTourViewModel()
+        {
+
+        }
+
         public string TourName
         {
             get { return _tourName; }
@@ -33,7 +49,7 @@ namespace TourPlanner.ViewModels
             {
                 if (_tourName != value)
                 {
-                    if(CheckIfTourNameUnique(value) == false)
+                    if(CheckIfTourNameExists(value) == false)
                     {
                         throw new ArgumentException("Tourname should be unique");
                     }

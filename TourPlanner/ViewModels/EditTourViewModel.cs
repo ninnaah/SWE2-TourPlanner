@@ -42,7 +42,7 @@ namespace TourPlanner.ViewModels
             {
                 if (_tourName != value)
                 {
-                    if (CheckIfTourNameUnique(value) == false)
+                    if (CheckIfTourNameExists(value) == false)
                     {
                         throw new ArgumentException("Tourname should be unique");
                     }

@@ -34,6 +34,18 @@ namespace TourPlanner.ViewModels
         {
             _currentTour = currentTour;
         }
+        public AddTourLogViewModel(TourItem currentTour, float dist, float dur, float fuel, string weather, float temp, int effort, string report, int rating)
+        {
+            _currentTour = currentTour;
+            _tourLogDistance = dist;
+            _tourLogDuration = dur;
+            _tourLogFuelUsed = fuel;
+            _tourLogWeather = weather;
+            _tourLogTemperature = temp;
+            _tourLogEffort = effort;
+            _tourLogReport = report;
+            _tourLogRating = rating;
+        }
 
         public float TourLogDistance
         {

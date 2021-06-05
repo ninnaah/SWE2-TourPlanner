@@ -22,7 +22,7 @@ namespace TourPlanner.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private ITourItemFactory _tourFactory;
+        public ITourItemFactory _tourFactory;
         private string _filePath;
 
         private ICommand _searchCommand;
@@ -65,6 +65,10 @@ namespace TourPlanner.ViewModels
 
         private static readonly ILog _logger = LogManager.GetLogger(typeof(MainViewModel));
 
+        public MainViewModel(ObservableCollection<TourItem> tours)
+        {
+            Tours = tours;
+        }
 
         public MainViewModel()
         {
@@ -367,7 +371,7 @@ namespace TourPlanner.ViewModels
             RaisePropertyChangedEvent(nameof(Tours));
         }
 
-        protected bool CheckIfTourNameUnique(string tourname)
+        public bool CheckIfTourNameExists(string tourname)
         {
             foreach (TourItem tour in Tours)
             {
