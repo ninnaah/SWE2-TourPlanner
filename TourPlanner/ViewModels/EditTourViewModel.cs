@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class EditTourViewModel : MainViewModel
+    public class EditTourViewModel : ViewModelBase
     {
 
         private ICommand _sendEditTourCommand;
@@ -25,8 +26,11 @@ namespace TourPlanner.ViewModels
         public ICommand SendEditTourCommand => _sendEditTourCommand ??= new RelayCommand(EditTour);
         public ICommand CloseWinCommand => _closeWinCommand ??= new RelayCommand(CloseWindow);
 
-        public EditTourViewModel(TourItem currentTour)
+        public ObservableCollection<TourItem> Tours { get; set; }
+
+        public EditTourViewModel(TourItem currentTour, ObservableCollection<TourItem> tours)
         {
+            Tours = tours;
             _tourName = currentTour.Name;
             _tourDescription = currentTour.Description;
             _tourFrom = currentTour.From;
@@ -158,6 +162,19 @@ namespace TourPlanner.ViewModels
             {
                 (commandParameter as Window).Close();
             }
+        }
+
+        public bool CheckIfTourNameExists(string tourname)
+        {
+            foreach (TourItem tour in Tours)
+            {
+                if (tourname == tour.Name)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

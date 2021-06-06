@@ -8,6 +8,7 @@ namespace TourPlanner.Test
     public class TestMainViewModel
     {
         private ObservableCollection<TourItem> _tours;
+        private MainViewModel _VM;
 
         [SetUp]
         public void SetUp()
@@ -17,15 +18,15 @@ namespace TourPlanner.Test
                 new TourItem ("WienPrag", "awsome tour", "Wien", "Prag", "Car"),
                 new TourItem ("WienKlagenfurt", "cool tour", "Wien", "Klagenfurt", "Car")
             };
+
+            _VM = new MainViewModel(_tours);
         }
 
         [Test]
         public void TestCheckIfTourNameExists_NameDoesntExist()
         {
-            MainViewModel VM = new MainViewModel(_tours);
-
             bool expectedResult = false;
-            bool result = VM.CheckIfTourNameExists("WienBerlin");
+            bool result = _VM.CheckIfTourNameExists("WienBerlin");
 
             Assert.AreEqual(expectedResult, result);
         }
@@ -33,12 +34,11 @@ namespace TourPlanner.Test
         [Test]
         public void TestCheckIfTourNameExists_NameExists()
         {
-            MainViewModel VM = new MainViewModel(_tours);
-
             bool expectedResult = true;
-            bool result = VM.CheckIfTourNameExists("WienLinz");
+            bool result = _VM.CheckIfTourNameExists("WienLinz");
 
             Assert.AreEqual(expectedResult, result);
         }
+
     }
 }

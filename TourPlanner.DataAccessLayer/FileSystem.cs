@@ -12,29 +12,32 @@ namespace TourPlanner.DataAccessLayer
 {
     public class FileSystem
     {
-        private string _filePath;
+        public string FilePath;
         private static readonly ILog _logger = LogManager.GetLogger(typeof(FileSystem));
 
         public FileSystem(Config config)
         {
-            _filePath = config.FilePath;
+            FilePath = config.FilePath;
+        }
+        public FileSystem()
+        {
         }
 
 
         public void DeleteTour(string tourName)
         {
-            if (File.Exists($"{_filePath}/maps/{tourName}.png"))
+            if (File.Exists($"{FilePath}/maps/{tourName}.png"))
             {
-                File.Move($"{_filePath}/maps/{tourName}.png", $"{_filePath}/maps/{tourName}-tmp.png");
-                File.Delete(@$"{_filePath}/maps/{tourName}-tmp.png");
+                File.Move($"{FilePath}/maps/{tourName}.png", $"{FilePath}/maps/{tourName}-tmp.png");
+                File.Delete(@$"{FilePath}/maps/{tourName}-tmp.png");
             }else
             {
                 _logger.Info($"Delete tour: map doesn't exist");
             }
 
-            if (File.Exists($"{_filePath}/direction/{tourName}.json"))
+            if (File.Exists($"{FilePath}/direction/{tourName}.json"))
             {
-                File.Delete(@$"{_filePath}/direction/{tourName}.json");
+                File.Delete(@$"{FilePath}/direction/{tourName}.json");
             }
             else
             {
@@ -48,7 +51,7 @@ namespace TourPlanner.DataAccessLayer
         {
             string fileName = $"{tour.Name}.pdf";
 
-            var document = new TourReport(tour, logs, _filePath);
+            var document = new TourReport(tour, logs, FilePath);
             document.GeneratePdf(fileName);
 
             _logger.Info($"Tour report created");
@@ -97,16 +100,16 @@ namespace TourPlanner.DataAccessLayer
             string jsonString;
             jsonString = JsonConvert.SerializeObject(tour.Direction, Formatting.Indented);
 
-            File.WriteAllText(@$"{_filePath}/direction/{fileName}", jsonString);
+            File.WriteAllText(@$"{FilePath}/direction/{fileName}", jsonString);
             _logger.Info($"Saved tour directions");
         }
         public List<TourItem> GetTourDirection(List<TourItem> tours)
         {
             foreach(TourItem tour in tours)
             {
-                if (File.Exists($"{_filePath}/direction/{tour.Name}.json"))
+                if (File.Exists($"{FilePath}/direction/{tour.Name}.json"))
                 {
-                    tour.Direction = JsonConvert.DeserializeObject<List<TourItemDirection>>(File.ReadAllText($"{_filePath}/direction/{tour.Name}.json"));
+                    tour.Direction = JsonConvert.DeserializeObject<List<TourItemDirection>>(File.ReadAllText($"{FilePath}/direction/{tour.Name}.json"));
                 }
                 
             }

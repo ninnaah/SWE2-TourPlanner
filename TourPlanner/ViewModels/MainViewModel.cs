@@ -5,11 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -213,7 +209,7 @@ namespace TourPlanner.ViewModels
         private void AddTour(object commandParameter)
         {
             AddTourWindow addTourWindow = new AddTourWindow();
-            AddTourViewModel addTourVM = new AddTourViewModel();
+            AddTourViewModel addTourVM = new AddTourViewModel(Tours);
 
             addTourVM.AddedTour += (_, tour) => { Add(tour); };
             addTourWindow.DataContext = addTourVM;
@@ -244,7 +240,7 @@ namespace TourPlanner.ViewModels
             if(CurrentTour != null) 
             {
                 EditTourWindow editTourWindow = new EditTourWindow();
-                EditTourViewModel editTourVM = new EditTourViewModel(CurrentTour);
+                EditTourViewModel editTourVM = new EditTourViewModel(CurrentTour, Tours);
 
                 editTourVM.EditedTour += (_, tour) => { Edit(tour); };
                 editTourWindow.DataContext = editTourVM;

@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using TourPlanner.Models;
 using TourPlanner.ViewModels;
 
@@ -10,6 +9,7 @@ namespace TourPlanner.Test
     public class TestTourViewModels
     {
         private ObservableCollection<TourItem> _tours;
+        private AddTourViewModel _VM;
 
         [SetUp]
         public void SetUp()
@@ -19,18 +19,21 @@ namespace TourPlanner.Test
                 new TourItem ("WienPrag", "awsome tour", "Wien", "Prag", "Car"),
                 new TourItem ("WienKlagenfurt", "cool tour", "Wien", "Klagenfurt", "Car")
             };
+
+            _VM = new AddTourViewModel(_tours);
         }
 
         [Test]
         public void TestInputTourName_InvalidLength()
         {
             try
-            { 
-                AddTourViewModel VM = new AddTourViewModel(_tours, "Wi", null, null, null, null);
+            {
+                _VM.TourName = "Wi";
                 Assert.Fail();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Assert.AreEqual(ex.Message, "Tourname should be between 5 and 15 characters long");
             }
         }
 
@@ -39,7 +42,7 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, "WienPrag", null, null, null, null);
+                _VM.TourName = "WienSalzburg";
                 Assert.Pass();
             }
             catch (Exception)
@@ -52,11 +55,12 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, "ni", null, null, null);
+                _VM.TourDescription = "ni";
                 Assert.Fail();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Assert.AreEqual(ex.Message, "Description should be between 5 and 50 characters long");
             }
         }
 
@@ -65,7 +69,7 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, "nice tour", null, null, null);
+                _VM.TourDescription = "nice tour";
                 Assert.Pass();
             }
             catch (Exception)
@@ -78,11 +82,12 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, null, "Wi", null, null);
+                _VM.TourFrom = "Wi";
                 Assert.Fail();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Assert.AreEqual(ex.Message, "Starting point should be between 3 and 20 characters long");
             }
         }
 
@@ -91,7 +96,7 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, null, "Wien", null, null);
+                _VM.TourFrom = "Wien";
                 Assert.Pass();
             }
             catch (Exception)
@@ -104,11 +109,12 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, null, null, "Wi", null);
+                _VM.TourTo = "Sa";
                 Assert.Fail();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Assert.AreEqual(ex.Message, "End point should be between 3 and 20 characters long");
             }
         }
 
@@ -117,7 +123,7 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, null, null, "Wien", null);
+                _VM.TourTo = "WienSalzburg";
                 Assert.Pass();
             }
             catch (Exception)
@@ -130,11 +136,12 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, null, null,null, null);
+                _VM.TourTransportMode = "";
                 Assert.Fail();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Assert.AreEqual(ex.Message, "Please choose transport mode");
             }
         }
 
@@ -143,7 +150,7 @@ namespace TourPlanner.Test
         {
             try
             {
-                AddTourViewModel VM = new AddTourViewModel(_tours, null, null, null, null, "Car");
+                _VM.TourTransportMode = "Car";
                 Assert.Pass();
             }
             catch (Exception)

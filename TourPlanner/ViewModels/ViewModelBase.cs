@@ -23,5 +23,6 @@ namespace TourPlanner.ViewModels
                 throw new ArgumentException("Invalid propery name: " + propertyName);
             }
         }
+
     }
 }

@@ -9,7 +9,7 @@ using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class EditTourLogViewModel : MainViewModel
+    public class EditTourLogViewModel : ViewModelBase
     {
         private TourItem _currentTour;
 

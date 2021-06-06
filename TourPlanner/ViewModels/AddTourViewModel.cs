@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TourPlanner.Models;
 
 namespace TourPlanner.ViewModels
 {
-    public class AddTourViewModel : MainViewModel
+    public class AddTourViewModel : ViewModelBase
     {
         private ICommand _sendAddTourCommand;
         private ICommand _closeWinCommand;
@@ -23,22 +18,14 @@ namespace TourPlanner.ViewModels
         private string _tourTransportMode;
         public event EventHandler<TourItem> AddedTour;
 
+        public ObservableCollection<TourItem> Tours { get; set; }
+
         public ICommand SendAddTourCommand => _sendAddTourCommand ??= new RelayCommand(AddTour);
         public ICommand CloseWinCommand => _closeWinCommand ??= new RelayCommand(CloseWindow);
 
-        public AddTourViewModel(ObservableCollection<TourItem> tours, string name, string desc, string from, string to, string transportMode)
+        public AddTourViewModel(ObservableCollection<TourItem> tours)
         {
-            Tours = tours;
-            TourName = name;
-            TourDescription = desc;
-            TourFrom = from;
-            TourTo = to;
-            TourTransportMode = transportMode;
-        }
-
-        public AddTourViewModel()
-        {
-
+            this.Tours = tours;
         }
 
         public string TourName
@@ -167,5 +154,19 @@ namespace TourPlanner.ViewModels
                 (commandParameter as Window).Close();
             }
         }
+
+        public bool CheckIfTourNameExists(string tourname)
+        {
+            foreach (TourItem tour in Tours)
+            {
+                if (tourname == tour.Name)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }
