@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TourPlanner.Models;
 
 namespace TourPlanner.DataAccessLayer
@@ -49,14 +50,18 @@ namespace TourPlanner.DataAccessLayer
         public async void GetTourMap(TourItem tour)
         {
             MapQuest mapQuest = new MapQuest(Config.MapQuestKey, Config.FilePath);
-
+            
             string responseBody = await mapQuest.GetTourValues(tour);
             JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
-
-            if((float)obj["route"]["distance"] == 0)
+            
+            if(obj["route"]["distance"] == null || (float)obj["route"]["distance"] == 0)
             {
-                _logger.Error($"Get tour Map: Starting or end point doesn't exist");
-                throw new ArgumentException("Starting or end point doesn't exist");
+                _logger.Error($"Cannot create tour");
+                if (tour.TransportMode == "Pedestrian")
+                    throw new ArgumentException("Cannot create pedestrian tour - distance is too long (max 320km)");
+                else{
+                    throw new ArgumentException("Starting or end point doesnt exist");
+                }
             }
 
             tour.Distance = (float)obj["route"]["distance"]; //in km

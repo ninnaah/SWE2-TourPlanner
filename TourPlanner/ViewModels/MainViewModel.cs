@@ -218,7 +218,13 @@ namespace TourPlanner.ViewModels
             AddTourWindow addTourWindow = new AddTourWindow();
             AddTourViewModel addTourVM = new AddTourViewModel(Tours);
 
-            addTourVM.AddedTour += (_, tour) => { Add(tour); };
+            addTourVM.AddedTour += (_, tour) => { 
+                Add(tour); 
+                if(tour.Distance == 0 && tour.TransportMode == "Bicycle")
+                {
+                    throw new ArgumentException("Cannot create bicycle tour - no appropriate roads");
+                }
+            };
             addTourWindow.DataContext = addTourVM;
 
             try
@@ -227,11 +233,11 @@ namespace TourPlanner.ViewModels
             }catch(Exception ex)
             {
                 _logger.Error($"Cannot add tour: {ex.Message}");
+                addTourWindow.Close();
                 MessageBox.Show(ex.Message);
                 CreateList();
                 RaisePropertyChangedEvent(nameof(Tours));
             }
-            
         }
 
         private void Add(TourItem tour)
@@ -249,10 +255,27 @@ namespace TourPlanner.ViewModels
                 EditTourWindow editTourWindow = new EditTourWindow();
                 EditTourViewModel editTourVM = new EditTourViewModel(CurrentTour, Tours);
 
-                editTourVM.EditedTour += (_, tour) => { Edit(tour); };
+                editTourVM.EditedTour += (_, tour) => { 
+                    Edit(tour);
+                    if (tour.Distance == 0 && tour.TransportMode == "Bicycle")
+                    {
+                        throw new ArgumentException("Cannot create bicycle tour - no appropriate roads");
+                    }
+                };
                 editTourWindow.DataContext = editTourVM;
 
-                editTourWindow.ShowDialog();
+                try
+                {
+                    editTourWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"Cannot add tour: {ex.Message}");
+                    editTourWindow.Close();
+                    MessageBox.Show(ex.Message);
+                    CreateList();
+                    RaisePropertyChangedEvent(nameof(Tours));
+                }
             }
         }
         private void Edit(TourItem tour)

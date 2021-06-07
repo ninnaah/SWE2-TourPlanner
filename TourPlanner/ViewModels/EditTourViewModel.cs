@@ -153,6 +153,10 @@ namespace TourPlanner.ViewModels
             {
                 EditedTour?.Invoke(this, new TourItem(_tourName, _tourDescription, _tourFrom, _tourTo, _tourTransportMode));
             }
+            else
+            {
+                throw new ArgumentException("Please fill in all fields");
+            }
         }
 
 

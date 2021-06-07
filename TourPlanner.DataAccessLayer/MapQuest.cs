@@ -26,7 +26,7 @@ namespace TourPlanner.DataAccessLayer
         }
 
         public async Task<string> GetTourValues(TourItem tour)
-        {       
+        {
             Task<string> responseBodyTask = SendRouteRequest(tour);
             string responseBody = await responseBodyTask;
 
@@ -47,7 +47,7 @@ namespace TourPlanner.DataAccessLayer
             string responseBody = await response.Content.ReadAsStringAsync();
 
             JObject obj = JsonConvert.DeserializeObject<JObject>(responseBody);
-
+            
             _boundingBox = obj["route"]["boundingBox"] as JObject;
             string sessionId = (string)obj["route"]["sessionId"];
 
@@ -62,6 +62,10 @@ namespace TourPlanner.DataAccessLayer
         {
             try
             {
+                if(_boundingBox == null)
+                {
+                    return;
+                }
                 string lowerRightLng = (string)_boundingBox["lr"]["lng"];
                 string lowerRightLat = (string)_boundingBox["lr"]["lat"];
                 string upperLeftLng = (string)_boundingBox["ul"]["lng"];
@@ -83,7 +87,6 @@ namespace TourPlanner.DataAccessLayer
                 _logger.Error($"Cannot load tourmap: {ex.Message}");
             }
             
-
             _logger.Info("Downloaded tourmap");
             
         }

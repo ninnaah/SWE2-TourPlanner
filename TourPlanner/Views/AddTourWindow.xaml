@@ -18,7 +18,6 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <DockPanel>
-                            <!--<TextBlock DockPanel.Dock="Right" Foreground="red" FontSize="12pt" Text="  !" ToolTip="{Binding ElementName=placeholder, Path= AdornedElement.(Validation.Errors)[0].ErrorContent}"/>-->
                             <TextBlock DockPanel.Dock="Right" Foreground="red" FontSize="12pt" Text="  !" ToolTip="{Binding ElementName=placeholder}"/>
                             <AdornedElementPlaceholder x:Name="placeholder" />
                         </DockPanel>
@@ -42,7 +41,6 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
         
 
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Add Tour" VerticalAlignment="Center" FontWeight="Bold" Margin="10"></TextBlock>

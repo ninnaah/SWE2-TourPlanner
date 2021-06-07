@@ -19,7 +19,7 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <DockPanel>
-                            <TextBlock DockPanel.Dock="Right" Foreground="red" FontSize="12pt" Text="  !" ToolTip="{Binding ElementName=placeholder, Path= AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                            <TextBlock DockPanel.Dock="Right" Foreground="red" FontSize="12pt" Text="  !" ToolTip="{Binding ElementName=placeholder}"/>
                             <AdornedElementPlaceholder x:Name="placeholder" />
                         </DockPanel>
                     </ControlTemplate>

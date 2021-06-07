@@ -200,6 +200,10 @@ namespace TourPlanner.ViewModels
             {
                 EditedTourLog?.Invoke(this, new TourLogItem(_currentTour.Name, DateTime.Now, _tourLogDistance, _tourLogDuration, _tourLogReport, _tourLogRating, _tourLogFuelUsed, _tourLogWeather, _tourLogTemperature, _tourLogEffort));
             }
+            else
+            {
+                throw new ArgumentException("Please fill in all fields");
+            }
         }
 
 
