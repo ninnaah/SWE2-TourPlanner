@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using QuestPDF.Elements;
-using QuestPDF.Helpers;
+﻿using System.Collections.Generic;
 using QuestPDF.Drawing;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using TourPlanner.Models;
-using System.Drawing;
-using static System.Net.Mime.MediaTypeNames;
 using System.IO;
 
 namespace TourPlanner.DataAccessLayer

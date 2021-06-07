@@ -41,10 +41,6 @@ namespace TourPlanner.Test
 
             //create empty tourMap 
             Bitmap tourMap = new Bitmap(300, 300);
-            Graphics g = Graphics.FromImage(tourMap);
-            g.Clear(Color.Transparent);
-            g.FillRectangle(Brushes.Green, 100, 100, 100, 100);
-            g.Flush();
             tourMap.Save($"{_fileSystem.FilePath}/maps/{tour.Name}.png", ImageFormat.Png);
 
             _fileSystem.CreateTourReportPDF(tour, _logs);

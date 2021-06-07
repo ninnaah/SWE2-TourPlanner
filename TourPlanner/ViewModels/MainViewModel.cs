@@ -119,14 +119,21 @@ namespace TourPlanner.ViewModels
                     string filePath = $"{_filePath}/maps/{CurrentTour.Name}.png";
                     if (File.Exists(filePath))
                     {
-                        var bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                        bitmap.UriSource = new Uri(filePath);
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.EndInit();
+                        try
+                        {
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                            bitmap.UriSource = new Uri(filePath);
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
 
-                        return bitmap;
+                            return bitmap;
+                        }catch(Exception ex)
+                        {
+                            _logger.Error($"Cannot get tourmap: {ex.Message}");
+                        }
+                        
                     }
                 }
 

@@ -1,12 +1,9 @@
 ﻿using log4net;
-using log4net.Config;
-using Newtonsoft.Json;
 using Npgsql;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using TourPlanner.Models;
 
 namespace TourPlanner.DataAccessLayer
